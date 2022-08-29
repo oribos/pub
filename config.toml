@@ -1,7 +1,7 @@
-baseURL = "http://h.xjj.pub"
+baseURL = "https://pub.oribos.cn"
 languageCode = "zh-cn"
 title = "记事本"
-copyright = "© XJJ 2022"
+copyright = "©denalon"
 googleAnalytics = ""
 
 # paginate decides the number of the newest posts
@@ -33,7 +33,7 @@ comment = "false"
 # Timeformat, no matter what format to use, make it the second day of Jan. 2006
 timeformat = "Jan 02, 2006"
 # switch for turning on/off lights.
-switch = ["🌚", "🌝"]
+switch = ["🌙", "🌻"]
 # default theme. e.g. light, dark, system
 defaultTheme = "system"
 # If set true, date of posts will be shown in the homepage.
@@ -52,13 +52,11 @@ toc = "lines"
 recent = "Recent Posts"
 older = "Older Posts"
 
-
-
 brand = ""
 
 # Disqus configuration
 [params.disqus]
-shortname = "hugo-minima"
+shortname = ""
 
 # Utterances configuration
 # Full doc's at https://utteranc.es
@@ -90,16 +88,16 @@ placeholder = ""
 # where `<svg>` is the svg code.
 [[params.social]]
 name = "github"  
-url = "https://github.com/mivinci/hugo-theme-minima"
+url = "https://github.com/oribos/pub"
 svg = ""
-[[params.social]]
-name = "linkedin"
-url = "https://linkedin/in/leonard-mivinci-63895317a"
-svg = ""
-[[params.social]]
-name = "twitter"
-url = "https://twitter.com/Leonard14733745"
-svg = ""
+# [[params.social]]
+# name = "linkedin"
+# url = "https://linkedin/in/leonard-mivinci-63895317a"
+# svg = ""
+# [[params.social]]
+# name = "twitter"
+# url = "https://twitter.com/Leonard14733745"
+# svg = ""
 [[params.social]]
 name = "rss"
 url = "/index.xml"
@@ -139,6 +137,10 @@ weight = 2
 name = "随笔"
 url = "/essay"
 weight = 3
+# [[menu.main]]
+# name = "存档"
+# url = "/archives"
+# weight = 98
 [[menu.main]]
 name = "关于"
 url = "/about"

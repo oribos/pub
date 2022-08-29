@@ -1,0 +1,15 @@
+{{ define "main" }}
+<main>
+	{{ if isset .Data "Term" }}
+	<h2 class="my-8">{{ .Data.Singular | title }} - "{{ .Data.Term }}"</h2>
+	{{ else }}
+	<h2 class="my-8">{{ .Title }}</h2>
+	{{ end }}
+	<hr class="hr-colorful">
+	<div class="mt-8">
+		{{ range .Data.Pages }}
+		{{ partial "list.html" . }}
+		{{ end }}
+	</div>
+</main>
+{{ end }}
