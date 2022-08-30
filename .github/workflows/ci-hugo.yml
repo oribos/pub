@@ -1,4 +1,4 @@
-name: ci
+name: ci-hugo 
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
         with:
@@ -20,9 +20,25 @@ jobs:
           hugo-version: 'latest'
           extended: true
 
-      - run: hugo
+      # - name: Setup Node
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: '16.x'
 
-      - name: Deploy
+      # - name: Cache dependencies
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-
+        
+        - name: run hugo
+      #      run: npm ci
+      #      run: npm run build
+            run: hugo
+
+       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
