@@ -17,6 +17,13 @@
   <link rel="shortcut icon" href="{{ $favicon | relURL }}" type="image/x-icon" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  <!-- 新 Bootstrap5 核心 CSS 文件 -->
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   {{ $hash := now.Unix }}
@@ -29,7 +36,9 @@
   <link rel="stylesheet" href="/css/app.css">
   <script defer type="text/javascript" src="{{ $js.RelPermalink }}"></script>
   <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
   <script src="/js/app.js"></script>
+  
 </head>
 <script>
   // We will default to system theme color if no choice was made.

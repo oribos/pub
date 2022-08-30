@@ -2,11 +2,11 @@
 {{ if gt $page.TotalPages 1 }}
 <div class="my-8 flex justify-between">
   {{ if $page.HasPrev }}
-  <a href="{{ $page.Prev.URL }}">← Newer</a>
+  <a href="{{ $page.Prev.URL }}">👈更新</a>
   {{ end }}
 
   {{ if $page.HasNext }}
-  <a href="{{ $page.Next.URL }}">Older →</a>
+  <a href="{{ $page.Next.URL }}">更早👉</a>
   {{ end }}
 </div>
 {{ end }}

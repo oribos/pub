@@ -1,12 +1,14 @@
 baseURL = "https://pub.oribos.cn"
 languageCode = "zh-cn"
 title = "记事本"
-copyright = "©denalon"
+copyright = "©nierheim"
 googleAnalytics = ""
+
+
 
 # paginate decides the number of the newest posts
 # that'll be shown on the home page.
-paginate = 30
+paginate = 18
 
 # theme is the name of the hugo theme you're gonna use,
 # `hugo-theme-minima` is put here only for debuging,
@@ -22,6 +24,7 @@ description = ""
 
 [params]
 
+ICP = "豫ICP备2020027870号-2"
 # iam is the beginning words of your self-introduction.
 iam = ""
 # The subtitle will be shown after the title of your blog site.
@@ -49,10 +52,11 @@ commentOnAllPosts = true
 # toc decides the shape of the toc button. e.g. default, lines, bar
 toc = "lines"
 
-recent = "Recent Posts"
-older = "Older Posts"
+recent = "最近更新"
+older = "更早之前"
 
-brand = ""
+brand = "nierheim`Blog"
+
 
 # Disqus configuration
 [params.disqus]

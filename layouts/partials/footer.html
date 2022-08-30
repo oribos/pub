@@ -1,8 +1,13 @@
+<!-- <link rel="stylesheet" href="https://base.oribos.city/css/monokai_sublime.min.css">
+<script src="https://base.oribos.city/archives/js/highlight.min.js"></script> -->
+
+
 <footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
-  <p class="mt-0 text-sm">
+  <p class="mt-0 text-sm-3">
     {{ .Site.Copyright }} |
     <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
     <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">{{ .Site.Params.ICP }}</a>
   </p>
   <p class="flex items-center mt-0">
     {{ range $_, $key := .Site.Params.Social }}
