@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="一个更自然原生的渐变顶栏" />
+<meta property="og:description" content="引用自reuixiy
+本博客的顶栏应该是两年多没动过了，一直都是上图中那闪眼的渐变彩带。这个渐变色的来源应该是..当年..的 GitHub Universe 网站1。当时年轻觉得新颖酷炫，现在老了只觉刺眼无味🤢。
+刚好，前几天折腾可变字体的时候，Google 结果中无意浏览到这个简洁却细节的博客，被它顶栏的简洁和毛玻璃效果吸引了，又在它的「致谢」中发现了 3type，而其顶栏也使用了毛玻璃……想起之前在 Twitter 中常常刷到的毛玻璃，想起之前浏览过的其它博客中的毛玻璃，想起之前浏览过的 Apple 官网的毛玻璃……终于的终于，我决心要将毛玻璃应用到我的博客🤪！
+正文 首先，渐变可以通过 CSS 的 linear-gradient() 函数实现，比如本博客之前的渐变，其 CSS 代码和效果如下：
+1 background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%); 你会发现，这样的渐变其实是非常..不自然..的。以大自然中的彩虹为例，我们雨后看到的彩虹肯定不长上面那样，自然中的彩虹颜色肯定没有这么饱和，而且也应该要通透一点。
+2
+要实现这种更自然的渐变，我们在 CSS 中可以简单地通过设置颜色的 Alpha 值即透明度来实现，其 CSS 代码和效果如下：
+1 background: linear-gradient(90deg, rgba(247, 149, 51, 0." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/reprint/2020030601.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2020-03-06T13:10:54+08:00" />
+<meta property="article:modified_time" content="2020-03-06T13:10:54+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="一个更自然原生的渐变顶栏"/>
+<meta name="twitter:description" content="引用自reuixiy
+本博客的顶栏应该是两年多没动过了，一直都是上图中那闪眼的渐变彩带。这个渐变色的来源应该是..当年..的 GitHub Universe 网站1。当时年轻觉得新颖酷炫，现在老了只觉刺眼无味🤢。
+刚好，前几天折腾可变字体的时候，Google 结果中无意浏览到这个简洁却细节的博客，被它顶栏的简洁和毛玻璃效果吸引了，又在它的「致谢」中发现了 3type，而其顶栏也使用了毛玻璃……想起之前在 Twitter 中常常刷到的毛玻璃，想起之前浏览过的其它博客中的毛玻璃，想起之前浏览过的 Apple 官网的毛玻璃……终于的终于，我决心要将毛玻璃应用到我的博客🤪！
+正文 首先，渐变可以通过 CSS 的 linear-gradient() 函数实现，比如本博客之前的渐变，其 CSS 代码和效果如下：
+1 background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%); 你会发现，这样的渐变其实是非常..不自然..的。以大自然中的彩虹为例，我们雨后看到的彩虹肯定不长上面那样，自然中的彩虹颜色肯定没有这么饱和，而且也应该要通透一点。
+2
+要实现这种更自然的渐变，我们在 CSS 中可以简单地通过设置颜色的 Alpha 值即透明度来实现，其 CSS 代码和效果如下：
+1 background: linear-gradient(90deg, rgba(247, 149, 51, 0."/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 一个更自然原生的渐变顶栏
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">一个更自然原生的渐变顶栏</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>reuixiy</b> |
+	
+		Posted at Mar 06, 2020
+	
+		
+	</div>
+	
+	<div class="sm:mt-4">
+		
+		<a class="not-first:ml-3" href="/tags/web">#web</a>
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<blockquote>
+<p>引用自<a href="https://io-oi.me/">reuixiy</a></p>
+</blockquote>
+<p><img src="https://base.oribos.city/images/2020/07/header-comparison.png" alt="header-comparison.png" title="🙄 → 😺"></p>
+<p>本博客的顶栏应该是两年多没动过了，一直都是上图中那闪眼的渐变彩带。这个渐变色的来源应该是..当年..的 <a href="https://githubuniverse.com/">GitHub Universe</a> 网站<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>。当时年轻觉得新颖酷炫，现在老了只觉刺眼无味🤢。</p>
+<p>刚好，前几天折腾<a href="/tech/get-started-with-variable-fonts/">可变字体</a>的时候，Google 结果中无意浏览到这个<a href="https://stone-zeng.github.io/">简洁却细节的博客</a>，被它顶栏的简洁和毛玻璃效果吸引了，又在它的「<a href="https://stone-zeng.github.io/about/#%E8%87%B4%E8%B0%A2">致谢</a>」中发现了 <a href="https://3type.cn/">3type</a>，而其顶栏也使用了毛玻璃……想起之前在 Twitter 中常常刷到的毛玻璃，想起之前浏览过的其它博客中的毛玻璃，想起之前浏览过的 Apple 官网的毛玻璃……终于的终于，我决心要将毛玻璃应用到我的博客🤪！</p>
+<h2 id="正文">正文</h2>
+<p>首先，渐变可以通过 CSS 的 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient"><code>linear-gradient()</code></a> 函数实现，比如本博客之前的渐变，其 CSS 代码和效果如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">background</span><span class="o">:</span> <span class="nt">linear-gradient</span><span class="o">(</span><span class="nt">90deg</span><span class="o">,</span> <span class="nt">rgb</span><span class="o">(</span><span class="nt">247</span><span class="o">,</span> <span class="nt">149</span><span class="o">,</span> <span class="nt">51</span><span class="o">)</span> <span class="nt">0</span><span class="o">,</span> <span class="nt">rgb</span><span class="o">(</span><span class="nt">243</span><span class="o">,</span> <span class="nt">112</span><span class="o">,</span> <span class="nt">85</span><span class="o">)</span> <span class="nt">15</span><span class="o">%,</span> <span class="nt">rgb</span><span class="o">(</span><span class="nt">239</span><span class="o">,</span> <span class="nt">78</span><span class="o">,</span> <span class="nt">123</span><span class="o">)</span> <span class="nt">30</span><span class="o">%,</span> <span class="nt">rgb</span><span class="o">(</span><span class="nt">161</span><span class="o">,</span> <span class="nt">102</span><span class="o">,</span> <span class="nt">171</span><span class="o">)</span> <span class="nt">44</span><span class="o">%,</span> <span class="nt">rgb</span><span class="o">(</span><span class="nt">80</span><span class="o">,</span> <span class="nt">115</span><span class="o">,</span> <span class="nt">184</span><span class="o">)</span> <span class="nt">58</span><span class="o">%,</span> <span class="nt">rgb</span><span class="o">(</span><span class="nt">16</span><span class="o">,</span> <span class="nt">152</span><span class="o">,</span> <span class="nt">173</span><span class="o">)</span> <span class="nt">72</span><span class="o">%,</span> <span class="nt">rgb</span><span class="o">(</span><span class="nt">7</span><span class="o">,</span> <span class="nt">179</span><span class="o">,</span> <span class="nt">155</span><span class="o">)</span> <span class="nt">86</span><span class="o">%,</span> <span class="nt">rgb</span><span class="o">(</span><span class="nt">109</span><span class="o">,</span> <span class="nt">186</span><span class="o">,</span> <span class="nt">130</span><span class="o">)</span> <span class="nt">100</span><span class="o">%);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><!-- raw HTML omitted -->
+<p>你会发现，这样的渐变其实是非常..不自然..的。以大自然中的彩虹为例，我们雨后看到的彩虹肯定不长上面那样，自然中的彩虹颜色肯定没有这么饱和，而且也应该要通透一点。</p>
+<p><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup><img src="https://base.oribos.city/images/2020/07/rainbow.jpg" alt="rainbow.jpg" title="大自然中的彩虹"></p>
+<p>要实现这种更自然的渐变，我们在 CSS 中可以简单地通过设置颜色的 Alpha 值即透明度来实现，其 CSS 代码和效果如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">background</span><span class="o">:</span> <span class="nt">linear-gradient</span><span class="o">(</span><span class="nt">90deg</span><span class="o">,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">247</span><span class="o">,</span> <span class="nt">149</span><span class="o">,</span> <span class="nt">51</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">0</span><span class="o">,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">243</span><span class="o">,</span> <span class="nt">112</span><span class="o">,</span> <span class="nt">85</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">15</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">239</span><span class="o">,</span> <span class="nt">78</span><span class="o">,</span> <span class="nt">123</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">30</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">161</span><span class="o">,</span> <span class="nt">102</span><span class="o">,</span> <span class="nt">171</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">44</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">80</span><span class="o">,</span> <span class="nt">115</span><span class="o">,</span> <span class="nt">184</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">58</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">16</span><span class="o">,</span> <span class="nt">152</span><span class="o">,</span> <span class="nt">173</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">72</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">7</span><span class="o">,</span> <span class="nt">179</span><span class="o">,</span> <span class="nt">155</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">86</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">109</span><span class="o">,</span> <span class="nt">186</span><span class="o">,</span> <span class="nt">130</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">100</span><span class="o">%);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><!-- raw HTML omitted -->
+<p>这样看起来虽然也不像彩虹，但至少让人感觉更自然一点。但是，当我们将这样的渐变加在页面的固定顶栏上时，我们又会发现，这还是不够自然，如下：<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<!-- raw HTML omitted -->
+<p>为什么呢🤔？这看起来太通透了，要做到自然，我们还需要点模糊，也就是我们经常说的毛玻璃效果。在 CSS 中，要实现这个需求，我们可以通过 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter"><code>backdrop-filter</code></a> 属性来实现。CSS 代码和效果如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">-webkit-backdrop-filter</span><span class="o">:</span> <span class="nt">saturate</span><span class="o">(</span><span class="nt">180</span><span class="o">%)</span> <span class="nt">blur</span><span class="o">(</span><span class="nt">1em</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="nt">backdrop-filter</span><span class="o">:</span> <span class="nt">saturate</span><span class="o">(</span><span class="nt">180</span><span class="o">%)</span> <span class="nt">blur</span><span class="o">(</span><span class="nt">1em</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl"><span class="nt">background</span><span class="o">:</span> <span class="nt">linear-gradient</span><span class="o">(</span><span class="nt">90deg</span><span class="o">,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">247</span><span class="o">,</span> <span class="nt">149</span><span class="o">,</span> <span class="nt">51</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">0</span><span class="o">,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">243</span><span class="o">,</span> <span class="nt">112</span><span class="o">,</span> <span class="nt">85</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">15</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">239</span><span class="o">,</span> <span class="nt">78</span><span class="o">,</span> <span class="nt">123</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">30</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">161</span><span class="o">,</span> <span class="nt">102</span><span class="o">,</span> <span class="nt">171</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">44</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">80</span><span class="o">,</span> <span class="nt">115</span><span class="o">,</span> <span class="nt">184</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">58</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">16</span><span class="o">,</span> <span class="nt">152</span><span class="o">,</span> <span class="nt">173</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">72</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">7</span><span class="o">,</span> <span class="nt">179</span><span class="o">,</span> <span class="nt">155</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">86</span><span class="o">%,</span> <span class="nt">rgba</span><span class="o">(</span><span class="nt">109</span><span class="o">,</span> <span class="nt">186</span><span class="o">,</span> <span class="nt">130</span><span class="o">,</span> <span class="nt">0</span><span class="p">.</span><span class="nc">1</span><span class="o">)</span> <span class="nt">100</span><span class="o">%);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><!-- raw HTML omitted -->
+<p>到此，我们的渐变是否更为自然原生了呢😺？不过，需要注意的是，<code>backdrop-filter</code> 是一个比较新的属性，因此如果你看不到效果，请使用最新版的 Chrome 尝试。</p>
+<p>但作为开发者，我们也需要考虑到这些用户的体验。在上面的例子中，因为我们将颜色变得很透明，所以当毛玻璃效果没有时，这样的顶栏看起来可能会很奇怪。我们可以使用 CSS 的 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@supports"><code>@supports</code></a> 来解决，比如在..后面..添加：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">@</span><span class="k">supports</span> <span class="nt">not</span> <span class="o">(</span><span class="nt">backdrop-filter</span><span class="o">:</span> <span class="nt">none</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nc">header</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">background-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">color</span><span class="o">-</span><span class="n">bg</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这也就是说，如果浏览器不支持 <code>backdrop-filter</code>，则为顶栏 <code>header</code> 添加回退的背景色（不会覆盖渐变，相当于渐变的底色，见 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background"><code>background</code></a>）。</p>
+<hr>
+<p><img src="https://base.oribos.city/images/2020/07/brand-new-header-design.gif" alt="brand-new-header-design.gif" title="窄屏下菜单栏设计"></p>
+<p>对于我的博客来说，菜单栏在顶栏中但又不属于顶栏🙈，因此对于上图中的效果的实现，这里就不展开来说了🤪……感兴趣的朋友可以查看 <a href="https://github.com/reuixiy/hugo-theme-meme/commit/a11c06a">reuixiy/hugo-theme-meme@a11c06a</a> 及相关..最新版..的代码。</p>
+<h2 id="致谢">致谢</h2>
+<ol>
+<li><a href="https://stone-zeng.github.io/">stone-zeng.github.io</a></li>
+<li><a href="https://3type.cn/">3type</a></li>
+<li><a href="https://www.apple.com/iphone-11/">iPhone 11 | Apple</a></li>
+<li><a href="https://codepen.io/anon/pen/EqPZaG">Nav Bar Scroll Smooth | CodePen</a></li>
+<li><a href="https://codepen.io/designcouch/pen/Atyop">Menu “Hamburger” Icon Animations | CodePen</a></li>
+<li><a href="https://web.dev/backdrop-filter/">Create OS-style backgrounds with backdrop-filter | web.dev</a></li>
+<li><a href="https://webkit.org/blog/3632/introducing-backdrop-filters/">Introducing Backdrop Filters | WebKit</a></li>
+</ol>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<hr>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a href="https://github.com/reuixiy/reuixiy.github.io/blob/master/custom.styl#L38">https://github.com/reuixiy/reuixiy.github.io/blob/master/custom.styl#L38</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>图源：<a href="https://www.pexels.com/photo/rainbow-830829/">https://www.pexels.com/photo/rainbow-830829/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>①文字：阿尔伯特·爱因斯坦：《爱因斯坦晚年文集》（方在庆、韩文博、何维国译），北京大学出版社，2008 年版，第 3 页，自画像。<br>
+②布局：<a href="https://www.zhihu.com/question/24822927/answer/145571048">https://www.zhihu.com/question/24822927/answer/145571048</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

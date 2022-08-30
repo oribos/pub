@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo on 记事本</title>
+    <link>https://pub.oribos.cn/tags/hugo/</link>
+    <description>Recent content in hugo on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Sun, 16 Aug 2020 21:30:32 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 GitHub Actions 部署 Hugo 博客到 GitHub Pages</title>
+      <link>https://pub.oribos.cn/web/reprint/2020081605.html</link>
+      <pubDate>Sun, 16 Aug 2020 21:30:32 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2020081605.html</guid>
+      <description>引用自reuixiy
+近期博主有了简化博客的想法，于是打算从 Netlify 回到 GitHub Pages，并采用 GitHub Actions 实现博客的持续集成部署。
+为了践行极简，博主自己写了一个 Action，使用 Arch Linux 作为 Docker 容器的基础镜像，见 reuixiy/hugo-deploy。
+如果你之前使用过 GitHub Pages，可前往 GitHub 参考 README.md 直接使用；如果没有，则可以参考下方的详细教程。
+Prerequisites Git GitHub SSH Tutorial Git 你的 Hugo 站点
+参见 https://io-oi.me/tech/host-your-blog-on-ipfs/#准备环境。
+GitHub 上新建仓库
+要使用 GitHub Pages，必须先新建一个 &amp;lt;username&amp;gt;.github.io 的仓库。
+参见 Types of GitHub Pages sites。
+通过 SSH 连接 GitHub
+参见 https://io-oi.me/tech/ssh-with-multiple-github-accounts/#单帐号。
+推送源码到 GitHub
+这里，我们区分一下，我们要推送的是源码，而..不是..生成的 public 文件夹。
+1 2 git remote add origin git@github.com:username/username.github.io.git git push -u origin master 新建 Workflow 配置文件</description>
+    </item>
+    
+    <item>
+      <title>Hugo 与 Hexo 的异同</title>
+      <link>https://pub.oribos.cn/web/reprint/010.html</link>
+      <pubDate>Thu, 14 Nov 2019 11:25:35 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/010.html</guid>
+      <description>引用自reuixiy
+前言 Hugo 是一个基于 Go 语言开发的静态网站生成器（SSG），目前由 @bep 领衔开发，Hugo 的突出特点是简洁、灵活、高效，目前有很多知名网站都在使用 Hugo：Netlify、Let’s Encrypt、IPFS、Cloudflare Developers、DigitalOcean Docs、1Password 等等。与目前国内流行的 Hexo 相比，Hugo 的速度可称为飞速🚀——在安装和使用上都是如此。
+下面，我们就来看一下 Hugo 与 Hexo 的一些异同，不过需要注意的是：此文主要探讨的是用户层面上的一些异同，而非技术层面的差异。简体中文来说🐼：即一个技术小白（我）从 Hexo 迁移到 Hugo 时遇到的一些常见问题。
+目录结构 1 2 3 4 5 6 7 8 9 10 11 12 ~/blog $ tree -L 1 . # 说明 Hexo ├── archetypes/ # 文章模板 scaffolds/ ├── assets/ # Hugo 管道 ├── config.toml # 配置文件 _config.yml ├── content/ # 文章目录 source/_posts/ ├── data/ # Hugo 数据文件 source/_data/ ├── layouts/ # 布局模板 ├── public/ # 生成的静态文件 public/ ├── resources/ # Hugo 缓存 ├── static/ # 网站的静态文件 source/ └── themes/ # 主题目录 themes/ 在 Hugo 中，与 Hexo 的一个很大不同——也可以说是优点——是主题目录与站点目录有一样的结构，以 MemE 主题举个例子（已剔除无关文件）：</description>
+    </item>
+    
+    <item>
+      <title>Hugo 主题 MemE 文档</title>
+      <link>https://pub.oribos.cn/web/reprint/011.html</link>
+      <pubDate>Sat, 02 Nov 2019 10:42:03 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/011.html</guid>
+      <description>引用自reuixiy
+前言 MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。MemE 主题专注于优雅、简约、现代，以及代码的正确性。MemE 主题对习惯了 Hexo 的用户非常友好，是从 Hexo 迁移到 Hugo 的不错选择。
+为什么要起名为 MemE 呢？这四个字母的含义是基于这个单词本身的，即希望你的博客以及文章能够像模因一样传播、影响。当然，希望这个主题也是如此，并给你带来欢乐。至于这四个字母的形式（MemE），则是受 Taylor Swift 的 ME! 中的「you can’t spell “awesome” without “me”」启发。同时，这两个字母的大写就将这个单词分成了两部分——ME 和 em，中间两个字母组成 em，这也给人一种可爱的感觉。此外，em 也是 me 的反写，这又是我非常喜欢的形式！
+MemE 主题践行极简主义，没有使用现有的流行前端库，主题的 HTML 和 CSS 皆由我纯手工从零雕琢而成。同时，MemE 的 CSS 也是按需生成的，比如：如果你不需要代码高亮的功能，那么代码高亮的样式就不会被加入 MemE 的 CSS 文件中。更甚，MemE 无需加载任何图标库——主题的图标是通过 Hugo 的数据模板直接将 SVG 嵌入到 HTML 中实现的——这使得 MemE 不会去加载图标库中大量你所不需要的图标，节约了很多资源。当然，这也意味着你可以方便地自定义属于自己的图标。
+极简并不等于简陋，MemE 主题具有许多强大的、现代的特性：
+功能 完全的深色模式支持 完全的多语言支持 可自定义的 SVG 图标 支持 HTML/CSS/JS 的压缩和 JS 的捆包 代码高亮、脚注、Todo 列表、定义列表、Emoji 字体排版 自定义字体、字号、行间距 自定义文章内容宽度 段首缩排、两端对齐 首字下沉、小型大写 图片说明、图片脚注 着重号 中文标点符号字形纠正 归档页面、分类页面、标签云页面 Atom╱RSS 订阅 分节标题锚点 图片外链、视频外链 自定义页脚 404 页面 模块 顶栏 菜单栏 文章副标题 文章描述 文章元信息 文章目录 文章版权 文章更新徽章 文章的 Git 版本信息 文章分享 相关文章 文章的标签 文章上下篇 极简页脚、关于页面的极简页脚 返回顶部按钮 其它 Service Worker 及 PWA Google Analytics、Google Site Verification、Google AdSense 不蒜子页面浏览量和站点访客数、站点访问量 Disqus 评论、Valine 评论、Utterances 评论 KaTeX 和 MathJax 3.</description>
+    </item>
+    
+    <item>
+      <title>利用 Workbox 实现博客的 PWA</title>
+      <link>https://pub.oribos.cn/web/reprint/2019100108.html</link>
+      <pubDate>Tue, 01 Oct 2019 21:32:34 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019100108.html</guid>
+      <description>引用自reuixiy
+1
+如果你使用 Google Chrome 浏览器访问我的博客💻，你可能会发现地址栏右侧有一个小小的 + 号，并会提醒你安装。当然，如果你是用手机访问的话📱，Chrome 就会在页面的底部提醒你。但你可千万千万不要把它当作什么恶意骚扰哦😅，它只是善意地提醒你：这个网站是一个 PWA 站点，强烈推荐您添加到桌面以获取原生应用般的优质体验！😝
+注意：请查看一个简单的 Service Worker。
+前言 渐进式网络应用程序（英语：Progressive Web Apps，简称：PWA）是一种运用现代的 Web API 以及传统的渐进式增强策略创建的跨平台 Web 应用程序。这种应用程序将目前最为现代化的浏览器提供的功能与移动设备的体验优势相结合，使其具有与原生应用相同的用户体验优势。2
+以上是开发者角度，就用户角度来说🐼，当你的博客实现 PWA 后，你的读者可以：
+添加你的博客到电脑╱手机的桌面，以原生应用般的方式浏览你的博客 更快速地浏览你的博客 离线浏览你的博客 第一点：对于读者，博客可一触即达，且无浏览器的地址栏、菜单栏等「无关」干扰👴；对于博客，非常有利于博客的用户留存率，也利于博客的品牌形象😺。第二点：可以利用 Service Worker 的缓存特点，极大地加速你的博客，如果再加上 InstantClick 的预加载特点，简直飞速🚀。第三点：对博客来说，个人感觉意义不大🤔。
+正文 PWA 有很多要求，比如：HTTPS、响应式布局等等，可参考这个 Checklist，可用 Lighthouse3 检查。
+4
+关于图标和 manifest.json，可以通过这个网站在线生成。如果你不确定，可以参考我的博客以及 MemE 主题的相关代码。
+在 PWA 的众多要求中，其中很重要的一点就是可离线访问，而要实现这一点，最简单的方法就是使用 Service Worker。在这篇文章中，我们使用 Workbox 这个工具生成 sw.js 以快速实现 Service Worker 🤖，并实现页面的预缓存和页面更新后的提醒功能，而非深究 Service Worker 的接口然后手动写 JS 代码来实现👨‍💻🐶&amp;hellip;
+由于我们需要使用 Node 的模块，因此我们的电脑必须安装 Node.js。如果你使用的是 Hexo，那么是已经安装过的；如果你使用的是 Hugo，那么请自行安装一下。然后，我们安装模块📦：</description>
+    </item>
+    
+    <item>
+      <title>将博客部署到星际文件系统（IPFS）</title>
+      <link>https://pub.oribos.cn/web/reprint/2019091804.html</link>
+      <pubDate>Wed, 18 Sep 2019 15:13:56 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019091804.html</guid>
+      <description>引用自reuixiy
+1
+在这篇文章中，我将主要介绍如何将你的..静态..博客以持续集成的方式部署到星际文件系统 IPFS 上，也会简单介绍一下 IPFS 的使用。本文中，我使用的 SSG2 是 Hugo，使用的持续集成服务由 Netlify 提供，博客的源码可以在 GitHub 上找到。另，提醒一下，与零网一样，IPFS 默认不匿名👓，且对 Tor 的支持还在开发中。
+说明：最近发现 Cloudflare 的 IPFS 服务好像挂了，需要等待非常长的时间才能获取到最新内容，因此本博客已暂时放弃部署在 IPFS 上。
+前言 一年前的昨天🧐，知名的互联网基础设施服务提供商 Cloudflare 宣布开始支持 IPFS Gateway，作为其分布式互联网网关项目的一部分。关于分布式互联网（Distributed Web，以下简称 D 网），它的到来很有可能会将我们带向 Web 3.0 时代，一个全新的互联网时代！而 D 网所具有的去中心化将会带我们走向新的自由之路——无审查，无高墙。👉🌎🌍🌏💫
+起因 浏览 Twitter 时发现了 @GoHugoIO 的一条推文，IPFS 四个字母激起了我的兴趣🐭（之前..轻微..了解过，印象只限于这四个字母），快速浏览一遍链接的文章之后，去看了他之前写的一篇详细教程，打开 IPFS 的官网，决定这次一定要尝试一下 IPFS！🕳️🦆
+正文 文章的正文分为两个部分：持续集成和原生部署，第一部分是文章的主体，第二部分供感兴趣的读者研究。
+当你按照此文章将博客成功部署到 IPFS 上后，你的博客将：
+⚡拥有全球范围的高速 CDN，国内也有不错的访问速度（Cloudflare） 🌤️无需支出且永远在线（如果你不需要域名的话） 🛸走向未来 持续集成 如果你只是想直接通过持续集成的方式部署博客，那么你是无需在自己的电脑（本地）上安装 IPFS 的，你甚至可以完全不用接触 IPFS。但是，你的电脑必须安装 Git 和 Node.js。如果你是一个程序员或之前有尝试过搭建静态博客，那么你对它们应该并不陌生。
+准备环境 首先是 Git，我们要将博客所在的文件夹初始化成一个 Git 仓库。注意，如果你之前已经初始化过了，请跳过这一步。怎么确定是否已经是一个 Git 仓库呢🤔？打开终端╱命令行，然后进入你的博客文件夹，输入 git status 然后回车，如下：</description>
+    </item>
+    
+    <item>
+      <title>在开发一个 Hugo 主题</title>
+      <link>https://pub.oribos.cn/web/reprint/004.html</link>
+      <pubDate>Fri, 05 Jul 2019 21:31:32 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/004.html</guid>
+      <description>引用自reuixiy
+这些天在开发一个 Hugo 主题1，目标是从 Hexo 平滑地迁移到 Hugo，并保留博客现有的结构、样式、功能……为什么要迁移到 Hugo 呢？因为相比 Hugo 的生成速度，Hexo 实在是太慢了，最重要的是 Hugo 更为极简主义，而 Hexo 的依赖包……
+由于是代码小白，所以开发起来也没有捷径，先去找现有的 Hugo 主题，然后观察，最后结合文档自己从零慢慢构建。这些天来，摸清了 Hugo 使用的 Go Template 的基本语法2，弄清了 Hugo 内的基本数据结构，学会了使用 Hugo 的一些基本函数，理清了 Hugo 的一些基本概念以及其与 Hexo 的异同……
+开发进度呢？仅仅是一个未完成的 Atom 的模板……因为我是个完美主义者，而要完美，就必须弄懂每一行代码，弄明白每一项功能。而作为代码小白，要了解、要学习的东西就可多了，你可以看看下方我的浏览器截图中满满的标签页，以及我的可怜的内存……不过未来的开发进度应该会更快，因为该要的知识也摸得差不多了，应该。还有就是我一边开发，一边把遇到的坑╱总结╱文档写了，毕竟这可能是我的第一个开源项目，所以好好写，一来对将来的用户友好，二来希望对想开发 Hugo 主题的人提供一点我的开发经验，以利于他们自己的开发，从而让更多的人加入 Hugo。
+3
+Anyway，敬请期待吧～
+已开发完成，主题的最终名字叫 MemE。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+可参考官方文档的 Introduction to Hugo Templating 入门，可参考 Régis Philibert 写的相关教程。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+推荐安装相应的语法高亮插件，以更高效开发，博主后来开发时使用的是 VS Code 的 Hugo Language and Syntax Support。&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+  </channel>
+</rss>

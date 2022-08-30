@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="从零搭建Spring Boot的Hello World" />
+<meta property="og:description" content="从零搭建Spring Boot的Hello World" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/note/2020091801.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2020-09-18T09:01:40+08:00" />
+<meta property="article:modified_time" content="2020-09-18T09:01:40+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="从零搭建Spring Boot的Hello World"/>
+<meta name="twitter:description" content="从零搭建Spring Boot的Hello World"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 从零搭建Spring Boot的Hello World
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">从零搭建Spring Boot的Hello World</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Sep 18, 2020
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p>从零搭建Spring Boot的Hello World</p>
+	<article class="md">
+		<h1 id="从零搭建spring-boot的hello-world">从零搭建Spring Boot的Hello World</h1>
+<h2 id="安装java开发环境">安装Java开发环境</h2>
+<ol>
+<li>
+<p>下载并安装JDK8，下载地址参见<a href="https://www.oracle.com/java/technologies/javase-downloads.html?spm=a2c6h.13858378.0.0.68727178huCoQh">Java SE 8u261</a> 。</p>
+</li>
+<li>
+<p>配置Java环境变量。</p>
+<p>a.  打开命令窗口，执行以下命令。</p>
+</li>
+</ol>
+<p>说明：执行命令前，请修改JAVA_HOME参数C:\Program Files\Java\jdk1.8.0_211为您的JDK安装目录。</p>
+<pre><code>```
+setx JAVA_HOME &quot;C:\Program Files\Java\jdk1.8.0_211&quot;
+setx path &quot;%path%;%JAVA_HOME%\bin&quot;
+
+```
+b.执行以下命令，验证环境变量配置是否成功。
+
+```
+java -version
+```
+</code></pre>
+<h2 id="安装并配置intellij-idea">安装并配置IntelliJ IDEA</h2>
+<p>此步骤主要介绍使用IntelliJ IDEA安装Spring Assistant插件。</p>
+<ol>
+<li>
+<p>下载并安装IntelliJ IDEA，下载地址参见 <a href="https://www.jetbrains.com/idea/download/?spm=a2c6h.13858378.0.0.68727178huCoQh">IntelliJ IDEA</a> 。</p>
+</li>
+<li>
+<p>双击运行IntelliJ IDEA。</p>
+</li>
+<li>
+<p>在IntelliJ IDEA启动界面，依次单击 Configure &gt; Settings 。</p>
+</li>
+</ol>
+<p><img src="https://base.oribos.city//images/2020/09/TB1XKXUO1L2gK0jSZFmXXc7iXXa-999-901.png" alt=""></p>
+<ol start="4">
+<li>单击 Plugins，然后在搜索栏输入spring Assistant。最后单击 Install 安装插件。</li>
+</ol>
+<p><img src="https://base.oribos.city//images/2020/09/TB1Kx4JOYr1gK0jSZFDXXb9yVXa-1249-880.png" alt=""></p>
+<ol start="5">
+<li>单击 Restart IDE。</li>
+</ol>
+<p><img src="https://base.oribos.city//images/2020/09/TB1zjFHOVT7gK0jSZFpXXaTkpXa-1241-872.png" alt=""></p>
+<h2 id="创建spring-boot项目">创建Spring Boot项目</h2>
+<p>本步骤主要介绍使用Spring Assistant插件来搭建简单的Spring Boot项目。</p>
+<ol>
+<li>
+<p>在IntelliJ IDEA启动界面，单击 Create New Project。</p>
+</li>
+<li>
+<p>在左侧单击 Spring Assistant，然后单击 Next。</p>
+</li>
+</ol>
+<p><img src="https://base.oribos.city//images/2020/09/TB1ncFTO8r0gK0jSZFnXXbRRXXa-1086-832.png" alt=""></p>
+<ol start="3">
+<li>如下图所示，依次配置Group Id、Artifact Id、Packaging等，然后单击 Next。</li>
+</ol>
+<p><img src="https://base.oribos.city//images/2020/09/TB10M0AOVY7gK0jSZKzXXaikpXa-1085-833.png" alt=""></p>
+<ol start="4">
+<li>在左侧单击 Web，然后勾选 Spring Web，最后单击Next。</li>
+</ol>
+<p><img src="https://base.oribos.city//images/2020/09/TB1IWmafGNj0u4jSZFyXXXgMVXa-1087-831.png" alt=""></p>
+<ol start="5">
+<li>单击 Finish，等待项目初始化。</li>
+</ol>
+<p>完整的目录结构如下。</p>
+<p><img src="https://base.oribos.city//images/2020/09/TB144Cnasieb18jSZFvXXaI3FXa-469-705.png" alt=""></p>
+<ol start="6">
+<li>初始化完成之后，在 com.example.demo 目录下创建 HelloAliyunController.java 文件。</li>
+</ol>
+<p><img src="https://base.oribos.city//images/2020/09/TB1PZFIOVT7gK0jSZFpXXaTkpXa-610-323.png" alt=""></p>
+<ol start="7">
+<li>在 HelloAliyunController.java 文件中，添加以下代码。</li>
+</ol>
+<pre tabindex="0"><code>package com.example.demo;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class HelloAliyunController {
+
+    @RequestMapping(&#34;/&#34;)
+    public String helloAliyun(){
+
+        return &#34;Hello Aliyun!!!&#34;;
+    }
+}
+</code></pre><p>打包并上传项目到ECS服务器</p>
+<ol>
+<li>
+<p>打包项目。</p>
+<p>a.  单击IDEA右上角Maven。</p>
+</li>
+</ol>
+<p><img src="https://base.oribos.city//images/2020/09/TB1coVAOVY7gK0jSZKzXXaikpXa-421-400.png" alt=""></p>
+<pre><code>b.  依次双击 demo&gt;Lifecycle&gt;package，开始打包。
+</code></pre>
+<p><img src="https://base.oribos.city//images/2020/09/TB187pTO8r0gK0jSZFnXXbRRXXa-251-375.png" alt=""></p>
+<pre><code>执行结果如下，图中标记位置为打包后jar包的路径。
+</code></pre>
+<p><img src="https://base.oribos.city//images/2020/09/TB1770IOVT7gK0jSZFpXXaTkpXa-980-633.png" alt=""></p>
+<ol start="2">
+<li>打开终端工具。</li>
+</ol>
+<p>Windows：打开命令窗口。
+MAC：打开命令行终端Terminal。
+Windows用户请检查系统中是否安装有SSH工具。检查方法：</p>
+<pre><code>a.  在终端中输入命令ssh -V。
+</code></pre>
+<pre tabindex="0"><code>ssh -V
+</code></pre><p>如果显示SSH版本则表示已安装，如下图所示。</p>
+<p><img src="https://base.oribos.city//images/2020/09/TB1Am16g639YK4jSZPcXXXrUFXa-306-34.png" alt=""></p>
+<p>b.  如果未安装，请下载安装OpenSSH工具。</p>
+<ol start="3">
+<li>
+<p>上传jar包到ECS服务器。</p>
+<p>a.  在命令行中执行以下命令。</p>
+</li>
+</ol>
+<p>scp C:\Users\Administrator\IdeaProjects\demo\target\demo-0.0.1-SNAPSHOT.jar <a href="mailto:root@47.xx.xx.xx">root@47.xx.xx.xx</a>:/root
+说明: 在执行命令前，请先替换以下参数。</p>
+<p>C:\Users\Administrator\IdeaProjects\demo\target\demo-0.0.1-SNAPSHOT.jar为jar包存放路径。
+47.xx.xx.xx为ECS实例公网IP。
+执行结果如下。</p>
+<p><img src="https://base.oribos.city//images/2020/09/TB1mBKKPEz1gK0jSZLeXXb9kVXa-1006-43.png" alt=""></p>
+<pre><code>b.  输入已创建的ECS云服务器的登录密码。
+
+c.  上传成功后，会显示如下信息。
+</code></pre>
+<p><img src="https://base.oribos.city//images/2020/09/TB1N1XKO7L0gK0jSZFAXXcA9pXa-1010-66.png" alt=""></p>
+<h2 id="运行ecs上的java项目">运行ECS上的Java项目</h2>
+<ol>
+<li>执行以下命令，安装Java运行环境。</li>
+</ol>
+<pre tabindex="0"><code>yum -y install java-1.8.0*
+</code></pre><ol start="2">
+<li>执行以下命令，运行Java项目。</li>
+</ol>
+<pre tabindex="0"><code>java -jar demo-0.0.1-SNAPSHOT.jar
+</code></pre><p>执行结果如下。</p>
+<p><img src="https://base.oribos.city//images/2020/09/TB1BKpAO7L0gK0jSZFtXXXQCXXa-1402-380.png" alt=""></p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

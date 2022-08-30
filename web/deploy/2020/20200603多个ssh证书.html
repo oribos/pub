@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="多个ssh证书" />
+<meta property="og:description" content="2020 06 03 多个ssh证书
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/deploy/2020/20200603%E5%A4%9A%E4%B8%AAssh%E8%AF%81%E4%B9%A6.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2020-06-03T09:09:55+08:00" />
+<meta property="article:modified_time" content="2020-06-03T09:09:55+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="多个ssh证书"/>
+<meta name="twitter:description" content="2020 06 03 多个ssh证书
+"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 多个ssh证书
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">多个ssh证书</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Jun 03, 2020
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p>2020 06 03 多个ssh证书</p>
+	<article class="md">
+		<h2 id="在linux上使用多个ssh证书">在linux上使用多个ssh证书</h2>
+<p>如果你已经有了一套名为 id_rsa 的公秘钥，将要生成另外一个公钥，比如 aysee ，你也可以使用任何你喜欢的名字。</p>
+<p>步骤如下：</p>
+<p>1、生成一个新的自定义名称的公钥：</p>
+<pre tabindex="0"><code>ssh-keygen -t rsa -C &#34;YOUR_EMAIL@YOUREMAIL.COM&#34; -f ~/.ssh/aysee
+　　执行命令后，生成命名的公钥和生成默认公钥的步骤一样。
+</code></pre><p>执行完成后，会在 ~/.ssh/目录下生成一个 aysee 和 aysee.pub 文件。</p>
+<p>2、在 SSH 用户配置文件 ~/.ssh/config 中指定对应服务所使用的公秘钥名称，如果没有 config 文件的话就新建一个，并输入以下内容：</p>
+<pre tabindex="0"><code>Host github.com www.github.com
+  IdentityFile ~/.ssh/aysee
+</code></pre><p>3、添加 aysee.pub 到你的git服务器网站上。</p>
+<p>4、测试配置文件是否正常工作</p>
+<pre tabindex="0"><code>ssh -T git@gitcafe.com
+</code></pre><p>　　如果，正常的话，会出现如下提示：</p>
+<pre tabindex="0"><code>Hi USERNAME! You&#39;ve successfully authenticated, but github does not provide shell access.
+</code></pre><p>　　如果出现如下提示，则说明有权限问题：</p>
+<pre tabindex="0"><code>Permission denied (publickey)
+</code></pre><p>　　如果有权限问题的情况下，你对项目执行push操作的时候，会得到如下提示：</p>
+<pre tabindex="0"><code>Warning: Permanently added the RSA host key for IP address &#39;192.30.252.129&#39; to the list of known hosts.
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+ 
+Please make sure you have the correct access rights
+and the repository exists.
+</code></pre><p>多用户时出现权限问题的原因：
+github使用SSH与客户端连接。如果是单用户（first），生成密钥对后，将公钥保存至 GitHub ，每次连接时SSH客户端发送本地私钥（默认~/.ssh/id_rsa）到服务端验证。单用户情况下，连接的服务器上保存的公钥和发送的私钥自然是配对的。但是如果是 多用户 （first，second），我们在连接到second的帐号时，second保存的是自己的公钥，但是SSH客户端依然发送默认私钥，即first的私钥，那么这个验证自然无法通过。</p>
+<p>解决ssh权限问题（）:
+通常一台电脑生成一个ssh不会有这个问题，当一台电脑生成多个ssh的时候，就可能遇到这个问题，解决步骤如下：</p>
+<p>1、查看系统ssh-key代理,执行如下命令</p>
+<pre tabindex="0"><code>$ ssh-add -l
+　　以上命令如果输出  The agent has no identities. 则表示没有代理。如果系统有代理，可以执行下面的命令清除代理:
+</code></pre><pre tabindex="0"><code>$ ssh-add -D
+</code></pre><p>2、然后依次将不同的ssh添加代理，执行命令如下：</p>
+<pre tabindex="0"><code>$ ssh-add ~/.ssh/id_rsa
+$ ssh-add ~/.ssh/aysee
+</code></pre><p>　你会分别得到如下提示：</p>
+<pre tabindex="0"><code>2048 8e:71:ad:88:78:80:b2:d9:e1:2d:1d:e4:be:6b:db:8e /Users/aysee/.ssh/id_rsa (RSA)
+</code></pre><p>　　和</p>
+<pre tabindex="0"><code>2048 8e:71:ad:88:78:80:b2:d9:e1:2d:1d:e4:be:6b:db:8e /Users/aysee/.ssh/id_rsa (RSA)
+2048 a7:f4:0d:f1:b1:76:0b:bf:ed:9f:53:8c:3f:4c:f4:d6 /Users/aysee/.ssh/aysee (RSA)
+</code></pre><p>　　如果使用 ssh-add ~/.ssh/id_rsa的时候报如下错误，则需要先运行一下 ssh-agent bash 命令后再执行 ssh-add &hellip;等命令</p>
+<pre tabindex="0"><code>Could not open a connection to your authentication agent.
+</code></pre><p>3、配置 ~/.ssh/config 文件</p>
+<p>　　如果没有就在~/.ssh目录创建config文件，该文件用于配置私钥对应的服务器</p>
+<pre tabindex="0"><code># Default github user(first@mail.com)
+ 
+Host github.com
+HostName github.com
+User git
+IdentityFile C:/Users/username/.ssh/id_rsa
+ 
+# aysee (company_email@mail.com)
+Host github-aysee
+HostName github.com
+User git
+IdentityFile C:/Users/username/.ssh/aysee
+</code></pre><p>　　Host随意即可，方便自己记忆，后续在添加remote是还需要用到。 配置完成后，在连接非默认帐号的github仓库时，远程库的地址要对应地做一些修改，比如现在添加second帐号下的一个仓库test，则需要这样添加：</p>
+<pre tabindex="0"><code>git remote add test git@github-aysee:ay-seeing/test.git
+</code></pre><p>#并非原来的git@github.com:ay-seeing/test.git
+　　ay-seeing 是github的用户名</p>
+<p>4、测试 ssh</p>
+<pre tabindex="0"><code>ssh -T git@github.com
+</code></pre><p>　　你会得到如下提示，表示这个ssh公钥已经获得了权限</p>
+<pre tabindex="0"><code>Hi USERNAME! You&#39;ve successfully authenticated, but github does not provide shell access.
+</code></pre><p>　　</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

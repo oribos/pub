@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>zeronet on 记事本</title>
+    <link>https://pub.oribos.cn/tags/zeronet/</link>
+    <description>Recent content in zeronet on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Fri, 01 Sep 2017 09:33:18 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tags/zeronet/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>零网（ZeroNet）初探</title>
+      <link>https://pub.oribos.cn/web/reprint/2017090105.html</link>
+      <pubDate>Fri, 01 Sep 2017 09:33:18 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017090105.html</guid>
+      <description>引用自reuixiy
+听说有个暗网，现在接触了个零网……打开之后，首先感觉界面很棒，骚气的紫色，加上渐变，让人眼前一亮 (๑•̀ㅂ•́)و✧～网页下拉，很赞有木有，不过最让人眼前一亮的是右上角的小东东，鼠标按住它往左拉，会出现一个侧栏。别的不说，光是这 UI 就值得体验一下🐱！
+介绍和安装 1）什么是 ZeroNet？
+ZeroNet 是一个去中心化的类似于 Internet 的网络，由匈牙利的开发者使用 Python 制作，完全开源。网站特殊的 ZeroNet URL 可以使用一般的浏览器浏览，就像访问本地主机一样。ZeroNet ..默认并不匿名..，但是用户可以通过内置的 Tor 功能进行匿名化。ZeroNet 使用 Bitcoin 加密算法及 BitTorrent 网络。
+ZeroNet 是一个利用比特币加密和 BT 技术提供不受审查的网络与通信的 BT 平台，ZeroNet 网络功能已经得到完整的种子的支持和加密连接，保证用户通信和文件共享的安全。使用 ZeroNet，你可以匿名上网，你可以在自己电脑搭建网站，但即使你关机，你的网站依然在全球存在，别人无法关闭你的网站。
+2）防 DMCA Take down
+由于 ZeroNet 去中心化的原因，国外有人制作了一个 ZeroNet 版本的海盗湾——Play，这个网站可让版权所有者头疼啦……一般的网站服务器都有 IP 地址，不抗投诉的 ISP 收到了向 IP WHOIS 滥用信箱发送的 DMCA 投诉信的话，你就要和你的网站说再见了……（俗称 DMCA Take down）。可用了 ZeroNet 后，并没有一台服务器是真实的服务器，任何访客都有可能成为服务器，还有些访客使用了 Tor，更找不到真正的。
+3）使用 ZeroNet 的特点
+可以建自己的网站，且无需备案，无需审核，无需服务器。1 基于 P2P 原理，你只要建好并有足够的人浏览过，即使你自己关机，你的网站依然在全球存在，别人想关你站，也没门。 基于 P2P 原理，支持内网穿透，也就是说你在内网也没关系，手机也没问题。 基于比特币原理，账号很安全，谁也不知道你是谁，谁也盗不去。 不需要域名，任何人访问都使用 http://127.</description>
+    </item>
+    
+  </channel>
+</rss>

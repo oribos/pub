@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>测试代码 on 记事本</title>
+    <link>https://pub.oribos.cn/info/test/</link>
+    <description>Recent content in 测试代码 on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Fri, 19 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://pub.oribos.cn/info/test/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mirrors</title>
+      <link>https://pub.oribos.cn/mirrors/</link>
+      <pubDate>Fri, 19 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/mirrors/</guid>
+      <description>开源镜像索引 大学镜像 名称 地址 清华大学 https://mirrors.tuna.tsinghua.edu.cn/ 北京外国语大学 https://mirrors.bfsu.edu.cn/ 北京大学 https://mirrors.pku.edu.cn/ 中国科学技术大学 https://mirrors.ustc.edu.cn/ 兰州大学 http://mirror.lzu.edu.cn/ 浙江大学 http://mirrors.zju.edu.cn/ 东北大学 http://mirror.neu.edu.cn/ 华中科技大学 http://mirrors.hust.edu.cn/ 重庆大学 http://mirrors.cqu.edu.cn/ 大连东软信息学院 http://mirrors.neusoft.edu.cn/ 大连理工大学 http://mirror.dlut.edu.cn/ 上海交通大学FTP http://ftp.sjtu.edu.cn/ 上海交通大学 https://mirrors.sjtug.sjtu.edu.cn/ 山东女子学院 https://mirrors.sdwu.edu.cn/ 哈尔滨工业大学 http://mirrors.hit.edu.cn/ 北京理工大学 http://mirror.bit.edu.cn/ 云南大学 https://mirrors.ynu.edu.cn/ 高能物理研究所 http://mirror.ihep.ac.cn/ 南京大学 https://mirrors.nju.edu.cn/ 南阳理工学院 https://mirror.nyist.edu.cn/ 山东大学 https://mirrors.sdu.edu.cn/ 西北农林科技大学 https://mirrors.nwafu.edu.cn/ 企业镜像 名称 地址 阿里 http://mirrors.aliyun.com/ 腾讯 https://mirrors.cloud.tencent.com/ 搜狐 http://mirrors.sohu.com/ 网易 https://mirrors.163.com/ 首都在线 http://mirrors.yun-idc.com/ 公云 http://mirrors.pubyun.com/ 华为 https://mirrors.huaweicloud.com/ Docker Hub 镜像 名称 地址 网易 https://hub-mirror.</description>
+    </item>
+    
+    <item>
+      <title>test001</title>
+      <link>https://pub.oribos.cn/web/test/2021010191.html</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/test/2021010191.html</guid>
+      <description>test 该仓库是作为脱离于博客存档文章以外的额外更新包。平时针对该仓库进行管理和更新，当年末时，这些文章将转移到存档目录下，文章的url地址不变
+新增样式 加粗字体的彩色效果
+b, strong { -webkit-background-clip: text; -webkit-text-fill-color: transparent; --strong-gradient: linear-gradient(62deg,#188bfd,#a03bff)!important; background-image: var(--strong-gradient); font-weight: bolder; } 代码块
+1 2 git remote add origin git@github.com:username/username.github.io.git git push -u origin master 1 2 3 4 5 6 7 b, strong { -webkit-background-clip: text; -webkit-text-fill-color: transparent; --strong-gradient: linear-gradient(62deg,#188bfd,#a03bff)!important; background-image: var(--strong-gradient); font-weight: bolder; } </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="可变字体（Variable Fonts）尝鲜" />
+<meta property="og:description" content="引用自reuixiy
+最近在系统地学习 Web，在 MDN 的 CSS 学习区的 Web fonts 一节底部，看到 Variable Fonts 即「可变字体」一词，瞌睡之中突然来了点兴趣——因为之前间断地见过这个术语，前不久还在 Twitter 上刷到过好几次——于是我点开 Variable fonts guide，并马上被这个示例的字体和视觉效果吸引了，决定马上尝试一下。二话不说，CTRL &#43; U 发现 Amstelvar VF 然后 Google 到 Amstelvar，先 Star 然后开始尝鲜可变字体！
+前言 不过，可变字体其实已经不新鲜了，Google 结果中浏览到这篇 Get started with variable fonts，而此文的发布日期是 2017 年的 2 月份。但无论如何，可变字体对我来说还是新鲜的，而..尝试..一下也发现这是值得的——可变字体让人耳目一新。
+⌛经过一番尝试，我已经将上文提到的 Amstelvar 这个开源的可变字体应用到了我的博客——你现在所见的本博客正文中的英文即是。下面，就来说说可变字体在 Web 上的食用方法😺。
+正文 首先，我们去 GitHub 上下载 Amstelvar 字体，将 Amstelvar-Roman-VF.ttf 和其斜体 Amstelvar-Italic-VF.ttf 下载到本地。
+然后，我们将 .ttf 压缩成既现代又节约的 .woff2，可以使用 ttf2woff2，或者你也可以尝试其它方法。
+接下来，我们添加 CSS 代码，使用 @font-face 指定一下我们要使用的字体：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 /* https://github." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/reprint/2020022901.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2020-02-29T22:00:19+08:00" />
+<meta property="article:modified_time" content="2020-02-29T22:00:19+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="可变字体（Variable Fonts）尝鲜"/>
+<meta name="twitter:description" content="引用自reuixiy
+最近在系统地学习 Web，在 MDN 的 CSS 学习区的 Web fonts 一节底部，看到 Variable Fonts 即「可变字体」一词，瞌睡之中突然来了点兴趣——因为之前间断地见过这个术语，前不久还在 Twitter 上刷到过好几次——于是我点开 Variable fonts guide，并马上被这个示例的字体和视觉效果吸引了，决定马上尝试一下。二话不说，CTRL &#43; U 发现 Amstelvar VF 然后 Google 到 Amstelvar，先 Star 然后开始尝鲜可变字体！
+前言 不过，可变字体其实已经不新鲜了，Google 结果中浏览到这篇 Get started with variable fonts，而此文的发布日期是 2017 年的 2 月份。但无论如何，可变字体对我来说还是新鲜的，而..尝试..一下也发现这是值得的——可变字体让人耳目一新。
+⌛经过一番尝试，我已经将上文提到的 Amstelvar 这个开源的可变字体应用到了我的博客——你现在所见的本博客正文中的英文即是。下面，就来说说可变字体在 Web 上的食用方法😺。
+正文 首先，我们去 GitHub 上下载 Amstelvar 字体，将 Amstelvar-Roman-VF.ttf 和其斜体 Amstelvar-Italic-VF.ttf 下载到本地。
+然后，我们将 .ttf 压缩成既现代又节约的 .woff2，可以使用 ttf2woff2，或者你也可以尝试其它方法。
+接下来，我们添加 CSS 代码，使用 @font-face 指定一下我们要使用的字体：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 /* https://github."/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 可变字体（Variable Fonts）尝鲜
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">可变字体（Variable Fonts）尝鲜</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>reuixiy</b> |
+	
+		Posted at Feb 29, 2020
+	
+		
+	</div>
+	
+	<div class="sm:mt-4">
+		
+		<a class="not-first:ml-3" href="/tags/typography">#typography</a>
+		
+		<a class="not-first:ml-3" href="/tags/web">#web</a>
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<blockquote>
+<p>引用自<a href="https://io-oi.me/">reuixiy</a></p>
+</blockquote>
+<p>最近在系统地学习 Web，在 MDN 的 CSS 学习区的 <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/Styling_text/Web_fonts#Variable_fonts">Web fonts</a> 一节底部，看到 Variable Fonts 即「<a href="https://zh.wikipedia.org/wiki/%E5%8F%AF%E5%8F%98%E5%AD%97%E4%BD%93">可变字体</a>」一词，瞌睡之中突然来了点兴趣——因为之前间断地见过这个术语，前不久还在 Twitter 上刷到过好几次——于是我点开 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide">Variable fonts guide</a>，并马上被<a href="https://mdn.github.io/css-examples/variable-fonts/sample-page.html">这个示例</a>的字体和视觉效果吸引了，决定马上尝试一下。二话不说，<code>CTRL + U</code> 发现 <code>Amstelvar VF</code> 然后 Google 到 <a href="https://github.com/TypeNetwork/Amstelvar">Amstelvar</a>，先 Star 然后开始尝鲜可变字体！</p>
+<h2 id="前言">前言</h2>
+<p>不过，可变字体其实已经不新鲜了，Google 结果中浏览到这篇 <a href="https://medium.com/@clagnut/get-started-with-variable-fonts-c055fd73ecd7">Get started with variable fonts</a>，而此文的发布日期是 2017 年的 2 月份。但无论如何，可变字体对我来说还是新鲜的，而..尝试..一下也发现这是值得的——可变字体让人耳目一新。</p>
+<p><img src="https://base.oribos.city/images/2020/07/variable-fonts-sample-page.png" alt="variable-fonts-sample-page.png"></p>
+<p>⌛经过一番尝试，我已经将上文提到的 Amstelvar 这个开源的可变字体应用到了我的博客——你现在所见的本博客正文中的英文即是。下面，就来说说可变字体在 Web 上的食用方法😺。</p>
+<h2 id="正文">正文</h2>
+<p>首先，我们<a href="https://github.com/TypeNetwork/Amstelvar/tree/master/fonts">去 GitHub 上下载 Amstelvar 字体</a>，将 <code>Amstelvar-Roman-VF.ttf</code> 和其斜体 <code>Amstelvar-Italic-VF.ttf</code> 下载到本地。</p>
+<p>然后，我们将 <code>.ttf</code> 压缩成既现代又节约的 <code>.woff2</code>，可以使用 <a href="https://github.com/nfroidure/ttf2woff2">ttf2woff2</a>，或者你也可以尝试其它方法。</p>
+<p>接下来，我们添加 CSS 代码，使用 <code>@font-face</code> 指定一下我们要使用的字体：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="c">/* https://github.com/TypeNetwork/Amstelvar */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">font-face</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">font-family</span><span class="o">:</span> <span class="s1">&#39;Amstelvar&#39;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">font-display</span><span class="o">:</span> <span class="nt">swap</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">src</span><span class="o">:</span> <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;/fonts/Amstelvar-Roman-VF.woff2&#39;</span><span class="o">)</span> <span class="nt">format</span><span class="o">(</span><span class="s1">&#39;woff2-variations&#39;</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">         <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;/fonts/Amstelvar-Roman-VF.woff2&#39;</span><span class="o">)</span> <span class="nt">format</span><span class="o">(</span><span class="s1">&#39;woff2&#39;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">font-weight</span><span class="o">:</span> <span class="nt">100</span> <span class="nt">900</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">font-stretch</span><span class="o">:</span> <span class="nt">50</span><span class="o">%</span> <span class="nt">125</span><span class="o">%;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">font-style</span><span class="o">:</span> <span class="nt">normal</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">font-face</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">font-family</span><span class="o">:</span> <span class="s1">&#39;Amstelvar&#39;</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">font-display</span><span class="o">:</span> <span class="nt">swap</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">src</span><span class="o">:</span> <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;/fonts/Amstelvar-Italic-VF.woff2&#39;</span><span class="o">)</span> <span class="nt">format</span><span class="o">(</span><span class="s1">&#39;woff2-variations&#39;</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">         <span class="nt">url</span><span class="o">(</span><span class="s1">&#39;/fonts/Amstelvar-Italic-VF.woff2&#39;</span><span class="o">)</span> <span class="nt">format</span><span class="o">(</span><span class="s2">&#34;woff2&#34;</span><span class="o">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">font-weight</span><span class="o">:</span> <span class="nt">100</span> <span class="nt">900</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">font-stretch</span><span class="o">:</span> <span class="nt">50</span><span class="o">%</span> <span class="nt">125</span><span class="o">%;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">font-style</span><span class="o">:</span> <span class="nt">italic</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如以上代码所示，你需要将我们之前压缩好的两个字体放到网站根目录下的 <code>fonts</code> 文件夹；然后 <code>src</code> 中重复了两行是利用了 <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps/How_CSS_works#What_happens_if_a_browser_encounters_CSS_it_doesnt_understand">CSS 的运行规则</a>来实现浏览器的兼容性，以防 <code>woff2-variations</code> 这个全新的字体格式不能被旧浏览器识别而导致字体不能被应用；至于 <code>font-weight</code> 和 <code>font-stretch</code> 则表示字体的字重和字宽的范围；最后 <code>font-style</code> 则指定字体的风格，这里主要是为了区别斜体——使用真斜体而非通过算法实现的假斜体。</p>
+<p>你可能会问：我们怎么知道字体支持的字重和字宽的范围的呢？很简单，在 Linux 中的 GNOME 桌面环境下，用默认的 Fonts 打开即可查看到相关信息，如下：</p>
+<p><img src="https://base.oribos.city/images/2020/07/amstelvar-roman-gnome-fonts-info.png" alt="amstelvar-roman-gnome-fonts-info.png" title="Amstelvar Roman 字体的信息"></p>
+<p>我们可以发现 <em>Variation Axes</em> 之中的 <code>Weight 100 — 900, default 400</code> 和 <code>Width 50 — 125, default 100</code>，即字体的字重和字宽的范围和默认值。除此之外，我们在其下方还能发现一大堆抽象的名字，这些就是可变字体的「变形轴」（Variation Axis）。我们可以通过 <a href="https://wakamaifondue.com/">Wakamai Fondue</a> 这个网站将我们之前下载的字体拖拽上去，通过移动滑块的方式来形象直观地理解这些术语，如下：</p>
+<p><img src="https://base.oribos.city/images/2020/07/variation-axes-on-wakamaifondue.png" alt="variation-axes-on-wakamaifondue.png" title="在线调试可变字体 Amstelvar Roman 的变形轴"></p>
+<p>至于这些术语的全称和详细描述，可以参考 <a href="https://variationsguide.typenetwork.com/">Font Bureau OpenType 1.8 Variations Axes Proposals</a>。</p>
+<p>需要注意的是，变形轴分已注册和自定义两类。自定义的必须全部字母大写，详细可参考 <a href="https://docs.microsoft.com/en-us/typography/opentype/spec/dvaraxisreg">OpenType 细则</a>。其中，有一个字体设计中常用的 Grade（等级）<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>，其变形轴标签为 <code>GRAD</code>，其它的可以参考上文提到的<a href="https://variationsguide.typenetwork.com/">这个提议</a>了解。</p>
+<p>已注册的目前有以下 5 个：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">变形轴名（Name）</th>
+<th style="text-align:center">变形轴标签（Axis tag）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Weight</td>
+<td style="text-align:center"><code>wght</code></td>
+</tr>
+<tr>
+<td style="text-align:center">Width</td>
+<td style="text-align:center"><code>wdth</code></td>
+</tr>
+<tr>
+<td style="text-align:center">Italic</td>
+<td style="text-align:center"><code>ital</code></td>
+</tr>
+<tr>
+<td style="text-align:center">Slant</td>
+<td style="text-align:center"><code>slnt</code></td>
+</tr>
+<tr>
+<td style="text-align:center">Optical Size</td>
+<td style="text-align:center"><code>opsz</code></td>
+</tr>
+</tbody>
+</table>
+<p>要注意的是，这些变形轴能否配置使用不是取决于细则的定义，而是取决于字体是否支持。比如，我们在此文中使用的 Amstelvar Roman 字体就没有 <code>Italic</code> 和 <code>Slant</code> 变形轴——因为其有独立设计的斜体 Amstelvar Italic。所以，在配置可变字体的变形轴之前务必先查看字体支持的变形轴 <em>Variation Axes</em>。</p>
+<hr>
+<p>那么在 CSS 中，我们怎么去配置这些变形轴呢？有以下两种方式：</p>
+<ol>
+<li>
+<p>通过 CSS 中现有的字体属性</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">CSS 中的现有属性</th>
+<th style="text-align:center">变形轴名（Name）</th>
+<th style="text-align:center">变形轴标签（Axis tag）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>font-weight</code></td>
+<td style="text-align:center">Weight</td>
+<td style="text-align:center"><code>wght</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>font-stretch</code></td>
+<td style="text-align:center">Width</td>
+<td style="text-align:center"><code>wdth</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>font-style</code></td>
+<td style="text-align:center">Italic, Slant</td>
+<td style="text-align:center"><code>ital</code>, <code>slnt</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>font-optical-sizing</code></td>
+<td style="text-align:center">Optical Size</td>
+<td style="text-align:center"><code>opsz</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>通过 CSS 的 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings"><code>font-variation-settings</code></a> 属性<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+<p>配置的语法很简单，比如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">font-variation-settings</span><span class="o">:</span> <span class="s1">&#39;wght&#39;</span> <span class="nt">400</span><span class="o">,</span> <span class="s1">&#39;wdth&#39;</span> <span class="nt">100</span><span class="o">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>即一个变形轴标签 + 空格 + 配置值，然后如有多个变形轴要配置，则添加逗号分隔。</p>
+</li>
+</ol>
+<p>既然有两种方式，且其配置值会相互冲突，我们肯定会想到优先级的问题，引用 MDN 的说明：</p>
+<pre tabindex="0"><code>
+**Note**: font characteristics set using `font-variation-settings` will always override those set using the corresponding basic font properties, e.g. `font-weight`, no matter where they appear in the cascade. In some browsers, this is currently only true when the `@font-face` declaration includes a `font-weight` range.
+
+— *https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings*
+</code></pre><p>也就是说，只要配置使用了 <code>font-variation-settings</code> 属性，无论基本字体属性（比如 <code>font-weight</code>）的层级如何，都会覆盖它。在我的实际测试中（<code>Chrome 80.0.3987.122</code>），发现的确如此，但应用的只是这个可变字体包含的字符，不影响其不包含的字符，如下图：</p>
+<p><img src="https://base.oribos.city/images/2020/07/font-variation-settings-priority-test.png" alt="font-variation-settings-priority-test.png" title="优先级测试结果"></p>
+<p>注意上图中：一、英文的字重被优先级更低的 <code>400</code> 覆盖；二、中文的字重还是 <code>700</code>。</p>
+<hr>
+<p>接下来，我们来配置一个实例。不过这里我们配置的不是单个元素——因为这其实很简单，用 CSS 选择器定位到该元素，然后直接添加 <code>font-variation-settings</code> 即可——这里我们需要配置的是这样一个需求：</p>
+<ol>
+<li>修改正文字体的结构，使其更紧凑、高挑；</li>
+<li>修改标题字体的结构，使其更醒目、冲击。</li>
+</ol>
+<p>其实现代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="c">/* 需求 1.1 */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">:</span><span class="nd">root</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-wdth</span><span class="p">:</span> <span class="mi">90</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-opsz</span><span class="p">:</span> <span class="mi">40</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-YTLC</span><span class="p">:</span> <span class="mi">460</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nt">body</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">font-variation-settings</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;wdth&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">wdth</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;opsz&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">opsz</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;YTLC&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">YTLC</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/* 需求 1.2 */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">post-title</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">font-variation-settings</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;wght&#39;</span> <span class="mi">550</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;opsz&#39;</span> <span class="mi">60</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;YOPQ&#39;</span> <span class="mi">90</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>我们先来看看需求 1.1，我们首先通过 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/:root"><code>:root</code></a><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> 这个「老祖宗」来声明（定义）我们要使用的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties">CSS 变量</a>，然后再给 <code>body</code> 这个「老祖宗」添加一个 <code>font-variation-settings</code> 属性，这样其子元素都能继承这一属性，最后为该属性里的变形轴标签配置相应的值，这里的话就是 CSS 变量的值。使用 CSS 变量是为了让子元素能够更方便地覆盖掉「老祖宗」的默认值，比如：以上面的代码为例，如果你有一个元素需要减小 <code>wdth</code> 的值，你就只需往该元素添加 <code>--text-wdth: 50;</code> 来重新为其赋值，而无需又重复一遍很长的 <code>font-variation-settings</code>。至于需求 1.2，这里我们就直接为其赋值了，原因见下方。</p>
+<p><img src="https://base.oribos.city/images/2020/07/variable-fonts-adjustment-compare.png" alt="variable-fonts-adjustment-compare.png" title="定制前和定制后"></p>
+<hr>
+<p>特别要注意的是，以下这段代码是错误的（注意高亮部分）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl">:root {
+</span></span><span class="line"><span class="cl">    --text-wdth: 90;
+</span></span><span class="line"><span class="cl">    --text-opsz: 40;
+</span></span><span class="line"><span class="cl">    --text-YTLC: 460;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">body {
+</span></span><span class="line"><span class="cl">     font-variation-settings:
+</span></span><span class="line"><span class="cl"><span class="gi">+        &#39;wght&#39; var(--text-wght),
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span>         &#39;wdth&#39; var(--text-wdth),
+</span></span><span class="line"><span class="cl">         &#39;opsz&#39; var(--text-opsz),
+</span></span><span class="line"><span class="cl">         &#39;YTLC&#39; var(--text-YTLC);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gi">+ .post-title {
+</span></span></span><span class="line"><span class="cl"><span class="gi">+     --text-wght: 500;
+</span></span></span><span class="line"><span class="cl"><span class="gi">+ }
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>因为对于除 <code>.post-title</code> 以外的所有其非子级元素来说，<code>--text-wght</code> 变量是未声明（定义）的，以上代码会导致所有这些元素的 <code>font-variation-settings</code> 都失效。而如果我们这样写：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl">:root {
+</span></span><span class="line"><span class="cl"><span class="gi">+    --text-wght: 400; /* default value */
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span>     --text-wdth: 90;
+</span></span><span class="line"><span class="cl">     --text-opsz: 40;
+</span></span><span class="line"><span class="cl">     --text-YTLC: 460;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">body {
+</span></span><span class="line"><span class="cl">     font-variation-settings:
+</span></span><span class="line"><span class="cl"><span class="gi">+        &#39;wght&#39; var(--text-wght),
+</span></span></span><span class="line"><span class="cl"><span class="gi"></span>         &#39;wdth&#39; var(--text-wdth),
+</span></span><span class="line"><span class="cl">         &#39;opsz&#39; var(--text-opsz),
+</span></span><span class="line"><span class="cl">         &#39;YTLC&#39; var(--text-YTLC);
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gi">+ .post-title {
+</span></span></span><span class="line"><span class="cl"><span class="gi">+     --text-wght: 500;
+</span></span></span><span class="line"><span class="cl"><span class="gi">+ }
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>即在 <code>:root</code> 中定义一下新增的 <code>--text-wght</code>，这又会导致一个问题，比如：如果文章中有一个 <code>&lt;strong&gt;</code> 标签，它的默认字重是 <code>700</code>，而根据上文的优先级问题可知——我们新加的 <code>--text-wght: 400</code> 会覆盖这个值，让 <code>&lt;strong&gt;</code> 标签的字重变成 <code>400</code>。也就是说，这可能会让我们陷入一个地狱——我们必须为其它所有的字重不为 <code>400</code> 的元素添加 <code>--text-wght</code> 来纠正其字重。</p>
+<p>可见，这应该是目前使用中的一个缺陷，要完美地解决这个问题，我觉得就需要在 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variation-settings"><code>font-variation-settings</code></a> 中为变形轴标签新增一个特殊值 <code>inherit</code> 或 <code>auto</code>，它的作用是继承 CSS 中现有的字体属性的值或者字体的默认值。可惜的是，目前并没有这样的特殊值，所以这个问题目前还无法完美解决。</p>
+<hr>
+<p>最后，还有一步，修改相应元素的 <code>font-family</code>，将 <code>Amstelvar</code> 添加进去，比如：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">body</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">font-family</span><span class="p">:</span> <span class="s1">&#39;Amstelvar&#39;</span><span class="p">,</span> <span class="s1">&#39;Noto Serif SC&#39;</span><span class="p">,</span> <span class="kc">serif</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="参考">参考</h2>
+<ol>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide">Variable fonts guide | MDN</a></li>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide">Variable fonts guide (zh-CN) | MDN</a></li>
+<li><a href="https://developers.google.com/web/fundamentals/design-and-ux/typography/variable-fonts">Introduction to variable fonts on the web | Google Developers</a></li>
+</ol>
+<h2 id="链接">链接</h2>
+<ol>
+<li><a href="https://fonts.google.com/">Google Fonts</a></li>
+<li><a href="https://developers.google.com/fonts/docs/css2">CSS API update | Google Developers</a></li>
+<li><a href="https://variablefonts.io/">A Variable Fonts Primer</a></li>
+</ol>
+<h2 id="结语">结语</h2>
+<p>对于大多数人，字体通常都是仅仅「只可读不可写」的，而可变字体的到来，改变了这种情况——可变字体让我们每个人都可以在「盒子」外方便地定制出属于自己的个性字体样式。可变字体，前景光明！</p>
+<h2 id="附加">附加</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="c">/* 这里不能遗漏任何一项，否则 `font-variation-settings` 会失效 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">:</span><span class="nd">root</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-wght</span><span class="p">:</span> <span class="mi">400</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-wdth</span><span class="p">:</span> <span class="mi">100</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-opsz</span><span class="p">:</span> <span class="mi">14</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-GRAD</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-XTRA</span><span class="p">:</span> <span class="mi">562</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-XOPQ</span><span class="p">:</span> <span class="mi">176</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-YOPQ</span><span class="p">:</span> <span class="mi">124</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-YTLC</span><span class="p">:</span> <span class="mi">500</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-YTUC</span><span class="p">:</span> <span class="mi">750</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-YTAS</span><span class="p">:</span> <span class="mi">767</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-YTDE</span><span class="p">:</span> <span class="mi">-240</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">--text-YTFI</span><span class="p">:</span> <span class="mi">760</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/* Amstelvar Roman 字体目前所支持的所有变形轴 */</span>
+</span></span><span class="line"><span class="cl"><span class="nt">body</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">font-variation-settings</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* Weight */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;wght&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">wght</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* Width */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;wdth&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">wdth</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* Optical Size */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;opsz&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">opsz</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* Grade */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;GRAD&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">GRAD</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* X Transparent */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;XTRA&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">XTRA</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* X Opaque */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;XOPQ&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">XOPQ</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* Y Opaque */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;YOPQ&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">YOPQ</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* Y Transparent Lowercase */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;YTLC&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">YTLC</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* Y Transparent Uppercase */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;YTUC&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">YTUC</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* Y Transparent Ascender */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;YTAS&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">YTAS</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* Y Transparent Descender */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;YTDE&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">YTDE</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="c">/* ? */</span>
+</span></span><span class="line"><span class="cl">        <span class="s1">&#39;YTFI&#39;</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="kc">text</span><span class="o">-</span><span class="n">YTFI</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>关于 Grade 的历史，可以参考 <a href="https://en.wikipedia.org/wiki/Font#Weight">Wikipedia 的 Font 词条中 Weight</a> 一节的底部。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>顺便安利一个 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings</code></a> 属性，特别是它的 <code>&quot;tnum&quot;</code> 这个值，其可以让本来不等宽的数字变成等宽（需要字体支持）。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>当然，你也可以使用 <code>html</code> 或 <code>body</code>。&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

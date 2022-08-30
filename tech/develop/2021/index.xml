@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2021 on 记事本</title>
+    <link>https://pub.oribos.cn/tech/develop/2021/</link>
+    <description>Recent content in 2021 on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Fri, 10 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://pub.oribos.cn/tech/develop/2021/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>webview不能加载http与https混合内容的问题</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021091001.html</link>
+      <pubDate>Fri, 10 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021091001.html</guid>
+      <description>简化 解决android 5.0 webview不能加载http与https混合内容的问题 在使用WebView加载https资源文件时，如果认证证书不被Android认可，那么会出现无法成功加载对应资源问题。那么，我们就要针对这一状况作出对应的处理。
+1、解决方法：启用mixed content ,webview默认不允许加载http与https混合内容： 比如你访问的网页为http://xxx.com/a.html，则如果a.html包含了https的资源，则此资源不会显示。如果仔细观察log，可以看到如下的内容提示：
+********was loaded over HTTPS, but requested an insecure image******** 该怎么解决呢？很简单，只需设置webSettings，允许其加载混合网络协议内容即可。 //webview在安卓5.0之前默认允许其加载混合网络协议内容 // 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容 if (Build.VERSION.SDK_INT &amp;gt;= Build.VERSION_CODES.LOLLIPOP) { settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW); } 从Android5.0以后，当一个安全的站点（https）去加载一个非安全的站点（http）时，需要配置Webview加载内容的混合模式，一共有如下三种模式：
+MIXED_CONTENT_NEVER_ALLOW：Webview不允许一个安全的站点（https）去加载非安全的站点内容（http）,比如，https网页内容的图片是http链接。强烈建议App使用这种模式，因为这样更安全。 MIXED_CONTENT_ALWAYS_ALLOW：在这种模式下，WebView是可以在一个安全的站点（Https）里加载非安全的站点内容（Http）,这是WebView最不安全的操作模式，尽可能地不要使用这种模式。 MIXED_CONTENT_COMPATIBILITY_MODE：在这种模式下，当涉及到混合式内容时，WebView会尝试去兼容最新Web浏览器的风格。一些不安全的内容（Http）能被加载到一个安全的站点上（Https），而其他类型的内容将会被阻塞。这些内容的类型是被允许加载还是被阻塞可能会随着版本的不同而改变，并没有明确的定义。这种模式主要用于在App里面不能控制内容的渲染，但是又希望在一个安全的环境下运行。
+2、解决方法：设置WebView接受所有网站的证书 在认证证书不被Android所接受的情况下，我们可以通过设置重写WebViewClient的onReceivedSslError方法在其中设置接受所有网站的证书来解决，具体代码如下：
+webView.setWebViewClient(new WebViewClient() { @Override public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) { // TODO Auto-generated method stub // handler.cancel();// Android默认的处理方式 handler.proceed();// 接受所有网站的证书 // handleMessage(Message msg);// 进行其他处理 } }); 注：在重写WebViewClient的onReceivedSslError方法时，注意一定要去除onReceivedSslError方法的super.onReceivedSslError(view, handler, error);，否则设置无效。
+解决浏览器默认是不允许在 https 里面引用 http 资源 浏览器默认是不允许在 https 里面引用 http 资源的，一般都会弹出提示框。</description>
+    </item>
+    
+    <item>
+      <title>虚拟磁盘</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021071906/</link>
+      <pubDate>Mon, 19 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021071906/</guid>
+      <description>VHD VHD的windows里创建的虚拟磁盘，关于VHD的用法有相当多种。通过VHD可以将C盘或其他盘未使用空间分出来作为独立的磁盘管理。这个磁盘可以作为hyper-V的系统盘或其他盘。并支持bitlocker加密。
+LUN存储 通过在NAS或文件存储器里创建LUN并在客户端连接LUN即可获得虚拟磁盘，这个磁盘是基于网络连接的。
+hyper-V的磁盘 物理磁盘做hyper-V磁盘，将物理磁盘连接电脑后，设置磁盘脱机，再在hyper-V虚拟机里，添加磁盘，使用物理磁盘。
+这样的操作可以让hyper-V里的linux或MacOS识别对应的磁盘格式，而不仅限于常用的ntfs fat32格式。
+使用 磁盘上的虚拟磁盘、LUN存储、hyper-V、bitlocker配合使用可以提升资料安全。
+将硬盘接入电脑，在磁盘管理里将硬盘脱机，打开hyper-V</description>
+    </item>
+    
+    <item>
+      <title>BitLocker 智能卡自签名证书</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021070502/</link>
+      <pubDate>Mon, 05 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021070502/</guid>
+      <description>生成证书 创建1.txt
+[NewRequest] Subject = &amp;#34;CN=BitLocker Encrypt,C=CN&amp;#34; ValidityPeriod=Years ValidityPeriodUnits=100 HashAlgorithm = sha1 KeyLength = 2048 ProviderName = &amp;#34;eToken Base Cryptographic Provider&amp;#34; KeySpec = &amp;#34;AT_KEYEXCHANGE&amp;#34; KeyUsage = &amp;#34;CERT_KEY_ENCIPHERMENT_KEY_USAGE&amp;#34; KeyUsageProperty = &amp;#34;NCRYPT_ALLOW_DECRYPT_FLAG&amp;#34; RequestType = Cert SMIME = FALSE [EnhancedKeyUsageExtension] OID=1.3.6.1.4.1.311.67.1.1 使用命令
+D:\ufs&amp;gt; certreq -new d:\ufs\1.txt 创建证书
+智能卡已经导入证书 假定智能卡能被识别而且其中有自签名证书
+修改注册表 将 HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\FVE 中的 DWORD 值 SelfSignedCertificates设置为 1.
+也可以把下面的文本保存为 REG 文件导入。
+Windows Registry Editor Version 5.00 [HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\FVE] &amp;#34;SelfSignedCertificates&amp;#34;=dword:00000001 问题 智能卡是有证书的，但windows却提示在智能卡上找不到适用于bitlocker的证书,因为证书属于自签名证书，没有被Windows系统识别。</description>
+    </item>
+    
+    <item>
+      <title>启用加密</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021070501/</link>
+      <pubDate>Mon, 05 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021070501/</guid>
+      <description>大文件库 为了简化文档存储备份，对之前的所有文件进行整理，建立大文件库。同时对大文件库区分私有内容，公开内容，特殊内容。对私有内容和特殊内容进行加密。
+对文件使用加密 对个人使用的电脑硬盘，u盘，移动硬盘启用bitlocker加密。
+对加密的管理 加密的选择: 对磁盘进行bitlocker加密
+验证：加密使用密码和电子钥匙验证。
+电子钥匙的管理：电子钥匙区分，ES BS AS三类。根据需要对证书进行部署。
+恢复密钥的管理：用来加密恢复的密钥妥善保管，保存在onedrive,云盘，对象存储，专用U盘，私有git文件托管仓库。
+兼容性: 不对旧设备进行兼容
+其他问题点 并非所有的文件都需要加密，并非所有的硬盘都必须加密。必要保留数块硬盘以备数据在解密失败时备用。
+用于存放恢复密钥的设备，只会专用，不能随便删除，格式化。
+用于设备连接的硬盘不能使用加密
+用于专门存储恢复密钥的移动盘不能是加密磁盘</description>
+    </item>
+    
+    <item>
+      <title>测试新格式</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021062101/</link>
+      <pubDate>Mon, 21 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021062101/</guid>
+      <description>关于测试随机序列 测试新的url地址
+之前为了保证文章最终地址为实际地址即http://域名/路径/文件名,而文件名往往是html，在url里也加入了name.html,现在修改name.html为name</description>
+    </item>
+    
+    <item>
+      <title>github的api</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021061601.html</link>
+      <pubDate>Wed, 16 Jun 2021 11:55:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021061601.html</guid>
+      <description>api地址 例如以下地址https://api.github.com/repos/Hello-hao/Tbed/releases/latest,github提供一个对上传到github仓库的文件进行详细统计的数据。通过查询相应的数据可以获取该仓库的最新地址或指定地址。
+以以下项目为例，使用
+curl -s https://api.github.com/repos/Hello-hao/Tbed/releases/latest | grep &amp;#34;browser_download_url.*zip&amp;#34; | cut -d &amp;#39;&amp;#34;&amp;#39; -f 4 返回一个最新编译包的完整url地址
+通过使用以下命令
+curl -s https://api.github.com/repos/Hello-hao/Tbed/releases/latest | grep &amp;#34;browser_download_url.*zip&amp;#34; | cut -d &amp;#39;&amp;#34;&amp;#39; -f 4 | wget -i - 自动下载该最新编译包</description>
+    </item>
+    
+    <item>
+      <title>一个mongodb的事例</title>
+      <link>https://pub.oribos.cn/web/share/2021061603.html</link>
+      <pubDate>Wed, 16 Jun 2021 09:01:40 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/share/2021061603.html</guid>
+      <description>一个mongodb的事例 通过以下代码，并不能正常运行该项目，先做记录，后续调整。
+docker-compose.yml version: &amp;#39;3&amp;#39; networks: waline: external: false services: waline: container_name: waline image: lizheming/waline:latest restart: always ports: - 8360:8360 # volumes: # - ./data:/app/data networks: - waline environment: TZ: Asia/Shanghai MONGO_HOST: mongo MONGO_PORT: &amp;#34;27017&amp;#34; MONGO_DB: waline MONGO_USER: root MONGO_PASSWORD: example # MONGO_REPLICASET: atlas-12cebf-shard-0 MONGO_AUTHSOURCE: root MONGO_OPT_SSL: &amp;#34;false&amp;#34; # JWT_TOKEN: &amp;#39;Your token&amp;#39; # SITE_NAME: &amp;#39;Your site name&amp;#39; # SITE_URL: &amp;#39;http://129.211.208.41&amp;#39; # SECURE_DOMAINS: &amp;#39;example.com&amp;#39; # AUTHOR_EMAIL: &amp;#39;mail@example.com&amp;#39; mongo: image: mongo container_name: mongo restart: always networks: - waline environment: MONGO_INITDB_ROOT_USERNAME: root MONGO_INITDB_ROOT_PASSWORD: example mongo-express: image: mongo-express restart: always networks: - waline ports: - 8081:8081 environment: ME_CONFIG_MONGODB_ADMINUSERNAME: root ME_CONFIG_MONGODB_ADMINPASSWORD: example </description>
+    </item>
+    
+    <item>
+      <title>k8s安装和部署</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021061001.html</link>
+      <pubDate>Thu, 10 Jun 2021 11:55:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021061001.html</guid>
+      <description>引用自阿良的博客 http://blog.ctnrs.com/post/k8s-kubeadm-install/
+安装要求 在开始之前，部署Kubernetes集群机器需要满足以下几个条件：
+一台或多台机器，操作系统 CentOS7.x-86_x64
+硬件配置：2GB或更多RAM，2个CPU或更多CPU，硬盘30GB或更多
+集群中所有机器之间网络互通
+可以访问外网，需要拉取镜像
+禁止swap分区
+准备环境 角色 IP k8s-master 192.168.31.63 k8s-node1 192.168.31.65 k8s-node2 192.168.31.66 操作步骤 准备系统环境 关闭防火墙： $ systemctl stop firewalld $ systemctl disable firewalld 关闭selinux： $ sed -i &amp;#39;s/enforcing/disabled/&amp;#39; /etc/selinux/config $ setenforce 0 关闭swap： $ swapoff -a # 临时 $ sed -ri &amp;#39;s/.*swap.*/#&amp;amp;/&amp;#39; /etc/fstab # 永久 根据规划设置主机名： hostnamectl set-hostname &amp;lt;hostname&amp;gt; 在Master添加Hosts： $ cat /etc/hosts 192.168.31.62 k8s-master 192.168.31.63 k8s-node1 192.168.31.65 k8s-node2 将桥接的IPv4流量传递到iptables的链： $ cat &amp;gt; /etc/sysctl.</description>
+    </item>
+    
+    <item>
+      <title>20210603</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021060301.html</link>
+      <pubDate>Thu, 03 Jun 2021 11:55:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021060301.html</guid>
+      <description>需求 自动下载最新发布的应用版本
+自行决定下载版本和运行环境
+外部可自定义的运行命令
+可选的文件储存位置
+h5 部署了一个discuz Q站点，然后用Hbuilder X新建一个uni-app项目
+将discuz Q站点的服务器地址填上去，生成了一个H5文件，
+这个H5文件包部署到nginx就可以像前端页面一样，访问和编辑。
+笔记服务下线 将服务器重置时没有提前将笔记服务器的数据导出，导致数篇笔记丢失，笔记服务站点note下线
+幸亏手机客户端有几篇文章缓存。截图重写。
+持续的收集 收集了大量各类项目，编写或抄袭代码，放到docker仓库里。尽管后续使用的容器技术可能逐渐脱离docker，但现在保留使用易用方便的docker-compose文件还是很有必要的。
+变态的安装方式 postfixadmin的初始化安装 第一步，需要通过http://域名/setup.php
+通过输入密码，获得管理员hash（Generate setup_password hash）
+hash值事例如下：
+$CONF[&amp;#39;setup_password&amp;#39;] = &amp;#39;$2y$10$UkOf2dWBhDiOtH1BJ1.G.OzNxZ00Vn6n55ryPG9ieYqycelmQKU66&amp;#39;; 而这个hash并不能直接用来登录，需要第二步操作
+第二步，将生成的hash值添加到项目的配置文件config.local.php的文件里
+将
+$CONF[&amp;#39;setup_password&amp;#39;] = &amp;#39;changeme&amp;#39;; 修改为
+$CONF[&amp;#39;setup_password&amp;#39;] = &amp;#39;$2y$10$UkOf2dWBhDiOtH1BJ1.G.OzNxZ00Vn6n55ryPG9ieYqycelmQKU66&amp;#39;; 然后保存
+第三步，再次登录http://域名/setup.php
+登录 第一步输入的密码 Login with setup_password
+正式获得新建管理员账号和密码的权限</description>
+    </item>
+    
+    <item>
+      <title>20210531</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021053105.html</link>
+      <pubDate>Mon, 31 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021053105.html</guid>
+      <description>k8s的应用 k8s的概念 k8s概念
+k8s集群
+k8s安装和部署
+一．环境准备 二．部署前操作
+借助ntp服务设置各节点的时间同步 通过DNS完成各节点名称解析，测试环境主机，测试用hosts文件代替 配置ssh免密登入 关闭各节点iptables和firewalld服务 禁用SELinux 禁用Swap设备 打开iptables桥接功能及路由转发 三．部署k8s集群
+部署docker 部署kubernetes 配置Master节点初始化 在master安装flannel插入 Node节点加入 在master上查看
+部署应用程序</description>
+    </item>
+    
+    <item>
+      <title>docker构建和运行jar</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021052701.html</link>
+      <pubDate>Thu, 27 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021052701.html</guid>
+      <description>说明 使用一个java相册开源项目，奈何不想在本地安装和运行java环境，通过docker进行maven打包和项目运行
+文件列表 构建 使用以下代码构建
+Dockerfile 文件
+FROM maven:3.3-jdk-8 ADD ./app /usr/src/mymaven WORKDIR /usr/src/mymaven docker-compose.yml文件的内容
+version: &amp;#39;3&amp;#39; services: maven: build: . container_name: maven environment: - USER_UID=1000 - USER_GID=1000 restart: &amp;#34;no&amp;#34; privileged: true volumes: - ./app:/usr/src/mymaven - /etc/localtime:/etc/localtime command: [ &amp;#39;mvn&amp;#39;, &amp;#39;clean&amp;#39;, &amp;#39;package&amp;#39; ] 将java项目放入app目录，然后执行docker-compose up构建项目
+运行 docker-compose.yml
+version: &amp;#39;3&amp;#39; networks: springboot: external: false services: springboot: image: openjdk:8u292-jdk-oraclelinux7 container_name: springboot environment: - USER_UID=1000 - USER_GID=1000 restart: always privileged: true networks: - springboot volumes: - .</description>
+    </item>
+    
+    <item>
+      <title>容器镜像加速</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021052402.html</link>
+      <pubDate>Mon, 24 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021052402.html</guid>
+      <description>镜像加速器 加速器地址 https://0ijzpgpi.mirror.aliyuncs.com
+sudo mkdir -p /etc/docker sudo tee /etc/docker/daemon.json &amp;lt;&amp;lt;-&amp;#39;EOF&amp;#39; { &amp;#34;registry-mirrors&amp;#34;: [&amp;#34;https://0ijzpgpi.mirror.aliyuncs.com&amp;#34;] } EOF sudo systemctl daemon-reload sudo systemctl restart docker 容器化 只有面板和用于反向代理的nginx需要安装在本地，其他应用均部署为容器化，目前使用docker部署</description>
+    </item>
+    
+    <item>
+      <title>零星的记录</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021052406.html</link>
+      <pubDate>Mon, 24 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021052406.html</guid>
+      <description>阿里云企业邮箱地址 企业邮箱的POP3、SMTP、IMAP地址是什么？ 企业邮箱POP、SMTP、IMAP地址列表如下： （阿里云邮箱web端通用访问地址：https://qiye.aliyun.com/），客户端推荐以下参数配置： 协议	服务器地址	服务器端口号（常规）	服务器端口号（加密） POP3	pop.qiye.aliyun.com	110	995 IMAP	imap.qiye.aliyun.com	143	993 SMTP	smtp.qiye.aliyun.com	25	465 以下老地址和上面新地址一样可以正常使用： 协议	服务器地址	服务器端口号（常规）	服务器端口号（加密） POP3	pop3.mxhichina.com	110	995 SMTP	smtp.mxhichina.com	25	465 IMAP	imap.mxhichina.com	143	993 git三连 git add . &amp;amp;&amp;amp; git commit -m &amp;#34;up&amp;#34; &amp;amp;&amp;amp; git push 关于使用docker构建通用运行环境 拉取一个简单的linux环境 安装go环境或者java环境 python环境 配置目录关联app到运行目录 将程序放放到app 执行docker运行命令，在docker构建的运行环境了运行相应程序 配置插件目录，使用额外的运行命令安装和配置插件 配置外部配置文件，自定义运行配置文件
+docker里的文件 &amp;amp;&amp;amp; git clone https://e.coding.net/frednab/dev/hexo-blog.git blog \ &amp;amp;&amp;amp; cd blog \ &amp;amp;&amp;amp; npm ci \ &amp;amp;&amp;amp; hexo g FROM debian RUN sed -i s@/deb.</description>
+    </item>
+    
+    <item>
+      <title>容器应用</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021051501.html</link>
+      <pubDate>Sat, 15 May 2021 11:55:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021051501.html</guid>
+      <description>容器应用仓库 容器应用仓库
+部署了几个docker应用事例，保留备用。后期计划使用容器部署mysql和jar运行
+环境简洁 在本地服务器上安装尽可能少的应用，避免环境复杂和配置冲突
+易于移植 在不同系统，不同服务器环境下可以轻松转移数据和应用
+后续配置 服务器只安装基本的git docker docker-compose 文件管理，不再配置mysql java php等开发环境，这些开发环境均在docker里运行
+编写Dockerfile最佳实践 减少镜像层 一次RUN指令形成新的一层，尽量Shell命令都写在一行，减少镜像层。 例如： FROM centos:7 MAINTAINER www.ctnrs.com RUN yum install epel-release -y RUN yum install -y gcc gcc-c++ make -y RUN wget http://docs.php.net/distributions/php-5.6.36.tar.gz RUN tar zxf php-5.6.36.tar.gz RUN cd php-5.6.36 RUN ./configure --prefix=/usr/local/php RUN make -j 4 RUN make install EXPOSE 9000 CMD [&amp;#34;php-fpm&amp;#34;] 应该写成：
+FROM centos:7 MAINTAINER www.ctnrs.com RUN yum install epel-release -y &amp;amp;&amp;amp; \ yum install -y gcc gcc-c++ make RUN wget http://docs.</description>
+    </item>
+    
+    <item>
+      <title>用于持续运行的数据库</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021051401.html</link>
+      <pubDate>Fri, 14 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021051401.html</guid>
+      <description>mysql version: &amp;#39;3.1&amp;#39; networks: app: external: false services: db: image: mysql:5.7.22 restart: always container_name: mysql networks: - app ports: - 9036:3306 privileged: true environment: TZ: Asia/Shanghai MYSQL_ROOT_PASSWORD: 123456 command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --explicit_defaults_for_timestamp=true --lower_case_table_names=1 --max_allowed_packet=128M --sql-mode= --default-authentication-plugin=mysql_native_password --sql-mode=&amp;#34;STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO&amp;#34; volumes: - ./mysql/data:/var/lib/mysql - ./mysql/conf/my.cnf:/etc/my.cnf phpmyadmin 用来图形化访问mysql数据库的管理界面
+version: &amp;#39;3.1&amp;#39; networks: phpmyadmin: external: false services: db: image: mariadb:10.3 restart: always networks: - phpmyadmin environment: MYSQL_ROOT_PASSWORD: notSecureChangeMe phpmyadmin: image: phpmyadmin restart: always networks: - phpmyadmin ports: - 9018:80 environment: - PMA_ARBITRARY=1 - PMA_HOST=XXXX </description>
+    </item>
+    
+    <item>
+      <title>docker项目的配置文件备份</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021051001.html</link>
+      <pubDate>Mon, 10 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021051001.html</guid>
+      <description>wiz version: &amp;#39;3&amp;#39; services: bitwarden: image: wiznote/wizserver:latest container_name: wiz restart: always volumes: - /denalon/app/wiz/wizdata:/wiz/storage - /etc/localtime:/etc/localtime ports: - &amp;#34;9060:80&amp;#34; - &amp;#34;9269:9269&amp;#34; halo 使用docker数据库的halo version: &amp;#39;3&amp;#39; networks: halo: external: false services: server: image: openjdk container_name: halo environment: - USER_UID=1000 - USER_GID=1000 restart: always privileged: true networks: - halo volumes: - ./halo-1.4.8.jar:/halo.jar - ./application.yaml:/application.yaml - /etc/localtime:/etc/localtime ports: - &amp;#34;9030:8090&amp;#34; depends_on: - db command: [ &amp;#39;java&amp;#39;, &amp;#39;-jar&amp;#39;, &amp;#39;halo.jar&amp;#39; ] db: image: mysql restart: always environment: - MYSQL_ROOT_PASSWORD=halo - MYSQL_USER=halo - MYSQL_PASSWORD=passwd - MYSQL_DATABASE=halodb networks: - halo ports: - &amp;#34;9036:3306&amp;#34; volumes: - .</description>
+    </item>
+    
+    <item>
+      <title>一键导入iconfont</title>
+      <link>https://pub.oribos.cn/web/me/2021/2021050801.html</link>
+      <pubDate>Sat, 08 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/me/2021/2021050801.html</guid>
+      <description>进入iconfont官网后，进入需要下载图标页面，打开控制台（F12）,输入一下两段js代码
+var j = document.createElement(&amp;#39;script&amp;#39;); j.setAttribute(&amp;#34;src&amp;#34;, &amp;#39;https://ajax.microsoft.com/ajax/jquery/jquery-1.4.min.js&amp;#39;); document.getElementsByTagName(&amp;#34;head&amp;#34;)[0].appendChild(j); 回车后再输入
+$(&amp;#34;span[title=&amp;#39;添加入库&amp;#39;]&amp;#34;).each(function(){ $(this).delay(100).click(); console.log($(this).parent().prev().children().eq(0).html()); }); 回车后，等待执行完毕后，点击右上角或者右侧的购物车图标，发现已经将所有图标添加入库，此时点击下载即可。
+halo sudo docker run -it -d --name halo -p 9030:8090 -v /denalon/app/halo:/root/.halo --restart=always halohub/halo docker和docker-compose version: &amp;#34;2&amp;#34; services: eid-service: # 指定容器名称 container_name: halotest # 重启机制 restart: always # hub地址，image版本 image: halohub/halo volumes: # 本地jar包路径 - /denalon/app/halo:/root/.halo - /denalon/app/dev/application.properties:/application.properties # 指定容器时间为宿主机时间 - /etc/localtime:/etc/localtime # 访问端口 ports: - &amp;#34;9030:8090&amp;#34; environment: # 指定时区 - TZ=&amp;#34;Asia/Shanghai&amp;#34; # 其他参数 </description>
+    </item>
+    
+    <item>
+      <title>docker部署hello图床</title>
+      <link>https://pub.oribos.cn/web/me/2021/2021051301.html</link>
+      <pubDate>Tue, 04 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/me/2021/2021051301.html</guid>
+      <description>说明 不需要在本地安装jdk 需要数据库和docker环境 安装docker和docker-compose
+安装数据库（本项目没有在docker里运行数据库，需要在宿主机安装数据库）
+新建docker-compose.yml修改application.properties和其他配置文件
+docker-compose.yml源码 version: &amp;#34;2&amp;#34; services: eid-service: # 指定容器名称 container_name: hellohao # 重启机制 restart: always # hub地址，image版本 image: openjdk:8u292-jdk-oraclelinux7 volumes: # 本地jar包路径 - ./hellohao:/hellohao - ./Tbedmain:/Tbedmain - ./data:/data/upload_tmp - ./hellodata:/HellohaoData - ./application.properties:/application.properties # 指定容器时间为宿主机时间 - /etc/localtime:/etc/localtime # 访问端口 ports: - &amp;#34;8088:8088&amp;#34; environment: # 指定时区 - TZ=&amp;#34;Asia/Shanghai&amp;#34; # 其他参数 command: [ &amp;#39;./hellohao&amp;#39;, &amp;#39;java&amp;#39;, &amp;#39;-jar&amp;#39;, &amp;#39;Tbedmain&amp;#39; ] 其他内容 另一个版本的源码
+version: &amp;#39;3&amp;#39; networks: hello: external: false services: server: image: openjdk:8u292-jdk-oraclelinux7 container_name: hello environment: - USER_UID=1000 - USER_GID=1000 restart: always privileged: true networks: - hello volumes: - .</description>
+    </item>
+    
+    <item>
+      <title>docker部署记录</title>
+      <link>https://pub.oribos.cn/web/me/2021/20210512.html</link>
+      <pubDate>Tue, 04 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/me/2021/20210512.html</guid>
+      <description>转移到docker运行 图床，笔记，博客均迁入docker
+出现问题 使用docker部署springboot，项目运行前需要在数据库里导入数据，即便我将数据库文件导入，项目运行时依然报错。此项目暂时只能使用外部数据库
+使用docker部署的halo，数据库用mysql，导航页不显示，登录后文章统计不正常。
+事例 通过简单的docker安装和docker-compose安装，部署项目到docker上运行，以下事例使用了内部网络和mysql数据库连接。
+使用docker数据库的halo version: &amp;#39;3&amp;#39; networks: halo: external: false services: server: image: openjdk container_name: halo environment: - USER_UID=1000 - USER_GID=1000 restart: always privileged: true networks: - halo volumes: - ./halo-1.4.8.jar:/halo.jar - ./application.yaml:/application.yaml - /etc/localtime:/etc/localtime ports: - &amp;#34;9030:8090&amp;#34; depends_on: - db command: [ &amp;#39;java&amp;#39;, &amp;#39;-jar&amp;#39;, &amp;#39;halo.jar&amp;#39; ] db: image: mysql restart: always environment: - MYSQL_ROOT_PASSWORD=halo - MYSQL_USER=halo - MYSQL_PASSWORD=passwd - MYSQL_DATABASE=halodb networks: - halo ports: - &amp;#34;9036:3306&amp;#34; volumes: - .</description>
+    </item>
+    
+    <item>
+      <title>入门git教程</title>
+      <link>https://pub.oribos.cn/web/course/git.html</link>
+      <pubDate>Wed, 14 Apr 2021 08:20:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/course/git.html</guid>
+      <description>前言 此教程指导入门者初步接触git和使用git从代码托管服务商下载和推送代码，并不系统性介绍git各种概念和原理。
+本教程的目录是为了让入门者初步使用代码。参考Git 简明指南
+下载项目代码 在github下载缓慢可以选择coding或gitee下载
+git的作用 Git（读音为/gɪt/）是一个开源的分布式版本控制系统，hexo的代码可以通过git命令实现代码管理,并通过github actions自动构建。
+git使用 推送代码到github或使用项目的自动构建需要下列操作:
+安装git 访问git官网下载git，然后按照提示安装(一直下一步什么都不需要改)
+配置本地git用户信息 git config --global user.name &amp;#34;用户名&amp;#34; git config --global user.email &amp;#34;邮箱&amp;#34; 配置github仓库 1 注册github账户 在github官方注册github用户，获得用户名和密码
+如果github无法访问，可以使用coding或gitee进行代码托管。
+2 任选一种方式连接github 2.1 选择 https方式连接 推送代码时需要提供用户名和密码
+2.2 ssh免密方式连接，需要使用密钥对
+需要在本地电脑上使用以下命令生成密钥对 ssh-keygen -t rsa -C &amp;#34;GitHub 邮箱&amp;#34; 然后一路回车。生成的两个文件中，后缀名为.pub的文件为公钥，无后缀名或后缀名为.key的文件为私钥。
+2.3 提交公钥给github，
+使用记事本打开.pub文件，将文件内代码复制然后在github网站settings-SSH and GPG keys
+私钥需要妥善保管，系统对私钥有严格要求，用于验证时权限不能太大，避免文件被改写影响验证。
+私钥：当前系统的SYSTEM，Administrators用户组，拥有该文件的完全控制权限；该文件的所有者拥有修改权限。删除其他用户或Everyone读取和执行权限
+公钥：除去私钥的所有权限设置外，可以允许Everyone拥有读取和执行权限
+下载代码到本地 使用zip下载不会携带.git文件， 使用git clone方式下载的代码需要删掉项目根目录下的.git文件夹再执行如下操作。
+进阶操作：你可以通过git remote github xxx.git 配置github仓库而不需要删除.git
+推送代码到github 修改项目根目录下的文件，比如config.yml和CNAME文件，通过以下代码将整个仓库代码推送到github。
+git init //初始化仓库。 git add .</description>
+    </item>
+    
+    <item>
+      <title>魔改主题</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021041307.html</link>
+      <pubDate>Tue, 13 Apr 2021 09:55:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021041307.html</guid>
+      <description>魔改主题 将docsy主题魔改成自己的，然后换成自己的名字，放到自己的仓库里。
+经过一番折腾，成功运行。😄
+过程曲折 由于我在日常修改配置文件的时候，并没有改动原主题的js目录下文件，所以自定义的主题目录里并没有复制js目录。导致第一次运行失败。
+面对茫茫报错，反复修改（看不懂的注释掉），结果成功摸不着头脑。
+然后就重新下载 主题 https://github.com/google/docsy.git（我采用的coding代码 https://e.coding.net/denalon/asset/docsy.git）。然后逐个目录替换，直到发现之前并没有是缺少整个js目录。
+记录：对主题的修改 导航栏 修改原样式的.td-navbar-cover{background: transparent;}
+彩色背景使用自定义css类.navbar-custom
+.navbar-custom{ background: linear-gradient(90deg, rgba(247, 149, 51, 0.1) 0, rgba(243, 112, 85, 0.1) 15%, rgba(239, 78, 123, 0.1) 30%, rgba(161, 102, 171, 0.1) 44%, rgba(80, 115, 184, 0.1) 58%, rgba(16, 152, 173, 0.1) 72%, rgba(7, 179, 155, 0.1) 86%, rgba(109, 186, 130, 0.1) 100%); } 主体 使用下来代码对主体和页脚颜色进行彩色过渡
+.footer-bg{ background: linear-gradient(90deg, rgba(247, 149, 51, 0.1) 0, rgba(243, 112, 85, 0.</description>
+    </item>
+    
+    <item>
+      <title>适用于萌新的hexo自动部署</title>
+      <link>https://pub.oribos.cn/web/chip/2021041102.html</link>
+      <pubDate>Sun, 11 Apr 2021 09:10:40 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/chip/2021041102.html</guid>
+      <description>适用于萌新的hexo自动部署 简述 下载本仓库代码，修改CNAME文件，添加自己的文章，将本仓库代码推送github
+使用步骤 第一步 使用代码 git 下载coding仓库代码
+git clone https://e.coding.net/frednab/dev/hexo-blog.git
+第二步 修改配置 修改 source/CNAME文件里的域名
+安装主题
+方法一、下载主题目录，然后解压缩到themes目录下
+方法二、使用npm安装主题
+npm i hexo-theme-butterfly方式安装自己需要的主题（请参照自己需要主题的安装说明）
+方法三、通过git submodule安装主题
+git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly
+其他文件不需要配置
+第三步 更新文章 通过hexo new page 文章.md新建文档
+或者在source/_posts目录下撰写自己的文章
+第四步 将源码推送到github 通过一下命令将该仓库里的源码推送到github仓库
+如果你是使用git clone方式下载的代码，建议删掉目录下的.git目录再执行如下操作
+git init //初始化仓库。 git add . //添加文件到暂存区。(注意有点号.) git commit -m &amp;#34;更新说明&amp;#34; //将暂存区内容添加到仓库中。标识“更新说明” git remote add origin XXXX.git //添加到远程仓库操作，将xxxx.git设置为远程仓库origin git push -u origin master //推送master分支到origin仓库 提示操作成功后，代码将推送到github上的master分支，github自动部署将启动，将hexo文件自动部署到gh-pages分支
+由于该仓库含有github自动构建文件，上传到github将触发自动部署
+github自动构建文件为 .github/workflows/hexodeploy.yml文件</description>
+    </item>
+    
+    <item>
+      <title>易于分享的模块代码</title>
+      <link>https://pub.oribos.cn/web/chip/2021040903.html</link>
+      <pubDate>Fri, 09 Apr 2021 09:55:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/chip/2021040903.html</guid>
+      <description>开源的代码 摘抄自某开源的代码诸如以下代码：
+代码示例链接：https://dishiduo.coding.net/public/hcj/hcj/git
+html { font-size: 14px; } body { width: 100vw; height: 100vh; background-color: var(--background-color); display: flex; justify-content: center; align-items: center; font-family: &amp;#39;Montserrat&amp;#39;, sans-serif, Arial, &amp;#39;Microsoft Yahei&amp;#39;; } .container { display: flex; justify-content: center; align-items: center; flex-direction: column; } .container * { margin-bottom: 30px; color: #FFF; } h1 { width: 60%; text-align: center; } .bt { padding: 12px 40px; background-color: #EC3E27; } .content { width: 60%; } 此处的css样式均以html的基本元素定义，诸如html h1 content尽管可以在模板文件里展示正确的效果。但代码用于其他项目使用需要修改元素命名。</description>
+    </item>
+    
+    <item>
+      <title>git隐藏文件</title>
+      <link>https://pub.oribos.cn/web/chip/2021040702.html</link>
+      <pubDate>Wed, 07 Apr 2021 10:20:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/chip/2021040702.html</guid>
+      <description>使用git切换目录内容 1、使用git init新建一个git仓库
+2、向仓库目录下方式文件a.md
+3、使用git add .``git commit -m&amp;quot;说明&amp;quot;命令将文件加入暂存区
+4、使用git branch test命令 创建一个git仓库 test分支
+5、向仓库目录下放入文件 hide.md
+6、使用git add .``git commit -m&amp;quot;说明&amp;quot;命令将文件加入暂存区
+7、使用git checkout master或者git checkout main切换到git仓库主分支</description>
+    </item>
+    
+    <item>
+      <title>github加速</title>
+      <link>https://pub.oribos.cn/web/chip/2021040701.html</link>
+      <pubDate>Wed, 07 Apr 2021 09:55:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/chip/2021040701.html</guid>
+      <description>加速地址 加速功能 cdn 代码下载加速，</description>
+    </item>
+    
+    <item>
+      <title>炫彩按键</title>
+      <link>https://pub.oribos.cn/web/chip/2021040501.html</link>
+      <pubDate>Mon, 05 Apr 2021 09:55:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/chip/2021040501.html</guid>
+      <description>效果 代码 html部分
+&amp;lt;a class=&amp;#34;btn btn-colourful&amp;gt; &amp;lt;/a&amp;gt; css部分
+/* 炫彩按钮 */ .btn-colourful { position: relative; padding: 12px 30px; border-radius: 20px; font-size: 20px; color: #FFF; text-decoration: none; /* 使用linear-gradient生成一个线性渐变的“背景图” */ background-image: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4); /* 放大背景图 */ background-size: 400%; /* 这里是为了让a标签的背景显示在a::before的下面 */ z-index: 1; } .btn-colourful:hover { /* 创建动画 动画名称show 执行时间8秒 线性 循环执行 */ animation: show 8s linear infinite; } /* 动画主体 从初始到结束，移动背景图的位置 */ @keyframes show { 0% { background-position: 0%; } 100% { background-position: 400%; } } /* 创建背景炫光效果 */ .</description>
+    </item>
+    
+    <item>
+      <title>GitHub Actions 入门教程</title>
+      <link>https://pub.oribos.cn/web/chip/2021040401.html</link>
+      <pubDate>Sun, 04 Apr 2021 09:55:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/chip/2021040401.html</guid>
+      <description>GitHub Actions 入门教程 引用自阮一峰的网络日志
+GitHub Actions 是 GitHub 的持续集成服务，于2018年10月推出。
+这些天，我一直在试用，觉得它非常强大，有创意，比 Travis CI 玩法更多。
+本文是一个简单教程，演示如何使用 GitHub Actions 自动发布一个 React 应用到 GitHub Pages。
+一、GitHub Actions 是什么？ 大家知道，持续集成由很多操作组成，比如抓取代码、运行测试、登录远程服务器，发布到第三方服务等等。GitHub 把这些操作就称为 actions。
+很多操作在不同项目里面是类似的，完全可以共享。GitHub 注意到了这一点，想出了一个很妙的点子，允许开发者把每个操作写成独立的脚本文件，存放到代码仓库，使得其他开发者可以引用。
+如果你需要某个 action，不必自己写复杂的脚本，直接引用他人写好的 action 即可，整个持续集成过程，就变成了一个 actions 的组合。这就是 GitHub Actions 最特别的地方。
+GitHub 做了一个官方市场，可以搜索到他人提交的 actions。另外，还有一个 awesome actions 的仓库，也可以找到不少 action。
+上面说了，每个 action 就是一个独立脚本，因此可以做成代码仓库，使用userName/repoName的语法引用 action。比如，actions/setup-node就表示github.com/actions/setup-node这个仓库，它代表一个 action，作用是安装 Node.js。事实上，GitHub 官方的 actions 都放在 github.com/actions 里面。
+既然 actions 是代码仓库，当然就有版本的概念，用户可以引用某个具体版本的 action。下面都是合法的 action 引用，用的就是 Git 的指针概念，详见官方文档。
+actions/setup-node@74bc508 # 指向一个 commit actions/setup-node@v1.0 # 指向一个标签 actions/setup-node@master # 指向一个分支 二、基本概念 GitHub Actions 有一些自己的术语。</description>
+    </item>
+    
+    <item>
+      <title>减少彩色的使用</title>
+      <link>https://pub.oribos.cn/web/chip/2021040703.html</link>
+      <pubDate>Sun, 04 Apr 2021 09:55:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/chip/2021040703.html</guid>
+      <description>简化页面 减少不必要的装饰，炫彩背景，彩色字体
+易于阅读 减少不必要的阅读干扰，突出内容</description>
+    </item>
+    
+    <item>
+      <title>Markdown</title>
+      <link>https://pub.oribos.cn/web/share/markdown.html</link>
+      <pubDate>Thu, 01 Apr 2021 09:01:40 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/share/markdown.html</guid>
+      <description>简介 Markdown是一种轻量级标记语言，以纯文本格式编写文档，然后转换成有效的XHTML/HTML内容
+语法简洁明了、易读易写 轻量、纯文本、跨平台、兼容性极强 可以转换为HTML/XHTML、EPUB、PDF、Word、纂写Gitbook 广泛使用： Github 简书 Typecho WordPress（需编辑器插件） Reddit Diaspora Apollo Moodle more &amp;hellip;&amp;hellip; 创造者：Aaron Swartz和John Gruber共同设计 Aaron Swartz（1986年11月8日－2013年1月11日）
+Markdown主要贡献者，Aaron Hillel Swartz（全名）的维基百科介绍为：美国程序员、企业家、作者、政治活动者、互联网黑客主义者，点击查看更多关于这位天才的完整生平
+开始使用 编辑器：Typora、Sublime Text、VS code&amp;hellip; 首推跨平台、所见即所得的Typora编辑器 标题 一般的，Markdown使用#可以表示1-6级标题
+# 这是一级标题 ## 这是二级标题 ### 这是三级标题 #### 这是四级标题 ##### 这是五级标题
+对于一级和二级标题，还可以使用-和·=来标记
+1 2 3 4 这是一级标题 ===== 这是二级标题 ---------- 列表 无序列表 使用-、*、+来标记无序列表，下面以-为例
+1 2 3 - 这是第一项 - 这是第二项 - 这是第三项 显示效果：
+这是第一项 这是第二项 这是第三项 有序列表 在阿拉伯数字后面加上.来标记
+1 2 3 1.</description>
+    </item>
+    
+    <item>
+      <title>SSH 容器直通</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021052507.html</link>
+      <pubDate>Thu, 01 Apr 2021 09:01:40 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021052507.html</guid>
+      <description>SSH 容器直通 由于 SSH 在容器内运行，因此，如果需要 SSH 支持，则需要将 SSH 从主机传递到容器。一种选择是在非标准端口上运行容器 SSH（或将主机端口移至非标准端口）。另一个可能更直接的选择是将 SSH 连接从主机转发到容器。下面将说明此设置。
+本指南假定您已经在名为 git 的主机上创建了一个用户，该用户与容器值 USER_UID/USER_GID 共享相同的 UID/GID。这些值可以在 docker-compose.yml 中设置为环境变量：
+environment: - USER_UID=1000 - USER_GID=1000 接下来将主机的 /home/git/.ssh 装入容器。否则，SSH 身份验证将无法在容器内运行。
+volumes: - /home/git/.ssh/:/data/git/.ssh 现在，需要在主机上创建 SSH 密钥对。该密钥对将用于向主机验证主机上的 git 用户。
+sudo -u git ssh-keygen -t rsa -b 4096 -C &amp;#34;Gitea Host Key&amp;#34; 在下一步中，需要在主机上创建一个名为 /app/gitea/gitea 的文件（具有可执行权限）。该文件将发出从主机到容器的 SSH 转发。将以下内容添加到 /app/gitea/gitea：
+ssh -p 2222 -o StrictHostKeyChecking=no git@127.0.0.1 &amp;#34;SSH_ORIGINAL_COMMAND=\&amp;#34;$SSH_ORIGINAL_COMMAND\&amp;#34; $0 $@&amp;#34; 为了使转发正常工作，需要将容器（22）的 SSH 端口映射到 docker-compose.yml 中的主机端口 2222。由于此端口不需要暴露给外界，因此可以将其映射到主机的 localhost：</description>
+    </item>
+    
+    <item>
+      <title>简化</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021032402.html</link>
+      <pubDate>Wed, 24 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021032402.html</guid>
+      <description>简化 项目创建，项目组件，项目的外部要求
+功能的实现尽可能的简单
+服务器自动构建 首先创建一个git仓库
+在服务器里git clone 仓库地址
+在服务器里配置webhook
+在git仓库里配置webhook
+推送代码到git仓库，代码托管中心发送webhook
+服务器接收到webhook，执行动作，拉取代码，运行代码里的命令
+随笔 FROM debian RUN sed -i s@/deb.debian.org/@/mirrors.aliyun.com/@g /etc/apt/sources.list \ &amp;amp;&amp;amp; apt-get clean \ &amp;amp;&amp;amp; apt-get update \ &amp;amp;&amp;amp; apt-get install -y curl \ &amp;amp;&amp;amp; curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \ &amp;amp;&amp;amp; apt-get install -y nodejs &amp;amp;&amp;amp; npm install hexo-cli -g \ &amp;amp;&amp;amp; apt-get install -y git </description>
+    </item>
+    
+    <item>
+      <title>ssh</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021070101.html</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021070101.html</guid>
+      <description>安装ssh服务 $sudo apt-get update #更新软件源 $sudo apt-get install ssh #安装 配置文件：/etc/ssh/sshd_config
+修改配置文件 PasswordAuthentication yes PermitRootLogin yes 重启服务： /etc/init.d/ssh restart
+此时我们就可以使用ssh对服务器进行远程连接，但也不排除无法连接的情况。
+一般ssh无法连接的场景排查
+ping xxx.xxx.xxx.xxx 检查网络 很多情况下无法ssh，都是因为网络或者iptables限制导致。所以我们可以先通过ping命令来检查网络的连通性。当然有时候也会遇见防火墙拦截了ICMP和SSH，所以检查网络的最好是在需要ssh连接的服务器下进行
+检查端口
+ssh使用的是22端口，所以我们可以使用telnet命令检测该端口。
+telnet xxx.xxx.xxx.xxx 22 如果正常能通，一般情况下ssh服务器也就没问题了；如果不能通，检查iptables。因为为了保证服务器的安全性，我们经常会通过iptables去限制特定的网段才允许ssh连接服务器。
+检查服务 如果网络能通，且端口未被屏蔽。依旧无法ssh到服务器，那么检查ssh服务，以及配置文件是否正确配置。
+/etc/init.d/ssh status </description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://pub.oribos.cn/tech/develop/2021/%E6%A0%91%E8%8E%93%E6%B4%BE4b%E6%9B%B4%E6%96%B0%E6%BA%90/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/tech/develop/2021/%E6%A0%91%E8%8E%93%E6%B4%BE4b%E6%9B%B4%E6%96%B0%E6%BA%90/</guid>
+      <description>前言 1、当前树莓派4b基于debian10
+一、国内源说明 1、先到https://tvtv.fun/ping测一下速度，看看哪个比较快，这里以电子科技大学为例
+2、需要改的源有两个：Raspbian 和 Raspberrypi。可以看镜像站的使用说明如科技大学说明
+二、改
+1.系统源 备份原文件
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+一键修改
+sudo sed -i &amp;rsquo;s|raspbian.raspberrypi.org|mirrors.ustc.edu.cn/raspbian|g&amp;rsquo; /etc/apt/sources.list
+也可以用nano手动把raspbian.raspberrypi.org/替换成mirrors.ustc.edu.cn/raspbian/
+2.软件源 备份原文件
+sudo cp /etc/apt/sources.list.d/raspi.list /etc/apt/sources.list.d/raspi.list.bak
+一键修改
+sudo sed -i &amp;rsquo;s|//archive.raspberrypi.org|//mirrors.ustc.edu.cn/archive.raspberrypi.org|g&amp;rsquo; /etc/apt/sources.list.d/raspi.list
+3.更新索引（修改源后必做） sudo apt-get update 4.更新软件包（建议） sudo apt-get upgrade</description>
+    </item>
+    
+  </channel>
+</rss>

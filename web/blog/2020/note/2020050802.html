@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="2020 05 08 部署记录01" />
+<meta property="og:description" content="服务器部署记录 个人项目取消oss 由于oss的存储和访问都需要计费。最经济的情况下，使用coding pages和 jsdelivr代替之前的oss文件。原oss里文件，整天搬迁到coding pages上，域名和访问地址不变。
+后续的静态资源引用使用jsdelivr或者coding pages 的url地址。 考虑到coding pages访问速度不稳定。可以使用国内cdn加速。
+由于计费问题，取消所有oss服务。外部访问的文件全部下载下来单独保存。backup文件暂时保留。
+对服务器和git仓库全面使用秘钥登录 对coding仓库，github仓库，云服务器全面使用私钥登录。
+不再使用php 个人的网站和网页设计不再使用php项目。
+页面发布步骤 WWw页面是一个归纳页面,首先访问www页面,建立单独仓库和发布源.
+然后通过选择不同的内容,跳转到文章更新和随笔网页. 跟www页面属于不同的发布源.
+关于页面均在www页面
+精简仓库数量 简化coding上的仓库数量,保留一个备份和一个pages仓库.
+hugo站点的发布过程 原先对hugo的编辑是直接在主题文件夹里的源代码进行修改,这样主题更新以后,要么源代码被覆盖,要么重新设置.
+而现在,将部分文件转移到根目录下的data,assets,layouts等目录里,配置信息同主题分离.以方便以后更换主题或主题更新.
+css,font,js文件均有根目录下的文件夹提供(统一归为custom文件).
+修改文件直接在git仓库目录下编辑,将git仓库文件同本地临时配置文件夹合为一个,对于测试代码,可以新建分支或仓库,避免主目录太多太乱.
+进一步整理git仓库 对主文件目录base,同时链接两个远程库a和b,两个远程库分别放置最近更新和稳定更新的内容.
+后续,进一步差异化两个远程库的文件.对应的,pages也分成最近更新和稳定更新的内容.
+一个base文件夹同时对应远程库a的base,和远程库b的base
+取消本地电脑的本地仓库 一般情况下使用vsc在电脑上直接编辑远程服务器上的本地库,然后同步到远程库,尽可能的减少放到本地电脑的版本.
+github上的仓库仅仅用作jsdelivr 的cdn源,本地一般不直接向github的仓库推送,只有在服务器端向github推送
+gitee和阿里云等其他git代码托管的仓库全部取消.
+用于web访问的域名为 页面: hbn.pub 资源:ufs.pub 备用 :ufs.im
+为什么要频繁整理 随着采用的理论和技术越来越细致,过去的方法越来越不合适.有必要增加新的管理方法,采用新的技术.这就会导致旧的东西跟新东西发生冲突.
+体现在网站内容上,由于采用了新的文件管理方法.新的页面将统一采用新的文件结构,新的UFS结构重新命名了主文件夹和次级文件夹,重新规范了命名规则.一直运行的旧的b.hbn.pub仍然使用旧的结构不变.新更新的内容将采用新结构.
+对于归档.可以考虑在某个时间对整个b.hbn.pub做归档,启用一个专用的归档域名.
+本地仓库同步到多个远程库 通过以下命令将远程库加入 origin 列表里 git remote set-url --add origin **自己的仓库名**
+再通过git remote -v 查看远程版本库信息，显示如下
+这样可以,将一个本地文件同步到多个远程仓库里,以起到冗余备份的功能.
+魔改主题 hugo的主目录下的 主目录/layouts/partials 是可以替代 主题目录/layouts/partials 文件的.
+由于hugo-meme主题不支持某些bootstrap4代码,魔改主题需要修改对应的html代码,
+在这个主目录/layouts/partials里的修改不影响后续主题更新" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/blog/2020/note/2020050802.html" /><meta property="article:section" content="essay" />
+<meta property="article:published_time" content="2020-05-08T11:38:06+08:00" />
+<meta property="article:modified_time" content="2020-05-08T11:38:06+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2020 05 08 部署记录01"/>
+<meta name="twitter:description" content="服务器部署记录 个人项目取消oss 由于oss的存储和访问都需要计费。最经济的情况下，使用coding pages和 jsdelivr代替之前的oss文件。原oss里文件，整天搬迁到coding pages上，域名和访问地址不变。
+后续的静态资源引用使用jsdelivr或者coding pages 的url地址。 考虑到coding pages访问速度不稳定。可以使用国内cdn加速。
+由于计费问题，取消所有oss服务。外部访问的文件全部下载下来单独保存。backup文件暂时保留。
+对服务器和git仓库全面使用秘钥登录 对coding仓库，github仓库，云服务器全面使用私钥登录。
+不再使用php 个人的网站和网页设计不再使用php项目。
+页面发布步骤 WWw页面是一个归纳页面,首先访问www页面,建立单独仓库和发布源.
+然后通过选择不同的内容,跳转到文章更新和随笔网页. 跟www页面属于不同的发布源.
+关于页面均在www页面
+精简仓库数量 简化coding上的仓库数量,保留一个备份和一个pages仓库.
+hugo站点的发布过程 原先对hugo的编辑是直接在主题文件夹里的源代码进行修改,这样主题更新以后,要么源代码被覆盖,要么重新设置.
+而现在,将部分文件转移到根目录下的data,assets,layouts等目录里,配置信息同主题分离.以方便以后更换主题或主题更新.
+css,font,js文件均有根目录下的文件夹提供(统一归为custom文件).
+修改文件直接在git仓库目录下编辑,将git仓库文件同本地临时配置文件夹合为一个,对于测试代码,可以新建分支或仓库,避免主目录太多太乱.
+进一步整理git仓库 对主文件目录base,同时链接两个远程库a和b,两个远程库分别放置最近更新和稳定更新的内容.
+后续,进一步差异化两个远程库的文件.对应的,pages也分成最近更新和稳定更新的内容.
+一个base文件夹同时对应远程库a的base,和远程库b的base
+取消本地电脑的本地仓库 一般情况下使用vsc在电脑上直接编辑远程服务器上的本地库,然后同步到远程库,尽可能的减少放到本地电脑的版本.
+github上的仓库仅仅用作jsdelivr 的cdn源,本地一般不直接向github的仓库推送,只有在服务器端向github推送
+gitee和阿里云等其他git代码托管的仓库全部取消.
+用于web访问的域名为 页面: hbn.pub 资源:ufs.pub 备用 :ufs.im
+为什么要频繁整理 随着采用的理论和技术越来越细致,过去的方法越来越不合适.有必要增加新的管理方法,采用新的技术.这就会导致旧的东西跟新东西发生冲突.
+体现在网站内容上,由于采用了新的文件管理方法.新的页面将统一采用新的文件结构,新的UFS结构重新命名了主文件夹和次级文件夹,重新规范了命名规则.一直运行的旧的b.hbn.pub仍然使用旧的结构不变.新更新的内容将采用新结构.
+对于归档.可以考虑在某个时间对整个b.hbn.pub做归档,启用一个专用的归档域名.
+本地仓库同步到多个远程库 通过以下命令将远程库加入 origin 列表里 git remote set-url --add origin **自己的仓库名**
+再通过git remote -v 查看远程版本库信息，显示如下
+这样可以,将一个本地文件同步到多个远程仓库里,以起到冗余备份的功能.
+魔改主题 hugo的主目录下的 主目录/layouts/partials 是可以替代 主题目录/layouts/partials 文件的.
+由于hugo-meme主题不支持某些bootstrap4代码,魔改主题需要修改对应的html代码,
+在这个主目录/layouts/partials里的修改不影响后续主题更新"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 2020 05 08 部署记录01
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">2020 05 08 部署记录01</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	
+	
+		Posted at May 08, 2020
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<h3 id="服务器部署记录">服务器部署记录</h3>
+<h4 id="个人项目取消oss">个人项目取消oss</h4>
+<p>由于oss的存储和访问都需要计费。最经济的情况下，使用coding pages和 jsdelivr代替之前的oss文件。原oss里文件，整天搬迁到coding pages上，域名和访问地址不变。</p>
+<p>后续的静态资源引用使用jsdelivr或者coding pages 的url地址。 考虑到coding pages访问速度不稳定。可以使用国内cdn加速。</p>
+<p>由于计费问题，取消所有oss服务。外部访问的文件全部下载下来单独保存。backup文件暂时保留。</p>
+<h4 id="对服务器和git仓库全面使用秘钥登录">对服务器和git仓库全面使用秘钥登录</h4>
+<p>对coding仓库，github仓库，云服务器全面使用私钥登录。</p>
+<h4 id="不再使用php">不再使用php</h4>
+<p>个人的网站和网页设计不再使用php项目。</p>
+<h4 id="页面发布步骤">页面发布步骤</h4>
+<p>WWw页面是一个归纳页面,首先访问www页面,建立单独仓库和发布源.</p>
+<p>然后通过选择不同的内容,跳转到文章更新和随笔网页. 跟www页面属于不同的发布源.</p>
+<p>关于页面均在www页面</p>
+<h4 id="精简仓库数量">精简仓库数量</h4>
+<p>简化coding上的仓库数量,保留一个备份和一个pages仓库.</p>
+<h4 id="hugo站点的发布过程">hugo站点的发布过程</h4>
+<p>原先对hugo的编辑是直接在主题文件夹里的源代码进行修改,这样主题更新以后,要么源代码被覆盖,要么重新设置.</p>
+<p>而现在,将部分文件转移到根目录下的data,assets,layouts等目录里,配置信息同主题分离.以方便以后更换主题或主题更新.</p>
+<p>css,font,js文件均有根目录下的文件夹提供(统一归为custom文件).</p>
+<p>修改文件直接在git仓库目录下编辑,将git仓库文件同本地临时配置文件夹合为一个,对于测试代码,可以新建分支或仓库,避免主目录太多太乱.</p>
+<h3 id="进一步整理git仓库">进一步整理git仓库</h3>
+<p>对主文件目录base,同时链接两个远程库a和b,两个远程库分别放置<strong>最近更新</strong>和<strong>稳定更新</strong>的内容.</p>
+<p>后续,进一步差异化两个远程库的文件.对应的,pages也分成最近更新和稳定更新的内容.</p>
+<p>一个base文件夹同时对应远程库a的base,和远程库b的base</p>
+<h3 id="取消本地电脑的本地仓库">取消本地电脑的本地仓库</h3>
+<p>一般情况下使用vsc在电脑上直接编辑远程服务器上的本地库,然后同步到远程库,尽可能的减少放到本地电脑的版本.</p>
+<p>github上的仓库仅仅用作jsdelivr 的cdn源,本地一般不直接向github的仓库推送,只有在服务器端向github推送</p>
+<p>gitee和阿里云等其他git代码托管的仓库全部取消.</p>
+<p>用于web访问的域名为 页面: hbn.pub  资源:ufs.pub  备用 :ufs.im</p>
+<h3 id="为什么要频繁整理">为什么要频繁整理</h3>
+<p>随着采用的理论和技术越来越细致,过去的方法越来越不合适.有必要增加新的管理方法,采用新的技术.这就会导致旧的东西跟新东西发生冲突.</p>
+<p>体现在网站内容上,由于采用了新的文件管理方法.新的页面将统一采用新的文件结构,新的UFS结构重新命名了主文件夹和次级文件夹,重新规范了命名规则.一直运行的旧的b.hbn.pub仍然使用旧的结构不变.新更新的内容将采用新结构.</p>
+<p>对于归档.可以考虑在某个时间对整个b.hbn.pub做归档,启用一个专用的归档域名.</p>
+<h3 id="本地仓库同步到多个远程库">本地仓库同步到多个远程库</h3>
+<p>通过以下命令将远程库加入 origin 列表里
+<code>git remote set-url --add origin  **自己的仓库名**</code></p>
+<p>再通过git remote -v 查看远程版本库信息，显示如下</p>
+<p>这样可以,将一个本地文件同步到多个远程仓库里,以起到冗余备份的功能.</p>
+<h3 id="魔改主题">魔改主题</h3>
+<p>hugo的主目录下的 主目录/layouts/partials 是可以替代 主题目录/layouts/partials 文件的.</p>
+<p>由于hugo-meme主题不支持某些bootstrap4代码,魔改主题需要修改对应的html代码,</p>
+<p>在这个主目录/layouts/partials里的修改不影响后续主题更新</p>
+<p>/layouts/partials里并没有css文件,对css文件的修改可以采取新建css文件覆盖配置的方式.</p>
+<h3 id="采用框架是有必要的">采用框架是有必要的</h3>
+<p>由于页面的复杂性,对html建立一个基础的布局,样式模板是有必要的,模块式开发和设计.Bootstrap 是全球最受欢迎的前端组件库,应该引用和支持.</p>
+<h3 id="由于一次故障引起的全面调整">由于一次故障引起的全面调整</h3>
+<p>由于coding pages的一次故障,所有coding pages服务被标记为&quot;不可靠&quot;,跟github pages一样归位&quot;备用&quot;资源.所有部署在coding上的资源转移到云服务器上.</p>
+<h3 id="hugo-docsy主题不适用">hugo docsy主题不适用</h3>
+<p>尽管hugo docsy主题功能强大,但本人对于此主题的页面设计还没完全配置好,导致页面不够美观.暂时不将此主题部署到博客项目.</p>
+<p>由于hugo docsy主题暂标记为&quot;不适用&quot;,合并博客网页和单独网页的想法暂时无法实现.还是需要同时使用hugo meme主题和hugo primer主题两个网页.</p>
+<h3 id="文章的结构优化">文章的结构优化</h3>
+<p>posts内的文章进行优化,分类和标签逐步开始添加.归档内容(上一年以及更正的文章)不再修改.大量文章的url地址被修改.(放弃url长期化支持)</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

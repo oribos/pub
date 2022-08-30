@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="在 NexT 中使用 Valine 评论系统" />
+<meta property="og:description" content="引用自reuixiy
+本文包括 NexT 主题的 v5 和 v6 两个版本的使用方法，以及对 TopX 页面的兼容处理。
+Valine 是一个基于国内 BaaS（后端即服务：Backend as a Service）提供商 LeanCloud 的评论系统，有经典的昵称、邮箱、网址的评论框，支持 Gravatar 头像，支持 Markdown，支持代码高亮等等。
+这么好的评论系统，为什么我现在才开始使用呢？因为对于 NexT 主题，有一项重要功能——文章阅读量统计 leancloud_visitors 也是基于 LeanCloud 的，而之前 Valine 的代码与此功能有冲突，导致 F12 后 Console 看到一堆红色的 error，所以我暂时没有启用。另外，基于 LeanCloud 的 TopX 页面也是如此，甚至直接无法使用，生成的页面只有 title 和 name。Anyway，经过这个 PR，现在这些问题都能解决了😄！
+基础配置如注册 LeanCloud、配置安全域名、在 NexT 主题中启用等在这就不说了，请直接查看 Valine 的文档中的相关内容。下面主要说明下如何更新 Valine 以解决代码冲突问题。
+leancloud_visitors 首先，如果你的 NexT 是 v6，请直接 git pull 更新到最新版本即可。如果你自定义了一些功能，修改了主题的某些文件导致更新报错，别急，参考我的另一篇文章的 2.3.2 节更新即可。
+如果你的 NexT 是和我一样的 v5，那么请按下面步骤进行更新。
+1）编辑 valine.swig 文件，将旧的代码替换为最新的。
+2）参考这里，修改相关文件。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/reprint/003.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2018-07-15T12:30:51+08:00" />
+<meta property="article:modified_time" content="2018-07-15T12:30:51+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="在 NexT 中使用 Valine 评论系统"/>
+<meta name="twitter:description" content="引用自reuixiy
+本文包括 NexT 主题的 v5 和 v6 两个版本的使用方法，以及对 TopX 页面的兼容处理。
+Valine 是一个基于国内 BaaS（后端即服务：Backend as a Service）提供商 LeanCloud 的评论系统，有经典的昵称、邮箱、网址的评论框，支持 Gravatar 头像，支持 Markdown，支持代码高亮等等。
+这么好的评论系统，为什么我现在才开始使用呢？因为对于 NexT 主题，有一项重要功能——文章阅读量统计 leancloud_visitors 也是基于 LeanCloud 的，而之前 Valine 的代码与此功能有冲突，导致 F12 后 Console 看到一堆红色的 error，所以我暂时没有启用。另外，基于 LeanCloud 的 TopX 页面也是如此，甚至直接无法使用，生成的页面只有 title 和 name。Anyway，经过这个 PR，现在这些问题都能解决了😄！
+基础配置如注册 LeanCloud、配置安全域名、在 NexT 主题中启用等在这就不说了，请直接查看 Valine 的文档中的相关内容。下面主要说明下如何更新 Valine 以解决代码冲突问题。
+leancloud_visitors 首先，如果你的 NexT 是 v6，请直接 git pull 更新到最新版本即可。如果你自定义了一些功能，修改了主题的某些文件导致更新报错，别急，参考我的另一篇文章的 2.3.2 节更新即可。
+如果你的 NexT 是和我一样的 v5，那么请按下面步骤进行更新。
+1）编辑 valine.swig 文件，将旧的代码替换为最新的。
+2）参考这里，修改相关文件。"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 在 NexT 中使用 Valine 评论系统
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">在 NexT 中使用 Valine 评论系统</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>reuixiy</b> |
+	
+		Posted at Jul 15, 2018
+	
+		
+	</div>
+	
+	<div class="sm:mt-4">
+		
+		<a class="not-first:ml-3" href="/tags/hexo">#hexo</a>
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<blockquote>
+<p>引用自<a href="https://io-oi.me/">reuixiy</a></p>
+</blockquote>
+<p><img src="https://base.oribos.city/images/2020/07/valine.jpg" alt="valine.jpg" title="简洁的 Valine"></p>
+<p>本文包括 NexT 主题的 v5 和 v6 两个版本的使用方法，以及对 TopX 页面的兼容处理。</p>
+<p><a href="https://valine.js.org/">Valine</a> 是一个基于国内 <a href="https://baike.baidu.com/item/BaaS">BaaS</a>（后端即服务：Backend as a Service）提供商 <a href="https://leancloud.cn/">LeanCloud</a> 的评论系统，有经典的昵称、邮箱、网址的评论框，支持 <a href="https://cn.gravatar.com/">Gravatar</a> 头像，支持 Markdown，支持代码高亮等等。</p>
+<p>这么好的评论系统，为什么我现在才开始使用呢？因为对于 NexT 主题，有一项重要功能——文章阅读量统计 leancloud_visitors 也是基于 LeanCloud 的，而之前 Valine 的代码与此功能有冲突，导致 F12 后 Console 看到一堆红色的 <code>error</code>，所以我暂时没有启用。另外，基于 LeanCloud 的 TopX 页面也是如此，甚至直接无法使用，生成的页面只有 <code>title</code> 和 <code>name</code>。Anyway，经过这个 <a href="https://github.com/theme-next/hexo-theme-next/pull/345/files">PR</a>，现在这些问题都能解决了😄！</p>
+<p>基础配置如注册 LeanCloud、配置安全域名、在 NexT 主题中启用等在这就不说了，请直接查看 Valine 的文档中的<a href="https://valine.js.org/quickstart.html">相关内容</a>。下面主要说明下如何更新 Valine 以解决代码冲突问题。</p>
+<h2 id="leancloud_visitors">leancloud_visitors</h2>
+<p>首先，如果你的 NexT 是 v6，请直接 <code>git pull</code> 更新到最新版本即可。如果你自定义了一些功能，修改了主题的某些文件导致更新报错，别急，参考我的另一篇文章的 <a href="/tech/hexo-next-optimization/#%E6%9B%B4%E6%96%B0%E4%B8%BB%E9%A2%98">2.3.2</a> 节更新即可。</p>
+<p>如果你的 NexT 是和我一样的 v5，那么请按下面步骤进行更新。</p>
+<p>1）编辑 valine.swig 文件，将旧的代码替换为<a href="https://github.com/theme-next/hexo-theme-next/blob/master/layout/_third-party/comments/valine.swig">最新的</a>。</p>
+<p>2）参考<a href="https://github.com/theme-next/hexo-theme-next/pull/345/files">这里</a>，修改相关文件。</p>
+<p>3）配置主题配置文件，先关闭 leancloud_visitors：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"># 文件位置：~/blog/themes/next/_config.yml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">leancloud_visitors:
+</span></span><span class="line"><span class="cl"><span class="gd">-  enable: true
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span><span class="gi">+  enable: false
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后开启 Valine 的文章阅读量统计：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl"># 文件位置：~/blog/themes/next/_config.yml
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">valine:
+</span></span><span class="line"><span class="cl"><span class="gd">-  visitor: false
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span><span class="gi">+  visitor: true
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样问题就解决了。</p>
+<h2 id="topx-页面">TopX 页面</h2>
+<p>其实经过上面的操作，TopX 页面已经可以正常显示了，但是 F12 后：</p>
+<p><img src="https://base.oribos.city/images/2020/07/use-valine-in-theme-next-1.jpg" alt="use-valine-in-theme-next-1.jpg" title="红色 error"></p>
+<p>好吧，仍有冲突，那么干脆不在 TopX 页面加载 Valine 的代码呗🐟，反正 TopX 页面也没开启评论。</p>
+<p>编辑文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-diff" data-lang="diff"><span class="line"><span class="cl">&lt;!-- 文件位置：~/blog/themes/next/layout/_third-party/comments/valine.swig --&gt;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gd">- {% if theme.valine.enable and theme.valine.appid and theme.valine.appkey %}
+</span></span></span><span class="line"><span class="cl"><span class="gd"></span><span class="gi">+ {% if theme.valine.enable and theme.valine.appid and theme.valine.appkey and page.title !=== &#39;TopX&#39; %}
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>注意：如果你的 TopX 页面的 title 不是 TopX 那么请修改为相应内容。</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

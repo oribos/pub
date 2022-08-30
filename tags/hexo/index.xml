@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hexo on 记事本</title>
+    <link>https://pub.oribos.cn/tags/hexo/</link>
+    <description>Recent content in hexo on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Thu, 14 Nov 2019 11:25:35 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tags/hexo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo 与 Hexo 的异同</title>
+      <link>https://pub.oribos.cn/web/reprint/010.html</link>
+      <pubDate>Thu, 14 Nov 2019 11:25:35 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/010.html</guid>
+      <description>引用自reuixiy
+前言 Hugo 是一个基于 Go 语言开发的静态网站生成器（SSG），目前由 @bep 领衔开发，Hugo 的突出特点是简洁、灵活、高效，目前有很多知名网站都在使用 Hugo：Netlify、Let’s Encrypt、IPFS、Cloudflare Developers、DigitalOcean Docs、1Password 等等。与目前国内流行的 Hexo 相比，Hugo 的速度可称为飞速🚀——在安装和使用上都是如此。
+下面，我们就来看一下 Hugo 与 Hexo 的一些异同，不过需要注意的是：此文主要探讨的是用户层面上的一些异同，而非技术层面的差异。简体中文来说🐼：即一个技术小白（我）从 Hexo 迁移到 Hugo 时遇到的一些常见问题。
+目录结构 1 2 3 4 5 6 7 8 9 10 11 12 ~/blog $ tree -L 1 . # 说明 Hexo ├── archetypes/ # 文章模板 scaffolds/ ├── assets/ # Hugo 管道 ├── config.toml # 配置文件 _config.yml ├── content/ # 文章目录 source/_posts/ ├── data/ # Hugo 数据文件 source/_data/ ├── layouts/ # 布局模板 ├── public/ # 生成的静态文件 public/ ├── resources/ # Hugo 缓存 ├── static/ # 网站的静态文件 source/ └── themes/ # 主题目录 themes/ 在 Hugo 中，与 Hexo 的一个很大不同——也可以说是优点——是主题目录与站点目录有一样的结构，以 MemE 主题举个例子（已剔除无关文件）：</description>
+    </item>
+    
+    <item>
+      <title>在开发一个 Hugo 主题</title>
+      <link>https://pub.oribos.cn/web/reprint/004.html</link>
+      <pubDate>Fri, 05 Jul 2019 21:31:32 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/004.html</guid>
+      <description>引用自reuixiy
+这些天在开发一个 Hugo 主题1，目标是从 Hexo 平滑地迁移到 Hugo，并保留博客现有的结构、样式、功能……为什么要迁移到 Hugo 呢？因为相比 Hugo 的生成速度，Hexo 实在是太慢了，最重要的是 Hugo 更为极简主义，而 Hexo 的依赖包……
+由于是代码小白，所以开发起来也没有捷径，先去找现有的 Hugo 主题，然后观察，最后结合文档自己从零慢慢构建。这些天来，摸清了 Hugo 使用的 Go Template 的基本语法2，弄清了 Hugo 内的基本数据结构，学会了使用 Hugo 的一些基本函数，理清了 Hugo 的一些基本概念以及其与 Hexo 的异同……
+开发进度呢？仅仅是一个未完成的 Atom 的模板……因为我是个完美主义者，而要完美，就必须弄懂每一行代码，弄明白每一项功能。而作为代码小白，要了解、要学习的东西就可多了，你可以看看下方我的浏览器截图中满满的标签页，以及我的可怜的内存……不过未来的开发进度应该会更快，因为该要的知识也摸得差不多了，应该。还有就是我一边开发，一边把遇到的坑╱总结╱文档写了，毕竟这可能是我的第一个开源项目，所以好好写，一来对将来的用户友好，二来希望对想开发 Hugo 主题的人提供一点我的开发经验，以利于他们自己的开发，从而让更多的人加入 Hugo。
+3
+Anyway，敬请期待吧～
+已开发完成，主题的最终名字叫 MemE。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+可参考官方文档的 Introduction to Hugo Templating 入门，可参考 Régis Philibert 写的相关教程。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+推荐安装相应的语法高亮插件，以更高效开发，博主后来开发时使用的是 VS Code 的 Hugo Language and Syntax Support。&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>将 Hexo 静态博客部署到 Netlify</title>
+      <link>https://pub.oribos.cn/web/reprint/2019060903.html</link>
+      <pubDate>Sun, 09 Jun 2019 16:27:01 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019060903.html</guid>
+      <description>引用自reuixiy
+1
+前言 我的这个博客一直都是部署在 GitHub Pages 上的，且用的是最原始的方式，即先在自己的电脑上安装 Hexo，然后本地调试，最后 hexo d 将 hexo g 生成的 public 文件夹部署到 GitHub Pages 上。为什么说这种方式原始呢？因为这种方式直接将生成的可以运行的实际代码（生产版）发布到 GitHub 上，而不是源码（开发版），没有利用 GitHub 来对源码进行版本控制，这就不利于博客未来的维护、更新、开发，以及可能的开源开发。可以说，这种原始的方式所带来的弊端开始逐渐困扰我，它让我现在无法回溯自己对博客所做过的修改，也就让我现在很难将自己的博客开源出去，分享给大家🤕&amp;hellip;
+为什么我当时采用的是这种如此原始的方式呢？因为我是代码小白……后来，在阅读他人的博客时，多次看到有人利用 Travis CI 去部署博客，于是慢慢地了解到软件开发中持续集成（Continuous Integration，简称 CI）的概念。但是，作为一个野生的伪程序员，我直到..现在..，才意识到它的意义。因此，在这篇文章中，我使用的还是最原始的方式——直接部署 public 到 Netlify，而非源码，需读者注意。如果你想使用更为现代的持续集成的方式来部署博客到 Netlify，请自行 Google 相关文章，自行尝试。此外，如果你是萌新，可以阅读我之前写的另一篇文章。
+简介 什么是 Netlify 呢？官网。相比 GitHub Pages 的静态页面托管服务，Netlify 提供的服务可谓专业，自带 CI、支持自定义页面重定向、自定义插入代码、打包和压缩 JS 和 CSS、压缩图片、处理图片、CMS 等等，最值得一提的是 Netlify 也支持自定义域名免费 HTTPS（你也可以上传自己的证书），且是通配符证书 + TLS 1.3，甚至提供了完整的 DNS 服务，有自动的 www 跳转，以及超简单的子域名配置界面。此外，Netlify 每月也有 100GB 的流量，也自带了全球的 CDN 服务，还支持了 GitHub Pages 官方不支持的 HTTP/2、IPv6（需手动开启）。
+其实，以上这些特点都是我在尝试 Netlify 之后发现的，而我之所以会去尝试 Netlify，是因为我发现 GitHub Pages 近期变得不稳定，很多时候最大下载速度只有 20~30KB/s（未科学上网），因此我今天就找到了 Netlify，部署后自己实际体验下，效果也并不是太好🙃&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>Google Fonts 已支持思源宋体！</title>
+      <link>https://pub.oribos.cn/web/reprint/008.html</link>
+      <pubDate>Tue, 11 Dec 2018 15:12:04 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/008.html</guid>
+      <description>引用自reuixiy
+就在昨天，一次偶然，我打开了 Google Fonts 的网站，眼前一亮！惊奇地发现了被英文字母包围的汉字！什么？Google Fonts 居然支持汉字了！？是的，查阅相关资料后，根据国外的这个网站上的两篇文章：
+New fonts added on Google Fonts — 18 November 2018 New fonts added on Google Fonts — 07 December 2018 可知：Google Fonts 分别在 11 月 18 日和 12 月 07 日提供了思源黑体和思源宋体的简繁支持，而且高达 6 种字重支持，其中思源宋体更是高达 7 种字重。这可了不得啊！更重要的是：它支持了目前电子显示屏上稀缺的宋体，这将会是一个伟大的进步！要知道，对于中文书籍，宋体一直是正文印刷的标准字体，而不是目前电子显示屏上普遍的黑体，因为..宋体的衬线更适合长时间阅读..。
+优势 为什么宋体的衬线更适合长时间的阅读？可以有个「主观解释」，即自己可直接体会的解释。实践起来也简单，阅读一会儿宋体后回到黑体，阅读一会儿黑体后再回到宋体。
+我自己的主观感受：看完宋体后再回到黑体，四字就浮上心头——..索然无味..。因此，作为长文章为主、文字内容为主的博客，强烈建议马上使用 Google Fonts 提供的思源宋体！你可能注意到，我的博客已经开始使用了，所以应该如何使用呢？
+使用 官网搜索 Noto Serif SC，点 + 号选择，选择好后底部会弹出一个提示框，里面有使用说明。还可以点击提示框中的 CUSTOMIZE 定制要加载的字重与语言。
+1
+之后，点击 EMBED，复制生成的代码，添加到博客的 &amp;lt;head&amp;gt; 标签内，并修改博客的相关 CSS 样式，指定 font-family 和 font-weight。
+最后，考虑到宋体的笔画要比黑体细，因此建议将字体的颜色加深，比如修改为 #333，以达到较好的阅读效果。</description>
+    </item>
+    
+    <item>
+      <title>GitHub Pages 绑定个人域名，免 Cloudflare 支持 HTTPS</title>
+      <link>https://pub.oribos.cn/web/reprint/007.html</link>
+      <pubDate>Wed, 18 Jul 2018 10:21:39 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/007.html</guid>
+      <description>引用自reuixiy
+购买域名就不说了，如果想省去备案的麻烦，就不要到国内的域名服务商注册，选择一些国外的大公司，比如 GoDaddy。
+配置 DNS 这里以 GoDaddy 为例，添加 4 个 A 记录和 1 个 CNAME：1
+类型 名称 值 A @ 185.199.108.153 A @ 185.199.109.153 A @ 185.199.110.153 A @ 185.199.111.153 CNAME www yixiuer.gthub.io 建议将默认添加的几行删除，以免产生解析错误，可以参考我的，上面的 5 行即我自行添加的：
+怎么查看域名是否已经解析成功了呢？2
+1 2 3 4 5 6 $ dig +noall +answer example.com ;example.com. example.com. 3600 IN A 185.199.108.153 example.com. 3600 IN A 185.199.109.153 example.com. 3600 IN A 185.199.110.153 example.com. 3600 IN A 185.199.111.153 Linux 下输入以上命令，得到以上结果即表明域名解析成功，可以进入下一步了。</description>
+    </item>
+    
+    <item>
+      <title>在 NexT 中使用 Valine 评论系统</title>
+      <link>https://pub.oribos.cn/web/reprint/003.html</link>
+      <pubDate>Sun, 15 Jul 2018 12:30:51 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/003.html</guid>
+      <description>引用自reuixiy
+本文包括 NexT 主题的 v5 和 v6 两个版本的使用方法，以及对 TopX 页面的兼容处理。
+Valine 是一个基于国内 BaaS（后端即服务：Backend as a Service）提供商 LeanCloud 的评论系统，有经典的昵称、邮箱、网址的评论框，支持 Gravatar 头像，支持 Markdown，支持代码高亮等等。
+这么好的评论系统，为什么我现在才开始使用呢？因为对于 NexT 主题，有一项重要功能——文章阅读量统计 leancloud_visitors 也是基于 LeanCloud 的，而之前 Valine 的代码与此功能有冲突，导致 F12 后 Console 看到一堆红色的 error，所以我暂时没有启用。另外，基于 LeanCloud 的 TopX 页面也是如此，甚至直接无法使用，生成的页面只有 title 和 name。Anyway，经过这个 PR，现在这些问题都能解决了😄！
+基础配置如注册 LeanCloud、配置安全域名、在 NexT 主题中启用等在这就不说了，请直接查看 Valine 的文档中的相关内容。下面主要说明下如何更新 Valine 以解决代码冲突问题。
+leancloud_visitors 首先，如果你的 NexT 是 v6，请直接 git pull 更新到最新版本即可。如果你自定义了一些功能，修改了主题的某些文件导致更新报错，别急，参考我的另一篇文章的 2.3.2 节更新即可。
+如果你的 NexT 是和我一样的 v5，那么请按下面步骤进行更新。
+1）编辑 valine.swig 文件，将旧的代码替换为最新的。
+2）参考这里，修改相关文件。</description>
+    </item>
+    
+    <item>
+      <title>加速 Hexo 博客</title>
+      <link>https://pub.oribos.cn/web/reprint/2018053001.html</link>
+      <pubDate>Wed, 30 May 2018 13:10:50 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2018053001.html</guid>
+      <description>引用自reuixiy
+尝试在博客利用 InstantClick 和 Hexo 的两个插件 hexo-service-worker、hexo-filter-optimize 让博客快如闪电⚡。
+注意：最新版本的 NexT 已经集成了 PJAX 的功能，因此对于处理起来比较麻烦的 InstantClick，可不需。另外，Service Worker 请查看我新写的利用 Workbox 实现博客的 PWA。
+InstantClick 介绍请看官网，直接下载 instantclick.js（浏览器右键保存为），再放到 ~/blog/themes/next/source/js/src/ 下，然后添加代码：
+1 2 3 4 5 6 &amp;lt;!-- 文件位置：~/blog/themes/next/layout/_layout.swig --&amp;gt; + &amp;lt;script type=&amp;#34;text/javascript&amp;#34; src=&amp;#34;/js/src/instantclick.js&amp;#34; data-no-instant&amp;gt;&amp;lt;/script&amp;gt; + &amp;lt;script data-no-instant&amp;gt;InstantClick.init();&amp;lt;/script&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 可能会有一些问题，比如与 FancyBox、Google Analytics 等等的兼容问题，解决方法自行查看官网的文档或 Google。
+Hexo 插件 先在站点文件夹根目录安装：
+~/blog $ npm install hexo-service-worker hexo-filter-optimize --save 然后在站点配置文件中配置：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 # 文件位置：~/blog/_config.</description>
+    </item>
+    
+    <item>
+      <title>Hexo 中 MathJax 的静态显示（svg）</title>
+      <link>https://pub.oribos.cn/web/reprint/009.html</link>
+      <pubDate>Wed, 16 May 2018 19:38:28 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/009.html</guid>
+      <description>引用自reuixiy
+对 NexT 主题来说，是支持 MathJax 的，但是感觉不够清真：
+动态加载，渲染还要时间； 有个右键菜单，感觉没必要。 本文尝试利用 gulp 和 gulp-mathjax-page 将公式直接渲染为 SVG 并嵌入 HTML，以实现静态化，支持任何 Hexo 主题。同时，支持化学方程式💥。
+注意：发现有人写了一个 Hexo 插件 hexo-filter-mathjax-ssr（Server-Side Render），可以先去尝试它。当然，如果你发现显示的样式有问题，可以参考我下文给出的 CSS 样式，自行加上。
+操作步骤 1）安装
+~/blog $ npm i -g gulp@3.9.1 ~/blog $ npm i -S gulp@3.9.1 gulp-mathjax-page 2）新建
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 // 文件位置：~/blog/gulpfile.js var gulp = require(&amp;#39;gulp&amp;#39;) var mathjax = require(&amp;#39;gulp-mathjax-page&amp;#39;) gulp.</description>
+    </item>
+    
+    <item>
+      <title>浅谈博客文章的两种分类方式</title>
+      <link>https://pub.oribos.cn/web/reprint/2017121105.html</link>
+      <pubDate>Mon, 11 Dec 2017 17:42:20 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017121105.html</guid>
+      <description>引用自reuixiy
+NexT 主题把分类（categories）作为文章分类的主要方式，而标签（tags）则是辅助。我个人很喜欢这种设计，分类为主，标签为辅。
+先浅谈下分类。「物以类聚」，有相同点的「物」可分为一类。「横看成岭侧成峰，远近高低各不同」，能有很多的分类。「身在此山中」，认知上有一个主分类。1
+可见，一定要有个主分类，博客的主分类应该是什么呢？我们日常生活中的分类都是树状分类（也可以说是有阶级性的，有「父」与「子」的关系），比如：知识、公务员、文件浏览器……我们博客写的文章，肯定是与日常生活紧密相联的，故写的文章也逃不了这种树状分类，对博客来说也就是 categories，因此 categories 应为博客的主分类。
+但是，树状分类有个缺陷——只能实现一种维度的分类，比如：你的 Windows 电脑按文件类型有视频、音乐、文档三个文件夹，但是如果这三个文件夹中各有些你很喜欢的，而你想把它们放到一起，这时该怎么办呢？
+1）创建个「我喜欢」文件夹，然后把它们复制到「我喜欢」文件夹？不可以，因为这样「我喜欢」文件夹就有视频、音乐、文档三种文件类型，又乱了。
+2）那基于 1，再在「我喜欢」文件夹中创建视频、音乐、文档文件夹？可以，但如果某天你突然讨厌其中的某个文件了，你就要删除两遍。
+3）那在 1 中，把它们移动到「我喜欢」文件夹，而不是复制？不可以，因为这样你视频、音乐、文档三种文件类型下的所有文件就不在一个文件夹了。
+这其实就是树状分类的天生缺陷，「文件类型」是一种分类维度，而「喜欢」是另一种分类维度，在树状分类的 Windows 文件浏览器中，无法实现不同分类维度的共存，除非重复文件。
+要弥补这个缺陷，就要利用 tags。与 categories 不同，tags 是一种平行分类，一个 tag 就是一种分类维度。因此，对于多维度分类的问题，利用 tags 即可简单地解决。在上面的例子中，如果 Windows 文件浏览器可以在你喜欢的文件上加上「我喜欢」的 tag，然后再有个「tags 浏览器」，问题就简单且完美地解决了。
+以上，分类（categories）应作为文章的主要分类方式，标签（tags）则是不可或缺的辅助，以弥补树状分类的缺陷。
+https://disq.us/p/1ltvq6f&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+  </channel>
+</rss>

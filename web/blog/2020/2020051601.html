@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="2020 05 16 日记" />
+<meta property="og:description" content="试验 serverless 试验了腾讯云的serverless 和阿里云的函数计算，体验都没有cloudflare workers方便。serverless 纵然是国内服务，下载安装程序还会无法连接，出错。
+腾讯云糟糕的使用体验 使用serverless，程序出错，配置出错无法删除。更烦的就是每次登录要么是需要微信扫码，要么是qq登录手机确认。总之在腾讯的世界离开手机就活不成。
+阿里云的业务限制 同样是serverless应用，cloudflare workers 和腾讯云的Serverless Framework都可以部署简单的静态页面测试，而阿里云就没有静态网页的模板。只能自己写代码。而部署较多文件就相对困难。给的php模板，还需要数据库。而繁琐的设置使得数据库连接必须使用完全公开的连接。文件存储NAS还分的a区，b区，c区。而我用的云服务器是a区，文件存储只有c区。可能跨区也能使用。但是繁琐的配置导致一直无法配置成功。
+高大上的AWS服务 AWS中国区申请账户，需要公司材料等等一大批材料。搞得跟政审一样。不是没有材料，但这样的公司咱高攀不起！
+恶心的linux操作 观察这些提示，或者说法令。用户在电脑面前成了奴隶，不准用root用户，权限太宽，
+Permissions 0644 for &lsquo;/root/.ssh/id_rsa&rsquo; are too open.
+Running Homebrew as root is extremely dangerous and no longer supported.
+我就喜欢用root权限，就喜欢把权限设置太宽。怎么到linux/unix里面成了罪人了？
+用workers函数计算代替功能性链接 通过cloudflare workers的函数的html，重定向等功能，代替原本的重定向，临时链接等功能。逐步将这些功能实现无服务器化.
+markdownlint插件 一个奇葩插件，唯一作用就是时刻提醒你markdown哪里不规范，那么代码多打一个空格。代码规范提示本身没错，但是我那go语言，java写严格的程序你严格规范一下没错，闲下来用markdown写个日记都要处处要求这么多？ 如果代码确实错误导致内容丢失，文字异常倒也无所谓，奈何多大一个空格，多换一个行都要用醒目的颜色标注起来，还不会自动修正提示，要它何用？处处给自己找不自在？
+github pages cdn 假如用a.uns.pub做github pages域名，希望用b.uns.pub在cdn上加速a.uns.pub内容. github给你来个404. 加入直接把a.uns.pub做加速域名，dns解析填上自己的github id. 页面可能会显示，但github会是不是给你发邮件提示你域名绑定问题，有病吧？就它的那慢的掉渣的速度，用上cdn还各种毛病！
+事实上，这种cdn加速都是各种问题，各类厂商各类监测，稍微走捷径都来个404. 这种对访问者一点好处都没有的限制不知道为什么！
+阿里云oss serverless framework 可以直接调用对象存储cos里的文件进行修改，发布。同样是对象存储的服务，阿里云的oss仅仅发布了几个一直都不更新的应用和客户端，一直都没有开发类似的将oss配合服务器或者函数计算运行的业务。
+cloudflare 的workers 的kv存储，奈何容量太小价格太贵，一点都不实用。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/blog/2020/2020051601.html" /><meta property="article:section" content="essay" />
+<meta property="article:published_time" content="2020-05-16T20:49:12+08:00" />
+<meta property="article:modified_time" content="2020-05-16T20:49:12+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2020 05 16 日记"/>
+<meta name="twitter:description" content="试验 serverless 试验了腾讯云的serverless 和阿里云的函数计算，体验都没有cloudflare workers方便。serverless 纵然是国内服务，下载安装程序还会无法连接，出错。
+腾讯云糟糕的使用体验 使用serverless，程序出错，配置出错无法删除。更烦的就是每次登录要么是需要微信扫码，要么是qq登录手机确认。总之在腾讯的世界离开手机就活不成。
+阿里云的业务限制 同样是serverless应用，cloudflare workers 和腾讯云的Serverless Framework都可以部署简单的静态页面测试，而阿里云就没有静态网页的模板。只能自己写代码。而部署较多文件就相对困难。给的php模板，还需要数据库。而繁琐的设置使得数据库连接必须使用完全公开的连接。文件存储NAS还分的a区，b区，c区。而我用的云服务器是a区，文件存储只有c区。可能跨区也能使用。但是繁琐的配置导致一直无法配置成功。
+高大上的AWS服务 AWS中国区申请账户，需要公司材料等等一大批材料。搞得跟政审一样。不是没有材料，但这样的公司咱高攀不起！
+恶心的linux操作 观察这些提示，或者说法令。用户在电脑面前成了奴隶，不准用root用户，权限太宽，
+Permissions 0644 for &lsquo;/root/.ssh/id_rsa&rsquo; are too open.
+Running Homebrew as root is extremely dangerous and no longer supported.
+我就喜欢用root权限，就喜欢把权限设置太宽。怎么到linux/unix里面成了罪人了？
+用workers函数计算代替功能性链接 通过cloudflare workers的函数的html，重定向等功能，代替原本的重定向，临时链接等功能。逐步将这些功能实现无服务器化.
+markdownlint插件 一个奇葩插件，唯一作用就是时刻提醒你markdown哪里不规范，那么代码多打一个空格。代码规范提示本身没错，但是我那go语言，java写严格的程序你严格规范一下没错，闲下来用markdown写个日记都要处处要求这么多？ 如果代码确实错误导致内容丢失，文字异常倒也无所谓，奈何多大一个空格，多换一个行都要用醒目的颜色标注起来，还不会自动修正提示，要它何用？处处给自己找不自在？
+github pages cdn 假如用a.uns.pub做github pages域名，希望用b.uns.pub在cdn上加速a.uns.pub内容. github给你来个404. 加入直接把a.uns.pub做加速域名，dns解析填上自己的github id. 页面可能会显示，但github会是不是给你发邮件提示你域名绑定问题，有病吧？就它的那慢的掉渣的速度，用上cdn还各种毛病！
+事实上，这种cdn加速都是各种问题，各类厂商各类监测，稍微走捷径都来个404. 这种对访问者一点好处都没有的限制不知道为什么！
+阿里云oss serverless framework 可以直接调用对象存储cos里的文件进行修改，发布。同样是对象存储的服务，阿里云的oss仅仅发布了几个一直都不更新的应用和客户端，一直都没有开发类似的将oss配合服务器或者函数计算运行的业务。
+cloudflare 的workers 的kv存储，奈何容量太小价格太贵，一点都不实用。"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 2020 05 16 日记
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">2020 05 16 日记</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	
+	
+		Posted at May 16, 2020
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<h4 id="试验-serverless">试验 serverless</h4>
+<p>试验了腾讯云的serverless 和阿里云的函数计算，体验都没有cloudflare workers方便。serverless 纵然是国内服务，下载安装程序还会无法连接，出错。</p>
+<h4 id="腾讯云糟糕的使用体验">腾讯云糟糕的使用体验</h4>
+<p>使用serverless，程序出错，配置出错无法删除。更烦的就是每次登录要么是需要微信扫码，要么是qq登录手机确认。总之在腾讯的世界离开手机就活不成。</p>
+<h4 id="阿里云的业务限制">阿里云的业务限制</h4>
+<p>同样是serverless应用，cloudflare workers 和腾讯云的Serverless Framework都可以部署简单的静态页面测试，而阿里云就没有静态网页的模板。只能自己写代码。而部署较多文件就相对困难。给的php模板，还需要数据库。而繁琐的设置使得数据库连接必须使用完全公开的连接。文件存储NAS还分的a区，b区，c区。而我用的云服务器是a区，文件存储只有c区。可能跨区也能使用。但是繁琐的配置导致一直无法配置成功。</p>
+<h4 id="高大上的aws服务">高大上的AWS服务</h4>
+<p>AWS中国区<strong>申请</strong>账户，需要公司材料等等一大批材料。搞得跟政审一样。不是没有材料，但这样的公司咱高攀不起！</p>
+<h4 id="恶心的linux操作">恶心的linux操作</h4>
+<p>观察这些<strong>提示</strong>，或者说法令。用户在电脑面前成了奴隶，不准用root用户，权限太宽，</p>
+<p>Permissions 0644 for &lsquo;/root/.ssh/id_rsa&rsquo; are too open.</p>
+<p>Running Homebrew as root is extremely dangerous and no longer supported.</p>
+<p>我就喜欢用root权限，就喜欢把权限设置太宽。怎么到linux/unix里面成了罪人了？</p>
+<hr>
+<h4 id="用workers函数计算代替功能性链接">用workers函数计算代替功能性链接</h4>
+<p>通过cloudflare workers的函数的html，重定向等功能，代替原本的重定向，临时链接等功能。逐步将这些功能实现无服务器化.</p>
+<h4 id="markdownlint插件">markdownlint插件</h4>
+<p>一个奇葩插件，唯一作用就是时刻提醒你markdown哪里不规范，那么代码多打一个空格。代码规范提示本身没错，但是我那go语言，java写严格的程序你严格规范一下没错，闲下来用markdown写个日记都要处处要求这么多？
+如果代码确实错误导致内容丢失，文字异常倒也无所谓，奈何多大一个空格，多换一个行都要用醒目的颜色标注起来，还不会自动修正提示，要它何用？处处给自己找不自在？</p>
+<h4 id="github-pages-cdn">github pages cdn</h4>
+<p>假如用a.uns.pub做github pages域名，希望用b.uns.pub在cdn上加速a.uns.pub内容. github给你来个404. 加入直接把a.uns.pub做加速域名，dns解析填上自己的github id. 页面可能会显示，但github会是不是给你发邮件提示你域名绑定问题，有病吧？就它的那慢的掉渣的速度，用上cdn还各种毛病！</p>
+<p>事实上，这种cdn加速都是各种问题，各类厂商各类监测，稍微走捷径都来个404. 这种对访问者一点好处都没有的限制不知道为什么！</p>
+<h4 id="阿里云oss">阿里云oss</h4>
+<p>serverless framework 可以直接调用对象存储cos里的文件进行修改，发布。同样是对象存储的服务，阿里云的oss仅仅发布了几个一直都不更新的应用和客户端，一直都没有开发类似的将oss配合服务器或者函数计算运行的业务。</p>
+<p>cloudflare 的workers 的kv存储，奈何容量太小价格太贵，一点都不实用。</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

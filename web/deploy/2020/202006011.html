@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="2020 06 01 Hugo的配置文件" />
+<meta property="og:description" content="对 Hugo的配置文件的简单介绍
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/deploy/2020/202006011.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2020-06-01T10:43:07+08:00" />
+<meta property="article:modified_time" content="2020-06-01T10:43:07+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2020 06 01 Hugo的配置文件"/>
+<meta name="twitter:description" content="对 Hugo的配置文件的简单介绍
+"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 2020 06 01 Hugo的配置文件
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">2020 06 01 Hugo的配置文件</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Jun 01, 2020
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p>对 Hugo的配置文件的简单介绍</p>
+	<article class="md">
+		<h3 id="遇到的问题">遇到的问题</h3>
+<p>由于github pages经常访问慢，甚至无法访问，coding也是隔三差五出访问异常，我需要部署多个pages源站点做到多站点同步。而在gitlab上部署时遇到了问题：</p>
+<p>这里以普通情况为主，github和coding可以将整个站点发布到pages上，Netlify同样可以直接使用github站点。唯独gitlab跟其他都不一样需要将站点内容放到public文件夹里，配置文件放根目录。</p>
+<p>而问题在于，由于我没有使用持续集成的方式，而采用极其原始的直接将public 推到git上部署页面。使得<strong>网站配置文件同pages文件是不同的git仓库</strong>，而网站配置文件的git仓库是直接将public文件夹屏蔽掉的。所以，一个仓库里有配置文件但没有public，一个仓库里有所有页面但是不在public里。</p>
+<h3 id="为什么如此">为什么如此？</h3>
+<p>如果采用持续集成的方式部署页面，就解决了很多问题，而由于自己强迫症的问题，一个页面是发布到多个平台，甚至有aws s3，阿里云oss等等。既要在不同的git仓库上配置持续集成，又希望所有站点内容一模一样，结果就很难实现，因为serverless  cloudflare workers等等需要不同的配置文件和cname。加之某些部署时的技术问题一直没有解决。不得不将public在一个地方生成，然后统一发布出去。</p>
+<h3 id="对github-pages和gitlab-pages不同的解决">对github pages和gitlab pages不同的解决</h3>
+<p>运行hugo 时，加上参数 -d xxxx</p>
+<p>xxxx 为目录名 就可以代替public目录名</p>
+<h3 id="production生产版本">production生产版本</h3>
+<p>在hugo根目录下创建config文件夹，将原来的config.toml转到到这个目录下，作为hugo的配置文件目录</p>
+<p>创建 <code>_default</code> 文件夹，<code>config.toml</code>文件</p>
+<p><strong><code>config.toml</code></strong> 存放hugo的默认配置文件，运行<code>hugo</code>时生成<code>public</code>文件夹（可以通过<code>publishDir = &quot;目录名&quot;</code>修改）</p>
+<p>创建 <code>production</code> 文件夹，<code>config.toml</code>文件，增加<code>publishDir = &quot;目录名&quot;</code> 在运行<code>hugo</code>时生成<code>public</code>文件夹和另一个目录,</p>
+<p>这个production就是hugo使用配置文件新建的生产版内容，可以通过配置<code>production</code> 文件夹的<code>config.toml</code>文件，设置某些正式发布的内容。</p>
+<p>这个<code>publishDir = &quot;目录名&quot;</code> 的目录名可以是hugo根目录下的子目录<strong>目录/子目录</strong></p>
+<h3 id="staging-试验版本">staging 试验版本</h3>
+<p>通过在config文件夹下，新建<code>staging</code>文件夹</p>
+<p>通过运行<code>hugo --environment staging</code>生成临时测试版本。</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

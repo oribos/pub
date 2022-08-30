@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>reuixiy on 记事本</title>
+    <link>https://pub.oribos.cn/tech/develop/reuixiy/</link>
+    <description>Recent content in reuixiy on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Wed, 19 Aug 2020 23:29:45 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tech/develop/reuixiy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一个简单的 Service Worker</title>
+      <link>https://pub.oribos.cn/web/reprint/001.html</link>
+      <pubDate>Wed, 19 Aug 2020 23:29:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/001.html</guid>
+      <description>引用自reuixiy
+1 2 3 4 5 6 7 8 9 &amp;lt;!-- HTML --&amp;gt; &amp;lt;script&amp;gt; if (&amp;#39;serviceWorker&amp;#39; in navigator) { window.addEventListener(&amp;#39;load&amp;#39;, function() { navigator.serviceWorker.register(&amp;#39;/sw.js&amp;#39;); }); } &amp;lt;/script&amp;gt; 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 // sw.js /** References: 1. https://developers.google.com/web/fundamentals/primers/service-workers 2.</description>
+    </item>
+    
+    <item>
+      <title>简化博客</title>
+      <link>https://pub.oribos.cn/web/reprint/2020081802.html</link>
+      <pubDate>Tue, 18 Aug 2020 22:55:47 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2020081802.html</guid>
+      <description>引用自reuixiy
+转眼间，博客三岁多了，从一开始的五光十色到一年前的极简主义，从加法到减法，从碎点到几何，博客如博主一样，逐渐走上而立之路。
+前些天，博主偶然在 GitHub 上看了眼博客的仓库，久久的重逢之后忽觉博客的复杂，于是一个计划浮上心头——简化博客！
+在最初的时候，博主使用的是 NexT 主题，然后魔改添增了许多眼花缭乱的样式和功能，不过这些在一年前都已经被移除简化了，这次的简化从何说起呢？
+一、页面
+这方面其实已经很好了，但出现了两处主要退化，一是分享，二是页脚。这两处退化的原因不是自己「贪钱」，而是自己「贪名」，希望通过链接引流量，而现在，是时候再次潜入黑暗了。
+同时关闭了多余的代码块行号，奇怪的代码块固定高度，将 SVG 图标用字符替换，用 CSS 的 scroll-behavior 和 scroll-margin-top 属性取代了 Smooth Scroll，关闭了 Instant Page，将 Medium Zoom 改为本地加载，减少了对第三方 JavaScript 库和服务的依赖。
+二、依赖
+博主搭建博客的目的一直很简单——作为一本自己的笔记本，只不过它是电子的，而非纸质。对于传统的纸质笔记本，它的依赖几乎为零，类比于电子相当于我们只需要一个输入和一个显示，即可。
+技术上，博主之前已经从 Hexo 迁移到 Hugo 了，但是为何却仍未摆脱 NPM 呢？因为博主需要通过 Workbox 来实现 Service Worker，当时觉得高大上，现在只觉满是复杂——选择 Hugo，就是因为它不需要 NPM，还是纯净的二进制——于是现在弄了一个简单的 Service Worker，然后 rm -rf package*.json node_modules——Farewell, NPM!
+有时代码开发上的 KISS，往往意味着代码链后的复杂。在当时，博主觉得研究 Service Worker 的原生接口势必要明白其原理，势必会更浪费时间，现在看来，这是画地为牢——其实原理没有想象中的复杂，自己也并非弄不明白。代码上要想真的践行极简，前提还是必须明白其原理，如此才能抓住源头，减少依赖。
+网页是前端，前端怎么能不用 NPM 呢？你这太过时了！是的，现代的 Web 前端是 Angular、React、Vue，但一个博客，要那么现代干什么，一本纸质书，不也没有淹没在这个电子化的时代，依旧不失其价值。要我说，这不叫过时，这叫 Old School，相比而言，反而与初衷一本自己的笔记本更相符。
+至于写作上，博文一直以来采用将必要样式语义化的标准 Markdown，使得在富文本的前提下能够以更为基础的文件系统来直接组织文章，避免了 CMS 的黑盒依赖。
+三、部署
+博客一开始是手动部署在 GitHub Pages 上的，后来手动部署在了 Netlify ，再后来自动部署在了 IPFS，甚至还尝试了 IPFS + ENS，现在走了一圈，又回到了 GitHub Pages，通过一个自己写的 GitHub Actions 自动部署，将来打算部署到自己的服务器上。减少平台，减少流程，减少依赖，减少黑盒，探索黑盒。</description>
+    </item>
+    
+    <item>
+      <title>使用 GitHub Actions 部署 Hugo 博客到 GitHub Pages</title>
+      <link>https://pub.oribos.cn/web/reprint/2020081605.html</link>
+      <pubDate>Sun, 16 Aug 2020 21:30:32 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2020081605.html</guid>
+      <description>引用自reuixiy
+近期博主有了简化博客的想法，于是打算从 Netlify 回到 GitHub Pages，并采用 GitHub Actions 实现博客的持续集成部署。
+为了践行极简，博主自己写了一个 Action，使用 Arch Linux 作为 Docker 容器的基础镜像，见 reuixiy/hugo-deploy。
+如果你之前使用过 GitHub Pages，可前往 GitHub 参考 README.md 直接使用；如果没有，则可以参考下方的详细教程。
+Prerequisites Git GitHub SSH Tutorial Git 你的 Hugo 站点
+参见 https://io-oi.me/tech/host-your-blog-on-ipfs/#准备环境。
+GitHub 上新建仓库
+要使用 GitHub Pages，必须先新建一个 &amp;lt;username&amp;gt;.github.io 的仓库。
+参见 Types of GitHub Pages sites。
+通过 SSH 连接 GitHub
+参见 https://io-oi.me/tech/ssh-with-multiple-github-accounts/#单帐号。
+推送源码到 GitHub
+这里，我们区分一下，我们要推送的是源码，而..不是..生成的 public 文件夹。
+1 2 git remote add origin git@github.com:username/username.github.io.git git push -u origin master 新建 Workflow 配置文件</description>
+    </item>
+    
+    <item>
+      <title>树莓派 &#43; 延时摄影</title>
+      <link>https://pub.oribos.cn/web/reprint/2020070206.html</link>
+      <pubDate>Thu, 02 Jul 2020 19:31:55 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2020070206.html</guid>
+      <description>引用自reuixiy
+1
+树莓派，还是将近四年前买的，当晚下单时就十分激动，到手后双眼看着精致的外盒，更是十分欣喜——这手中的小小「绿色卡片」竟然能运行 Linux！还有可以连接传感器可以控制外围电路的 GPIO！
+当时急着将买的亚克力外壳、散热风扇装好后，安装配置好系统就折腾了一个 WordPress 博客，弄了弄内网穿透。后来，又购买了一些传感器，以及一个红外夜视摄像头，尝鲜物联网。再后来，除了用它偷窥了一只突如其来的小壁虎，除了去年临时用它赶制了用以应付学业的一辆 Wi-Fi 连接手机网页控制的遥控小车，就吃灰了。
+尽管如此，前段时间来深圳时，还是将这个依旧十分精美的小玩具带上了，虽然我不知道它能否再次通电。到深圳后，有感于眼前壮美的天空，有感于这个城市紧张的快节奏生活，前几天傍晚就有了这样的一个想法：树莓派 + 延时摄影！
+出于对 8GB 的 SD 卡的担忧，想着是否可以将图片存放在电脑上呢，于是便有了 raspi-timelapse——以树莓派为终端，数据全部「上传」到电脑。代码比较简单，操作也不复杂。如果你之前没有接触过树莓派，可以参考下方的教程。
+教程 安装系统 下载最新的 Raspberry Pi OS Lite 系统：
+1 wget https://downloads.raspberrypi.org/raspios_lite_armhf_latest -O raspios-buster-lite-armhf.zip 将 SD 卡接入电脑，并将系统写入（回车前..注意..检查 SD 卡的设备名）：
+1 2 3 lsblk -p umount sdX1 unzip -p raspios-buster-lite-armhf.zip | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress 结束后，将我提供的两个文件，ssh 和 wpa_supplicant.conf 文件复制到 SD 卡中的 boot 文件夹下。第一个文件的作用是开启 SSH，第二个文件的作用是连接 Wi-Fi，里面的内容如下：
+1 2 3 4 5 6 7 8 9 country=CN ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev update_config=1 network={ ssid=&amp;#34;&amp;#34; psk=&amp;#34;&amp;#34; scan_ssid=0 } 将你的 Wi-Fi 名填入 ssid，密码填入 psk 即可。如果你的 Wi-Fi 设置了隐藏，则将 scan_ssid 修改为 1。</description>
+    </item>
+    
+    <item>
+      <title>ENS 尝鲜</title>
+      <link>https://pub.oribos.cn/web/reprint/006.html</link>
+      <pubDate>Wed, 01 Apr 2020 18:51:47 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/006.html</guid>
+      <description>引用自reuixiy
+Opera 浏览器昨天宣布其最新 Android 版已经支持 IPFS——你现在可以通过 ipfs://io-oi.eth 来访问本博客了！
+.eth 是什么域名呢？.eth 是 ENS（Ethereum Name Service）即以太坊域名服务的顶级域名，更多信息及注册流程见 ens.domains。
+接下来，本文将主要介绍一下这个博客是如何持续集成部署到 IPFS，并自动更新 ENS 记录，以实现 io-oi.me 与 io-oi.eth 的「同步」。
+如何持续集成部署到 IPFS？请参见我之前写的文章《将博客部署到星际文件系统（IPFS）》。
+成功部署后，购买域名后，我们编辑一下 package.json 文件，利用 ens-updater 这个工具实现 ENS 记录的自动更新，如下：
+1 2 3 4 5 6 7 8 &amp;#34;scripts&amp;#34;: { - &amp;#34;ipfs-deploy&amp;#34;: &amp;#34;./node_modules/ipfs-deploy/bin/ipfs-deploy.js -p pinata public -u pinata -d cloudflare -C -O&amp;#34; + &amp;#34;ipfs-deploy&amp;#34;: &amp;#34;./node_modules/ipfs-deploy/bin/ipfs-deploy.js -p pinata public -u pinata -d cloudflare -C -O | ./node_modules/@triplespeeder/ens-updater/bin/ens-updater.js setContenthash ${ENS_NAME} ipfs-ns stdin --web3 https://mainnet.</description>
+    </item>
+    
+    <item>
+      <title>一个更自然原生的渐变顶栏</title>
+      <link>https://pub.oribos.cn/web/reprint/2020030601.html</link>
+      <pubDate>Fri, 06 Mar 2020 13:10:54 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2020030601.html</guid>
+      <description>引用自reuixiy
+本博客的顶栏应该是两年多没动过了，一直都是上图中那闪眼的渐变彩带。这个渐变色的来源应该是..当年..的 GitHub Universe 网站1。当时年轻觉得新颖酷炫，现在老了只觉刺眼无味🤢。
+刚好，前几天折腾可变字体的时候，Google 结果中无意浏览到这个简洁却细节的博客，被它顶栏的简洁和毛玻璃效果吸引了，又在它的「致谢」中发现了 3type，而其顶栏也使用了毛玻璃……想起之前在 Twitter 中常常刷到的毛玻璃，想起之前浏览过的其它博客中的毛玻璃，想起之前浏览过的 Apple 官网的毛玻璃……终于的终于，我决心要将毛玻璃应用到我的博客🤪！
+正文 首先，渐变可以通过 CSS 的 linear-gradient() 函数实现，比如本博客之前的渐变，其 CSS 代码和效果如下：
+1 background: linear-gradient(90deg, rgb(247, 149, 51) 0, rgb(243, 112, 85) 15%, rgb(239, 78, 123) 30%, rgb(161, 102, 171) 44%, rgb(80, 115, 184) 58%, rgb(16, 152, 173) 72%, rgb(7, 179, 155) 86%, rgb(109, 186, 130) 100%); 你会发现，这样的渐变其实是非常..不自然..的。以大自然中的彩虹为例，我们雨后看到的彩虹肯定不长上面那样，自然中的彩虹颜色肯定没有这么饱和，而且也应该要通透一点。
+2
+要实现这种更自然的渐变，我们在 CSS 中可以简单地通过设置颜色的 Alpha 值即透明度来实现，其 CSS 代码和效果如下：
+1 background: linear-gradient(90deg, rgba(247, 149, 51, 0.</description>
+    </item>
+    
+    <item>
+      <title>简单实现 Google Fonts 的异步加载</title>
+      <link>https://pub.oribos.cn/web/reprint/2020030501.html</link>
+      <pubDate>Thu, 05 Mar 2020 21:22:26 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2020030501.html</guid>
+      <description>引用自reuixiy
+在 Web 中，中文一般是不推荐使用网络字体的——因为汉字庞大的字符数让中文网络字体的体积异常庞大。但是，如果你经常浏览国外的英文网站，你会发现——使用了网络字体的网页是真的很美！所以，为何中文网页不能一样美呢？
+技术进步带来的字体子集化和用户网络带宽的普遍提升，中文网页其实已经可以开始尝试网络字体了。不知你是否注意到，苹果的中文官网其实就已经在使用中文网络字体了。就在昨天1，Google Fonts 推出了全新的设计，以庆祝其 10 岁的生日，而其中一个重要的新亮点，就是添加了可变字体（Variable Fonts）的支持。
+所以，中文网络字体的普及是刻不容缓的。这需要字体设计师的努力，也需要网页开发者的努力。作为开发者，尝试使用网络字体其实也是我们的一个职责——Making the Web Beautiful!
+2
+1 2 - &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; href=&amp;#34;style.css&amp;#34;&amp;gt; + &amp;lt;link rel=&amp;#34;stylesheet&amp;#34; href=&amp;#34;style.css&amp;#34; media=&amp;#34;print&amp;#34; onload=&amp;#34;this.media=&amp;#39;all&amp;#39;&amp;#34;&amp;gt; 参考：
+Defer non-critical CSS | web.dev Can I use &amp;lt;link rel=&amp;quot;preload&amp;quot;&amp;gt;? loadCSS | GitHub How to load CSS Asynchronously | Stack Overflow The Simplest Way to Load CSS Asynchronously | Filament Group, Inc. https://twitter.com/googlefonts/status/1234967000193150978&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+测试前需要前往 Network 将 Disable cache 勾选。&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>可变字体（Variable Fonts）尝鲜</title>
+      <link>https://pub.oribos.cn/web/reprint/2020022901.html</link>
+      <pubDate>Sat, 29 Feb 2020 22:00:19 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2020022901.html</guid>
+      <description>引用自reuixiy
+最近在系统地学习 Web，在 MDN 的 CSS 学习区的 Web fonts 一节底部，看到 Variable Fonts 即「可变字体」一词，瞌睡之中突然来了点兴趣——因为之前间断地见过这个术语，前不久还在 Twitter 上刷到过好几次——于是我点开 Variable fonts guide，并马上被这个示例的字体和视觉效果吸引了，决定马上尝试一下。二话不说，CTRL + U 发现 Amstelvar VF 然后 Google 到 Amstelvar，先 Star 然后开始尝鲜可变字体！
+前言 不过，可变字体其实已经不新鲜了，Google 结果中浏览到这篇 Get started with variable fonts，而此文的发布日期是 2017 年的 2 月份。但无论如何，可变字体对我来说还是新鲜的，而..尝试..一下也发现这是值得的——可变字体让人耳目一新。
+⌛经过一番尝试，我已经将上文提到的 Amstelvar 这个开源的可变字体应用到了我的博客——你现在所见的本博客正文中的英文即是。下面，就来说说可变字体在 Web 上的食用方法😺。
+正文 首先，我们去 GitHub 上下载 Amstelvar 字体，将 Amstelvar-Roman-VF.ttf 和其斜体 Amstelvar-Italic-VF.ttf 下载到本地。
+然后，我们将 .ttf 压缩成既现代又节约的 .woff2，可以使用 ttf2woff2，或者你也可以尝试其它方法。
+接下来，我们添加 CSS 代码，使用 @font-face 指定一下我们要使用的字体：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 /* https://github.</description>
+    </item>
+    
+    <item>
+      <title>三类优秀的程序员</title>
+      <link>https://pub.oribos.cn/web/reprint/2020022701/</link>
+      <pubDate>Thu, 27 Feb 2020 23:23:21 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2020022701/</guid>
+      <description>引用自reuixiy
+通常，科学家、发明家、企业家、工程师都是职业的并列对象，这里，我们把这四者跃迁到属性，把属于工程师的程序员跃迁为对象，来看看程序员的类型。
+第一类：程序员［科学家］·形而上学
+这类比较专一，通常是一领域的精通者，通常是拿显微镜在看针尖，熟知其领域的每一细节，优化每一常人不知道的细节到极致。这类的新发现能让常人耳目一新，下两类的新发明则能让人眼前一亮。还有，这类与以下两类不同，这类不像以下两类一样「产量」高。
+第二类：程序员［发明家］·哲学
+这类比较广博，通常是多领域的通识者，这类有两个对象：一、纵向为主的，拓扑是链式的；二、横向为主的，拓扑是网状的。
+第三类：程序员［企业家］·政治伦理
+这类与以上两类又不同，以上两类求理论之美，这类则是求应用之美。与上一类不同，上一类的发明可能会比较生棱极客，这类的发明则可以称为产品，更能博得常人喜欢，所以总是能够成就很大的商业价值。
+其他的，就回退到程序员的默认属性——工程师，使用重复的模板，建造同样的重复的建筑（当然，这里是对整体而言，而对其中的每一个体而言，体验的都是新鲜的「创造」）。最后，以上三类的共同之处，生活中都有好像永不褪色的热情和好奇心，这是以上三类能够成就优秀的凭借。
+至于我，目前只是一个正步入程序员世界中的工程师的入门学徒，一个正入局的局外人。</description>
+    </item>
+    
+    <item>
+      <title>引号的逻辑的哲学</title>
+      <link>https://pub.oribos.cn/web/reprint/002.html</link>
+      <pubDate>Fri, 31 Jan 2020 08:56:33 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/002.html</guid>
+      <description>引用自reuixiy
+我们知道，对于引号，在小学的时候老师教我们要先使用「双引号」（“”），然后如果双引号里面还要使用引号，则要使用「单引号」（‘’）。举例来说：1
+他站起来问：“老师，‘什么是哲学’的‘哲学’是什么意思？”
+这种用法，可能我们从小学用到现在，自己也从来没有问过一个..为什么..，直到当我们接触到直角引号的时候。什么是直角引号呢？举例来说：
+他站起来问：「老师，『什么是哲学』的『哲学』是什么意思？」
+当我们看到这个例子的第一眼，一定会..肯定..：双引号与单引号用反了。可这个例子其实是正确的。2
+终于，我们不得不问：为什么会有这样的差异呢？为什么对于直角引号，要先使用 「」 再使用 『』 呢？为什么要先使用双引号 “” 再使用单引号 ‘’ 呢？第三个问题暂时不答，但我们可以通过回答第二个问题来回答第一个问题——因为当引用内再进行引用时，这个引用就是「第二引用」，也就自然应该用「双层」的引号，即双引号。3
+但其实，我写这篇文章的最初推动是为了鼓吹哲学的作用。也就是说，为什么我们会肯定地说「双引号与单引号用反了」呢？因为我们已将「先使用双引号再使用单引号」这句话深深刻入了自己的脊髓，故对于引号的使用，我们都是直接本能地机械执行这句话，而非通过大脑去质问其定义——为什么要先使用双引号再使用单引号。4而哲学的作用就是——通过对「定义」的定义的不断探求，来纠正错误的机械执行。
+说明：改自维基百科引号词条的例子，下同。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+参见：https://ja.wikipedia.org/wiki/引用符#一覧&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+说明：当然，博主既非专业人士，也没有进行相应的考据。故博主的这个回答只是逻辑世界中的单纯分析，历史事实中的胡言乱语。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+说明：这也是一个「概念之困」。&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>使用 GitHub Issues 持续写作</title>
+      <link>https://pub.oribos.cn/web/reprint/2019120306.html</link>
+      <pubDate>Tue, 03 Dec 2019 22:36:48 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019120306.html</guid>
+      <description>引用自reuixiy
+不知你是否会为写作而发愁？当你突然闪出一个好想法时，却没有写作的时间；当你坐在书桌前准备写作时，却只有空空的无奈。在此，我激动地向你介绍一种现代的写作方式——使用 GitHub Issues ..持续写作..！1
+什么是 GitHub Issues 呢？GitHub 是全球著名的通过 Git 进行版本控制的软件源代码托管服务平台2，而 GitHub Issues 则是一种用来管理 GitHub 上的工作项目中的各种想法、改进、任务或漏洞的追踪方式，目前的官方中文译名为「议题」。
+什么是持续写作呢？持续写作是一种通过对想法的持续追踪、持续构建来协助写作的写作方式，英文为 Continuous Writing，简写为 CW。这是一个我自创的术语，由现代软件开发中的 CI/CD 概念所激发。
+因此，文题「使用 GitHub Issues 持续写作」可以理解为使用 GitHub 的议题来对你的想法进行持续追踪、持续构建，从而促进你的写作。这种方式的巧妙之处就在于将现代的软件开发模式直接借用于写作，从而成就现代的写作模式。
+听起来可能会有点摸不着头脑，下面就以采用持续集成方式部署的博客为例，简单描述下这种现代的写作模式的具体流程：
+Eureka！闪出新想法！ 去 GitHub 新建一个议题，标题为文章名，描述为想法内容或文章纲要3； 时间匆忙，暂时搁置； Eureka！闪现这个想法的另一方面！ 打开 GitHub 上的该议题，在底部添加一条评论补充； 重复 3、4、5； 整理成一篇文章并自动发布；自动关闭议题。 更棒的是，由于 GitHub 是一个网站，因此可以随时随地用手机编辑！这将会极大地促进并优质化写作，因为这利用了每一零碎时间，抓住了每一突发奇想，完善了文章的每一细节，进而解决了创作难的问题！以后我们出去溜达无聊时，就可以拿起手机，看看自己在 GitHub 上的议题列表，随时随地写作！相比于博客部署上的持续集成，这可以称为文章创作上的持续写作！现代的写作，也是持续化的！当你有了个想法，发个推特，可能就石沉大海了；但你新建个议题，就可以持续构建这个想法。这就避免了碎片化的知识，解决了现在流行的各种知识平台的弊端，深度化了知识，也许这可以称为 GitIdea。
+而且，GitHub Issues 是完全支持再编辑的，并能看到每个历史版本，这就日志化了文章的写作全过程。还有，GitHub Issues 还支持标签，这意味着你可以分类组织你的所有想法；GitHub Issues 还支持固定，这意味着你可以置顶重要的想法；GitHub Issues 还支持引用，这意味着你可以联系不同想法；GitHub Issues 还支持任务列表，这意味着你可以管理文章的完成进度；GitHub Issues 还支持项目板，这意味着你可以制定你的写作计划；GitHub Issues 还支持里程碑，这意味着你可以监督自己的写作进度。因此，这难道不是一个现代且完善的写作管理系统吗？
+还有，GitHub Issues 还是一个现代的笔记系统！除了支持手机方便编辑，除了上面所说的各种现代特点，它还支持 Markdown！读书笔记、课堂笔记、电影感悟……直接新建一个仓库，然后开始 Issue 即可！相比一条说说或一条朋友圈，这能够持续追踪你的各种记录，不仅避免了碎片化知识，甚至还可能汇聚成一个属于自己的体系！更重要的是，GitHub Issues 是基于网页的，这非常利于传播！想法的价值在于传播，使用 GitHub Issues，轻松方便地分享和传播你的想法！GitHub 的仓库还支持关注，且有邮件通知！此外，还可以使用 RSSHub 通过 RSS 来订阅 Issues！这意味着你完全可以新建一个仓库，然后将 GitHub Issues 当 Microblog 来用，什么朋友圈、空间、微博、推特、TG 频道都弱爆了！这是一种全新的记录方式！这是一种现代的记录方式！</description>
+    </item>
+    
+    <item>
+      <title>Hugo 与 Hexo 的异同</title>
+      <link>https://pub.oribos.cn/web/reprint/010.html</link>
+      <pubDate>Thu, 14 Nov 2019 11:25:35 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/010.html</guid>
+      <description>引用自reuixiy
+前言 Hugo 是一个基于 Go 语言开发的静态网站生成器（SSG），目前由 @bep 领衔开发，Hugo 的突出特点是简洁、灵活、高效，目前有很多知名网站都在使用 Hugo：Netlify、Let’s Encrypt、IPFS、Cloudflare Developers、DigitalOcean Docs、1Password 等等。与目前国内流行的 Hexo 相比，Hugo 的速度可称为飞速🚀——在安装和使用上都是如此。
+下面，我们就来看一下 Hugo 与 Hexo 的一些异同，不过需要注意的是：此文主要探讨的是用户层面上的一些异同，而非技术层面的差异。简体中文来说🐼：即一个技术小白（我）从 Hexo 迁移到 Hugo 时遇到的一些常见问题。
+目录结构 1 2 3 4 5 6 7 8 9 10 11 12 ~/blog $ tree -L 1 . # 说明 Hexo ├── archetypes/ # 文章模板 scaffolds/ ├── assets/ # Hugo 管道 ├── config.toml # 配置文件 _config.yml ├── content/ # 文章目录 source/_posts/ ├── data/ # Hugo 数据文件 source/_data/ ├── layouts/ # 布局模板 ├── public/ # 生成的静态文件 public/ ├── resources/ # Hugo 缓存 ├── static/ # 网站的静态文件 source/ └── themes/ # 主题目录 themes/ 在 Hugo 中，与 Hexo 的一个很大不同——也可以说是优点——是主题目录与站点目录有一样的结构，以 MemE 主题举个例子（已剔除无关文件）：</description>
+    </item>
+    
+    <item>
+      <title>Hugo 主题 MemE 文档</title>
+      <link>https://pub.oribos.cn/web/reprint/011.html</link>
+      <pubDate>Sat, 02 Nov 2019 10:42:03 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/011.html</guid>
+      <description>引用自reuixiy
+前言 MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。MemE 主题专注于优雅、简约、现代，以及代码的正确性。MemE 主题对习惯了 Hexo 的用户非常友好，是从 Hexo 迁移到 Hugo 的不错选择。
+为什么要起名为 MemE 呢？这四个字母的含义是基于这个单词本身的，即希望你的博客以及文章能够像模因一样传播、影响。当然，希望这个主题也是如此，并给你带来欢乐。至于这四个字母的形式（MemE），则是受 Taylor Swift 的 ME! 中的「you can’t spell “awesome” without “me”」启发。同时，这两个字母的大写就将这个单词分成了两部分——ME 和 em，中间两个字母组成 em，这也给人一种可爱的感觉。此外，em 也是 me 的反写，这又是我非常喜欢的形式！
+MemE 主题践行极简主义，没有使用现有的流行前端库，主题的 HTML 和 CSS 皆由我纯手工从零雕琢而成。同时，MemE 的 CSS 也是按需生成的，比如：如果你不需要代码高亮的功能，那么代码高亮的样式就不会被加入 MemE 的 CSS 文件中。更甚，MemE 无需加载任何图标库——主题的图标是通过 Hugo 的数据模板直接将 SVG 嵌入到 HTML 中实现的——这使得 MemE 不会去加载图标库中大量你所不需要的图标，节约了很多资源。当然，这也意味着你可以方便地自定义属于自己的图标。
+极简并不等于简陋，MemE 主题具有许多强大的、现代的特性：
+功能 完全的深色模式支持 完全的多语言支持 可自定义的 SVG 图标 支持 HTML/CSS/JS 的压缩和 JS 的捆包 代码高亮、脚注、Todo 列表、定义列表、Emoji 字体排版 自定义字体、字号、行间距 自定义文章内容宽度 段首缩排、两端对齐 首字下沉、小型大写 图片说明、图片脚注 着重号 中文标点符号字形纠正 归档页面、分类页面、标签云页面 Atom╱RSS 订阅 分节标题锚点 图片外链、视频外链 自定义页脚 404 页面 模块 顶栏 菜单栏 文章副标题 文章描述 文章元信息 文章目录 文章版权 文章更新徽章 文章的 Git 版本信息 文章分享 相关文章 文章的标签 文章上下篇 极简页脚、关于页面的极简页脚 返回顶部按钮 其它 Service Worker 及 PWA Google Analytics、Google Site Verification、Google AdSense 不蒜子页面浏览量和站点访客数、站点访问量 Disqus 评论、Valine 评论、Utterances 评论 KaTeX 和 MathJax 3.</description>
+    </item>
+    
+    <item>
+      <title>使用 SSH 连接到 GitHub（多帐号）</title>
+      <link>https://pub.oribos.cn/web/reprint/2019100704.html</link>
+      <pubDate>Mon, 07 Oct 2019 20:19:20 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019100704.html</guid>
+      <description>引用自reuixiy
+我们克隆 GitHub 上的仓库时，一般是通过默认的 HTTPS 的方式，而非上面这种 SSH 的方式。对于克隆仓库的话，我们使用起来是感受不到这两种方式的差别的。但是，当我们要将本地的改动提交到 GitHub 的时候，使用 SSH 就会比使用 HTTPS 方便很多——我们无需每次输入用户名和密码🐶&amp;hellip;
+单帐号 1 $ ssh-keygen -t rsa -b 4096 -C &amp;#34;reuixiy@gmail.com&amp;#34; 怎样使用 SSH 呢？首先，你需要通过以上命令生成 SSH 密钥对。当然，将上面的邮箱地址改为你自己在 GitHub 上的邮箱地址。然后，如果你是第一次生成的话，一路回车即可（口令 passphrase 非必须）。
+之后，cat ~/.ssh/id_rsa.pub 查看生成的公钥并复制，再去 GitHub 上设置一个 New SSH key，标题随便起一个（比如：我的电脑😺），然后粘贴公钥即可。
+最后，如果你 git clone 或 git remote add 的是 HTTPS 的地址1，那么要修改仓库的远程仓库链接地址为 SSH 地址，比如：
+1 ~/hugo-theme-meme $ git remote set-url origin git@github.com:reuixiy/hugo-theme-meme.git 此外，当你本地第一次连接 GitHub 的服务器时，可能会有警告信息，输入 yes 回车即可。
+多帐号 1 2 3 4 5 6 7 8 9 # 帐号一 $ ssh-keygen -t rsa -b 4096 -C &amp;#34;reuixiy@gmail.</description>
+    </item>
+    
+    <item>
+      <title>利用 Workbox 实现博客的 PWA</title>
+      <link>https://pub.oribos.cn/web/reprint/2019100108.html</link>
+      <pubDate>Tue, 01 Oct 2019 21:32:34 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019100108.html</guid>
+      <description>引用自reuixiy
+1
+如果你使用 Google Chrome 浏览器访问我的博客💻，你可能会发现地址栏右侧有一个小小的 + 号，并会提醒你安装。当然，如果你是用手机访问的话📱，Chrome 就会在页面的底部提醒你。但你可千万千万不要把它当作什么恶意骚扰哦😅，它只是善意地提醒你：这个网站是一个 PWA 站点，强烈推荐您添加到桌面以获取原生应用般的优质体验！😝
+注意：请查看一个简单的 Service Worker。
+前言 渐进式网络应用程序（英语：Progressive Web Apps，简称：PWA）是一种运用现代的 Web API 以及传统的渐进式增强策略创建的跨平台 Web 应用程序。这种应用程序将目前最为现代化的浏览器提供的功能与移动设备的体验优势相结合，使其具有与原生应用相同的用户体验优势。2
+以上是开发者角度，就用户角度来说🐼，当你的博客实现 PWA 后，你的读者可以：
+添加你的博客到电脑╱手机的桌面，以原生应用般的方式浏览你的博客 更快速地浏览你的博客 离线浏览你的博客 第一点：对于读者，博客可一触即达，且无浏览器的地址栏、菜单栏等「无关」干扰👴；对于博客，非常有利于博客的用户留存率，也利于博客的品牌形象😺。第二点：可以利用 Service Worker 的缓存特点，极大地加速你的博客，如果再加上 InstantClick 的预加载特点，简直飞速🚀。第三点：对博客来说，个人感觉意义不大🤔。
+正文 PWA 有很多要求，比如：HTTPS、响应式布局等等，可参考这个 Checklist，可用 Lighthouse3 检查。
+4
+关于图标和 manifest.json，可以通过这个网站在线生成。如果你不确定，可以参考我的博客以及 MemE 主题的相关代码。
+在 PWA 的众多要求中，其中很重要的一点就是可离线访问，而要实现这一点，最简单的方法就是使用 Service Worker。在这篇文章中，我们使用 Workbox 这个工具生成 sw.js 以快速实现 Service Worker 🤖，并实现页面的预缓存和页面更新后的提醒功能，而非深究 Service Worker 的接口然后手动写 JS 代码来实现👨‍💻🐶&amp;hellip;
+由于我们需要使用 Node 的模块，因此我们的电脑必须安装 Node.js。如果你使用的是 Hexo，那么是已经安装过的；如果你使用的是 Hugo，那么请自行安装一下。然后，我们安装模块📦：</description>
+    </item>
+    
+    <item>
+      <title>将博客部署到星际文件系统（IPFS）</title>
+      <link>https://pub.oribos.cn/web/reprint/2019091804.html</link>
+      <pubDate>Wed, 18 Sep 2019 15:13:56 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019091804.html</guid>
+      <description>引用自reuixiy
+1
+在这篇文章中，我将主要介绍如何将你的..静态..博客以持续集成的方式部署到星际文件系统 IPFS 上，也会简单介绍一下 IPFS 的使用。本文中，我使用的 SSG2 是 Hugo，使用的持续集成服务由 Netlify 提供，博客的源码可以在 GitHub 上找到。另，提醒一下，与零网一样，IPFS 默认不匿名👓，且对 Tor 的支持还在开发中。
+说明：最近发现 Cloudflare 的 IPFS 服务好像挂了，需要等待非常长的时间才能获取到最新内容，因此本博客已暂时放弃部署在 IPFS 上。
+前言 一年前的昨天🧐，知名的互联网基础设施服务提供商 Cloudflare 宣布开始支持 IPFS Gateway，作为其分布式互联网网关项目的一部分。关于分布式互联网（Distributed Web，以下简称 D 网），它的到来很有可能会将我们带向 Web 3.0 时代，一个全新的互联网时代！而 D 网所具有的去中心化将会带我们走向新的自由之路——无审查，无高墙。👉🌎🌍🌏💫
+起因 浏览 Twitter 时发现了 @GoHugoIO 的一条推文，IPFS 四个字母激起了我的兴趣🐭（之前..轻微..了解过，印象只限于这四个字母），快速浏览一遍链接的文章之后，去看了他之前写的一篇详细教程，打开 IPFS 的官网，决定这次一定要尝试一下 IPFS！🕳️🦆
+正文 文章的正文分为两个部分：持续集成和原生部署，第一部分是文章的主体，第二部分供感兴趣的读者研究。
+当你按照此文章将博客成功部署到 IPFS 上后，你的博客将：
+⚡拥有全球范围的高速 CDN，国内也有不错的访问速度（Cloudflare） 🌤️无需支出且永远在线（如果你不需要域名的话） 🛸走向未来 持续集成 如果你只是想直接通过持续集成的方式部署博客，那么你是无需在自己的电脑（本地）上安装 IPFS 的，你甚至可以完全不用接触 IPFS。但是，你的电脑必须安装 Git 和 Node.js。如果你是一个程序员或之前有尝试过搭建静态博客，那么你对它们应该并不陌生。
+准备环境 首先是 Git，我们要将博客所在的文件夹初始化成一个 Git 仓库。注意，如果你之前已经初始化过了，请跳过这一步。怎么确定是否已经是一个 Git 仓库呢🤔？打开终端╱命令行，然后进入你的博客文件夹，输入 git status 然后回车，如下：</description>
+    </item>
+    
+    <item>
+      <title>在开发一个 Hugo 主题</title>
+      <link>https://pub.oribos.cn/web/reprint/004.html</link>
+      <pubDate>Fri, 05 Jul 2019 21:31:32 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/004.html</guid>
+      <description>引用自reuixiy
+这些天在开发一个 Hugo 主题1，目标是从 Hexo 平滑地迁移到 Hugo，并保留博客现有的结构、样式、功能……为什么要迁移到 Hugo 呢？因为相比 Hugo 的生成速度，Hexo 实在是太慢了，最重要的是 Hugo 更为极简主义，而 Hexo 的依赖包……
+由于是代码小白，所以开发起来也没有捷径，先去找现有的 Hugo 主题，然后观察，最后结合文档自己从零慢慢构建。这些天来，摸清了 Hugo 使用的 Go Template 的基本语法2，弄清了 Hugo 内的基本数据结构，学会了使用 Hugo 的一些基本函数，理清了 Hugo 的一些基本概念以及其与 Hexo 的异同……
+开发进度呢？仅仅是一个未完成的 Atom 的模板……因为我是个完美主义者，而要完美，就必须弄懂每一行代码，弄明白每一项功能。而作为代码小白，要了解、要学习的东西就可多了，你可以看看下方我的浏览器截图中满满的标签页，以及我的可怜的内存……不过未来的开发进度应该会更快，因为该要的知识也摸得差不多了，应该。还有就是我一边开发，一边把遇到的坑╱总结╱文档写了，毕竟这可能是我的第一个开源项目，所以好好写，一来对将来的用户友好，二来希望对想开发 Hugo 主题的人提供一点我的开发经验，以利于他们自己的开发，从而让更多的人加入 Hugo。
+3
+Anyway，敬请期待吧～
+已开发完成，主题的最终名字叫 MemE。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+可参考官方文档的 Introduction to Hugo Templating 入门，可参考 Régis Philibert 写的相关教程。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+推荐安装相应的语法高亮插件，以更高效开发，博主后来开发时使用的是 VS Code 的 Hugo Language and Syntax Support。&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>解决 Win10 下 DNS 问题导致的无法上网</title>
+      <link>https://pub.oribos.cn/web/reprint/2019061205.html</link>
+      <pubDate>Wed, 12 Jun 2019 13:35:32 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019061205.html</guid>
+      <description>引用自reuixiy
+最近有好几个朋友叫我去帮忙看下他们的电脑，说「上不了网、提示错误、打不开软件」等等，结果我发现都是一样的问题——DNS，我打开手机 Google 一下一会儿就给解决了。虽然我早就不用 Windows 10 了，但预防将来可能还会有朋友遇到这样的问题，于是便写篇文章放博客记录下来，以便不时之需。
+1
+关于适配器设置 IP 地址和 DNS 服务器地址的操作这里就不重复了，直接百度 win10 dns 找一条看看即可，如果你的设置已经是..自动获得..但问题仍没有解决，那么请看下文。
+1）以管理员身份运行 CMD
+左下角的开始菜单然后鼠标右键 开始菜单搜索 cmd 找到「命令提示符」然后鼠标右键 若上面两种方法均不可用，则打开文件浏览器去 C 盘 Windows &amp;gt; System32 搜索 cmd.exe，然后鼠标右键 2）分别输入以下命令并回车2
+&amp;gt; ipconfig /flushdns &amp;gt; ipconfig /registerdns &amp;gt; ipconfig /release &amp;gt; ipconfig /renew &amp;gt; netsh winsock reset 如果无法输入，记得 shift 切换到英文输入状态 输入第一条回车后，可按键盘方向键「上」然后修改 3）重启
+好了！这样应该就解决了！不管是网页打不开 QQ 能打开，还是连 QQ 竟然也打不开，都能解决。再也不用抱着电脑去电脑店，结果被建议重装系统……再也不用担心这样所导致的一切损失和麻烦了！👶
+原图 Google 自网络，经过这个工具处理。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+参考①：https://sofree.cc/win10-dns-internet/
+参考②：https://blog.csdn.net/weixin_44090160/article/details/85034839&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>将 Hexo 静态博客部署到 Netlify</title>
+      <link>https://pub.oribos.cn/web/reprint/2019060903.html</link>
+      <pubDate>Sun, 09 Jun 2019 16:27:01 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019060903.html</guid>
+      <description>引用自reuixiy
+1
+前言 我的这个博客一直都是部署在 GitHub Pages 上的，且用的是最原始的方式，即先在自己的电脑上安装 Hexo，然后本地调试，最后 hexo d 将 hexo g 生成的 public 文件夹部署到 GitHub Pages 上。为什么说这种方式原始呢？因为这种方式直接将生成的可以运行的实际代码（生产版）发布到 GitHub 上，而不是源码（开发版），没有利用 GitHub 来对源码进行版本控制，这就不利于博客未来的维护、更新、开发，以及可能的开源开发。可以说，这种原始的方式所带来的弊端开始逐渐困扰我，它让我现在无法回溯自己对博客所做过的修改，也就让我现在很难将自己的博客开源出去，分享给大家🤕&amp;hellip;
+为什么我当时采用的是这种如此原始的方式呢？因为我是代码小白……后来，在阅读他人的博客时，多次看到有人利用 Travis CI 去部署博客，于是慢慢地了解到软件开发中持续集成（Continuous Integration，简称 CI）的概念。但是，作为一个野生的伪程序员，我直到..现在..，才意识到它的意义。因此，在这篇文章中，我使用的还是最原始的方式——直接部署 public 到 Netlify，而非源码，需读者注意。如果你想使用更为现代的持续集成的方式来部署博客到 Netlify，请自行 Google 相关文章，自行尝试。此外，如果你是萌新，可以阅读我之前写的另一篇文章。
+简介 什么是 Netlify 呢？官网。相比 GitHub Pages 的静态页面托管服务，Netlify 提供的服务可谓专业，自带 CI、支持自定义页面重定向、自定义插入代码、打包和压缩 JS 和 CSS、压缩图片、处理图片、CMS 等等，最值得一提的是 Netlify 也支持自定义域名免费 HTTPS（你也可以上传自己的证书），且是通配符证书 + TLS 1.3，甚至提供了完整的 DNS 服务，有自动的 www 跳转，以及超简单的子域名配置界面。此外，Netlify 每月也有 100GB 的流量，也自带了全球的 CDN 服务，还支持了 GitHub Pages 官方不支持的 HTTP/2、IPv6（需手动开启）。
+其实，以上这些特点都是我在尝试 Netlify 之后发现的，而我之所以会去尝试 Netlify，是因为我发现 GitHub Pages 近期变得不稳定，很多时候最大下载速度只有 20~30KB/s（未科学上网），因此我今天就找到了 Netlify，部署后自己实际体验下，效果也并不是太好🙃&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>博客重构：极简主义！</title>
+      <link>https://pub.oribos.cn/web/reprint/2019060301.html</link>
+      <pubDate>Mon, 03 Jun 2019 13:49:29 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019060301.html</guid>
+      <description>引用自reuixiy
+转眼间，我的这个博客已经两岁多了👴，访客总量 52k+，浏览总量 167k+。两年多的时间里，博客经历了多次改版，也经历了三次大灾难（rm、sed、硬盘暴废），可谓「阅历丰富」。但是，过去半年里，我的这个博客却少有更新，我最近不禁问我自己：我这是怎么了？刚开始写博客时的那种热情去哪了？经过一段时间的思考后，我决定重构博客，拥抱极简主义！
+Simplicity is the ultimate sophistication.（至繁归于至简）1
+— Leonardo da Vinci
+除旧 极简第一步，简化分类，简化标签。你可能注意到，我之前的博客的分类颇为复杂，标签也颇为繁冗。为什么我要设计得如此复杂呢？其实，这是因为我搭建这个博客的..初衷..并不是为了记录自己，而是为了归档我所习得的各种知识，以利于我的创造。
+你可能会问我要创造的是什么，答：一个哲学上的宏大体系，这在上面的两张图中应该有所体现。而我于去年搭建了一个新的博客，将哲学独立分离了出去，因此这个博客的分类和标签也是时候简化了，分类只有两个：生活、技术，标签则每篇文章不超过 5 个。
+极简第二步，页面元素，页面交互。博客的主体是文章，故除了文章内容，其它的一切都可以不要，只追求极致速度。菜单栏？分类才两个，不要！图片背景？应专注文字、排除干扰，不要！侧栏、返回顶部、动画效果？过多交互以致分散注意力，不要！文章信息、上篇下篇？相关文章？页脚？三个不要！
+极简第三步，浏览统计，评分评论。有时评论区会带来很大的心理压力，各种统计数字则是一种隐形心理压力。另，博客是静态，而这些属于动态内容，技术上讲即是写操作，违背了纯静态的只读原则2。综上，统统不要。
+当然，作为一个独立博客，博客的标识不可不要，因此保留了本博客独一无二的、显著的顶栏。此外，最终也在页面底部加上了标签、分类的内链，让读者来去自如。
+迎新 极简并不等于简陋，本博客也有了一些值得关注的创新设计。
+最值得关注的是字体排版，应该是目前中文博客中最美的🌚&amp;hellip; 字体使用了 Noto Serif SC + EB Garamond，通过 Google Fonts 实现；新增..着重号..以替代中文中不存在的斜体，更为美观、优雅；解决了网页中英字体混排导致的痛点——英文符号变全角或中文符号字形不对；……
+其它的方面，PWA、无需等待的超快速度、长文章的目录设计（可双向跳转）等等。
+其它 改变了本博客的 URL 结构，导致以前的博文链接大量 404（已利用 Netlify 解决，见我的这篇文章）。大量文章重写了，有些文章迁移了，少量文章删除了。为什么会重写呢？因为看看自己最初的文章，发现自己居然看不懂，表达得太差了，不忍直视。
+是否会开源？技术不足，代码写得丑，还无法将这些成果写成一个配置简单的主题，故暂时不会考虑开源。此外，还有轻微的模仿担忧。但是，欢迎你以本博客的设计理念去改善自己的博客，欢迎你以本博客的设计理念去开发一个主题。
+最后，希望自己在重构的本博客上多反省，多写感悟，多记录自己。「苟日新，日日新，又日新。」
+沃尔特·艾萨克森：《史蒂夫·乔布斯传》（管延圻等译），中信出版社，2011 年版，第六章。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+https://maintao.com/2019/subtraction-done-in-my-blog/&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>Google Fonts 已支持思源宋体！</title>
+      <link>https://pub.oribos.cn/web/reprint/008.html</link>
+      <pubDate>Tue, 11 Dec 2018 15:12:04 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/008.html</guid>
+      <description>引用自reuixiy
+就在昨天，一次偶然，我打开了 Google Fonts 的网站，眼前一亮！惊奇地发现了被英文字母包围的汉字！什么？Google Fonts 居然支持汉字了！？是的，查阅相关资料后，根据国外的这个网站上的两篇文章：
+New fonts added on Google Fonts — 18 November 2018 New fonts added on Google Fonts — 07 December 2018 可知：Google Fonts 分别在 11 月 18 日和 12 月 07 日提供了思源黑体和思源宋体的简繁支持，而且高达 6 种字重支持，其中思源宋体更是高达 7 种字重。这可了不得啊！更重要的是：它支持了目前电子显示屏上稀缺的宋体，这将会是一个伟大的进步！要知道，对于中文书籍，宋体一直是正文印刷的标准字体，而不是目前电子显示屏上普遍的黑体，因为..宋体的衬线更适合长时间阅读..。
+优势 为什么宋体的衬线更适合长时间的阅读？可以有个「主观解释」，即自己可直接体会的解释。实践起来也简单，阅读一会儿宋体后回到黑体，阅读一会儿黑体后再回到宋体。
+我自己的主观感受：看完宋体后再回到黑体，四字就浮上心头——..索然无味..。因此，作为长文章为主、文字内容为主的博客，强烈建议马上使用 Google Fonts 提供的思源宋体！你可能注意到，我的博客已经开始使用了，所以应该如何使用呢？
+使用 官网搜索 Noto Serif SC，点 + 号选择，选择好后底部会弹出一个提示框，里面有使用说明。还可以点击提示框中的 CUSTOMIZE 定制要加载的字重与语言。
+1
+之后，点击 EMBED，复制生成的代码，添加到博客的 &amp;lt;head&amp;gt; 标签内，并修改博客的相关 CSS 样式，指定 font-family 和 font-weight。
+最后，考虑到宋体的笔画要比黑体细，因此建议将字体的颜色加深，比如修改为 #333，以达到较好的阅读效果。</description>
+    </item>
+    
+    <item>
+      <title>开源：创造世界！</title>
+      <link>https://pub.oribos.cn/web/reprint/2018113007.html</link>
+      <pubDate>Fri, 30 Nov 2018 23:52:38 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2018113007.html</guid>
+      <description>引用自reuixiy
+几周前，经历一次硬盘暴废后，在我的全新硬盘，我只安装了 Arch Linux。我终于彻底摆脱了 Windows！然而，如果说几周前的硬盘损坏是物理上的意外压迫，那么刚刚这次经历就是一种精神上的诱惑。
+就在刚刚，我使用 Arch Linux 时，突然有了一个疯狂的需求：更改一张 SVG 图片的大小（注意，这很疯狂，因为我从未处理过）。这该怎么办呢？倘若在 Windows 下，我肯定要先打开浏览器，搜索编辑 SVG 的软件，然后去这个软件的官网下载，最后——不，等等，也许还要先注册个帐号——安装。这实在是逊爆了！比起我刚刚在 Arch Linux 上的经历。我刚刚只是 Google 时加上——arch linux——马上就看到我需要的软件包的名字：Incscape，终端输入 sudo pacman -S inkscape，回车，好了！没错，秒速就安装好了，仅仅几秒而已！真的是秒速！
+回到那张我想编辑的 SVG 图片，鼠标右键选择 Incscape 启动，马上就能编辑。哦，对了，就是马上！倘若在 Windows 下，安装好软件后打开的第一个界面可能并不是编辑，而是付费提醒。不友好，在漫长过程后的疲惫之时，甚至觉得是恶意，即使付费是合理的。Linux 下如何呢？快速地且舒服地进入了界面，再次 Google 一下如何编辑，选择一个 YouTube 视频观看。十几分钟之后，这个我之前认为疯狂的需求就完成了。
+这是为什么呢？为什么在 Linux 下一切都变得如此简单、迅速、友好？是开源！如果你不理解「开源」这个词语，可以通过一个故事来理解。有两个房间，房间甲和房间乙。一个房间被整齐地分为 1、2、3&amp;hellip; 个小隔间，隔间的每个人低着头，面无表情，按照死板的教条敲打着键盘，那是房间乙；一个房间空旷辽阔，几个人聚在一起，始于好奇，溺于创造，快乐无止！这是房间甲！这就是开源！一种符合人性的、自由的、奇异的合作模式！
+正是因为这种模式，珍品不断地在开源世界被创造。作为用户的我们不断感叹：珍品！而作为开发者，对自己的作品不是漠不关心，而是热情地不断完善自己的创造，最终在用户一次次的感叹中将珍品变为一个艺术品！这种模式，用户与开发者都在微笑中，一起创造出更好的未来！是的，那些生产者们，别再继续拖住我们前进的步伐了！你们永远无法生产出未来，因为未来是被创造出来的！你们永远无法生产出世界，因为世界是被创造出来的！
+还记得上面的硬盘暴废吗？这是个令人崩溃的可怕事件，万幸的是，我最终恢复了硬盘中的数据。说出来你可能难以相信，但我的确仅仅依靠自己就解决了。当然，除了我的机智之外，最直接的因素是：我使用的是 Linux，这个开源的现代的操作系统！我所做的，只是 Google 到 TestDisk 这个开源软件，然后在 Linux 中直接运行（系统自带），最终顺利地恢复了我的数据。需注意的是，这是个小概率事件，而生产者从来不重视它们。但是，由于好奇，创造者到达世界的每个角落，而且是以优雅的方式，并创造出珍品！数据无价，拯救我的数据的 TestDisk——这个珍品！——的背后，也有着一条快乐的创造之路！尽管很偏僻，但是很秀丽！
+这些如此神奇的开源软件，一个这样现代的操作系统！务必感谢这些因好奇、兴趣而热情地创造的伟大开发者们！致敬！你们这些伟大的创造者！拥抱开源，忠于好奇！我们创造的将是一个..显微后依然不断感叹..的奇异未来世界！</description>
+    </item>
+    
+    <item>
+      <title>网页字体排版的哲学：段首缩排或段间距</title>
+      <link>https://pub.oribos.cn/web/reprint/2018090503.html</link>
+      <pubDate>Wed, 05 Sep 2018 21:40:48 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2018090503.html</guid>
+      <description>引用自reuixiy
+写在前面 首先声明：本人非印刷行业的专业人士，也非网页设计的专业人士，故这系列博文全当本人的个人消遣。同时，也希望读者对此系列文章的正误有自己的思考。
+写这系列文章的直接原因是发现很多中文网页的字体排版实在是不忍直视，甚至博客也是如此，故打算写一写这方面的博文。主要原因是目前网上缺乏这方面的文章，或者这方面的知识尚未普及，而它却关系到我们每人每天都在阅读和输入的文字，其重要性不言而喻。故本人希望借此系列文章来普及一下这方面的知识，即使可能只是微薄之力，毕竟本人只是一个外行人。
+然而，如果说主要原因之上还有个根本原因，那本人写这系列文章的根本原因：作为一个爱哲学的人，本人想探索一下网页字体排版的..本质规定性..。另外，尽管文中有部分技术细节，但读懂此系列文章无需 HTML 与 CSS 基础，甚至无需任何计算机知识基础。
+系列前言 自写博客一年多来，虽然优秀的文章没有写几篇，但却了解了一些 Web 前端的知识。这些知识是本人在博客建设中的有力工具，而作为一个追求完美的人，博客建设中最令人犯愁的莫过于排版。
+首先，排版是一个很大的学问，所以在写之前先界定个范围。此系列博文主要是关于网页中文字体排版，什么意思呢？
+「网页」意味着 CSS； 「中文」意味着不谈英文； 「字体」意味着不谈页面。 然而，「排版」必然会受到各方面的影响，所以还是会涉及部分上面的「不谈」部分。另外，CSS 的应用已经不止网页，几乎你现在所见的各种中文字体排版都离不开 CSS，它的影响也远不止于网页。因此，可以说此系列适用于与中文字体排版有关的各种，比如：电子书、微信文章排版、Word 文章排版等等。
+题外话：目前中文电子书的排版简直是一片混乱之地。即使你用 Kindle，且电子书来自 Amazon，大部分直接打开后还是不忍直视。此外，虽然 Kindle 能够对电子书进行一些基本调整，但由于电子书排版的不统一，导致同时阅读多本电子书时，需要频繁重复设置以达到一致的阅读效果。若无意外，本人之后应该会特别写一篇《在 Kindle 上优雅地阅读》，在此先打住。
+此系列博文包括但不限于：
+分段样式； 标点符号； 字体选择； 各种数字； 特殊样式。 另外，本人的一些实践都会在本博客和我的另一个博客上体现。
+系列核心 先提一个看起来很傻的问题：为什么标题与段落的样式要有所区别？「因为名称不同，」你可能会答，「试想标题与段落的样式一样，正如一对双胞胎，那怎么分辨呢？」这个回答是无误的，但不够犀利，或者说只停留在了表象。深究一下问题本身，即：为什么要在「段落」之上另起「标题」？因为表达需求。
+无论是哪种字体排版样式，它都是表达需求的表现形式。如果说现在是果，那么历史就是因，我们可以通过回顾历史来寻找原因。从网页开始，沿着时间轴逆行，越过纸质书，来到原始的手写，一个「双重历史」。第一重，从印刷回溯到手写；第二重，从打字回溯到手写。我们虽是第一重的客体，但也是第二重的主体，回溯到在纸上书写时，这是我们都有过的体验。当自己在纸上书写时，标题与段落之间的样式肯定会有所区别，比如标题是居中。这就是表达需求的主观解释，每个人都能自行体验。
+逆行一下，上文是从排版样式回溯到表达需求，我们也可以尝试从表达需求回归到排版样式。正如需强调一个词时，就用粗体来表现，行文上有一个表达需求，排版上就要将这个表达需求表现，即排版样式。这意味着在讨论字体排版样式前，必须先回溯表达需求，然后再结合..表现要求..谈排版样式的美观问题，而不是凭主观美感空谈。
+分段样式 本节主要探讨分段的两种排版样式：段首缩排与段间距。
+现状概述 为什么先说这个呢？因为这似乎是网页上字体排版的空白区，很多网站的分段的排版样式都是段间距 + 段首缩排，不忍直视。其实，这是没明白分段的表达需求，在网页默认的段间距排版的基础上硬加段首缩排，极其荒谬。
+表达需求 字体排版样式都是表达需求的表现形式，所以在讨论分段的排版样式之前，必须先回溯分段的表达需求。为什么有分段这个表达需求呢，或者说为什么要分段，什么情况就要分段呢？印象中这应该是小学老师教授过的内容，大家应该都有所理解，个人理解：
+内容不直接相关； 上下是并列关系； 逻辑有一定转折。 也许还有其它方面，但其根本是前后不连续，不管是内容、逻辑。因此对于这个表达需求，在排版样式上则表现为将段落分离开来，即一种分段标识。另有一种..特殊情况..，如果不连续的程度很大，段落的分离程度也要更大，即一种分段停顿。
+排版样式 要将段落分离开来，有两种合理的排版样式：段首缩排与段间距。两种样式的区别：
+段首缩排，段首缩进两字符，段间距等于行间距。 段间距式，段首不进行缩进，段间距大于行间距。 在网页中，段落用 &amp;lt;p&amp;gt; 表示，行间距即 line-height，段间距可以用 margin 控制，段首缩排用 text-indent 实现。
+怎么评价这两种样式呢？段首缩排在「一统王国」也许会被禁止，因为它使页面的左边变成了一条曲折的线，不符合最智慧的线——直线。也就是说，其实从美观角度，段首缩排是一种..畸形排版..，因为它违背了基本的对齐原则，而遵守这一原则的段间距则使页面显得整齐。但是，段首缩排似乎一直是书籍印刷的标准段落排版样式，难道印刷行业一直错了？
+这时，我们就要考虑..表现要求..。书籍印刷的表现要求是专注文字内容，因此阅读体验应当置于美观之上。由于段间距比段首缩排的分离程度更大，一字连一字阅读时易产生隔阂感、停顿感，故段首缩排与之相比更为优雅，有着更好的阅读体验。
+对于网页，与纸质书的翻页不同，它是竖直方向的连续滚动。当网页快速滚动时，就使段落上下相连的段首缩排显得繁密易懵，而段落上下间隔的段间距则显得结构简明。在这个快速滚动的互联网时代，段间距也就比段首缩排更适合于网页，因为它更利于快速传达信息。
+对于诗歌，左边对齐的段间距排版更适合它。首先，如果称诗歌的「节」为「段」的话，与长文章不同，诗歌的每句很短，每段也很短。当采用段首缩排时，左边不对齐的美观问题将会变得格外突出。其次，诗歌注重意境，对于意境的想象，留白较大的段间距排版更为优雅。
+最后，对于分段需求的特殊情况——分段停顿，由于其不连续的程度很大，因此应当采用分离程度更大的段间距排版，而非段首缩排。另外，从美观角度，段首缩进四个字符是不忍直视的。</description>
+    </item>
+    
+    <item>
+      <title>GitHub Pages 绑定个人域名，免 Cloudflare 支持 HTTPS</title>
+      <link>https://pub.oribos.cn/web/reprint/007.html</link>
+      <pubDate>Wed, 18 Jul 2018 10:21:39 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/007.html</guid>
+      <description>引用自reuixiy
+购买域名就不说了，如果想省去备案的麻烦，就不要到国内的域名服务商注册，选择一些国外的大公司，比如 GoDaddy。
+配置 DNS 这里以 GoDaddy 为例，添加 4 个 A 记录和 1 个 CNAME：1
+类型 名称 值 A @ 185.199.108.153 A @ 185.199.109.153 A @ 185.199.110.153 A @ 185.199.111.153 CNAME www yixiuer.gthub.io 建议将默认添加的几行删除，以免产生解析错误，可以参考我的，上面的 5 行即我自行添加的：
+怎么查看域名是否已经解析成功了呢？2
+1 2 3 4 5 6 $ dig +noall +answer example.com ;example.com. example.com. 3600 IN A 185.199.108.153 example.com. 3600 IN A 185.199.109.153 example.com. 3600 IN A 185.199.110.153 example.com. 3600 IN A 185.199.111.153 Linux 下输入以上命令，得到以上结果即表明域名解析成功，可以进入下一步了。</description>
+    </item>
+    
+    <item>
+      <title>在 NexT 中使用 Valine 评论系统</title>
+      <link>https://pub.oribos.cn/web/reprint/003.html</link>
+      <pubDate>Sun, 15 Jul 2018 12:30:51 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/003.html</guid>
+      <description>引用自reuixiy
+本文包括 NexT 主题的 v5 和 v6 两个版本的使用方法，以及对 TopX 页面的兼容处理。
+Valine 是一个基于国内 BaaS（后端即服务：Backend as a Service）提供商 LeanCloud 的评论系统，有经典的昵称、邮箱、网址的评论框，支持 Gravatar 头像，支持 Markdown，支持代码高亮等等。
+这么好的评论系统，为什么我现在才开始使用呢？因为对于 NexT 主题，有一项重要功能——文章阅读量统计 leancloud_visitors 也是基于 LeanCloud 的，而之前 Valine 的代码与此功能有冲突，导致 F12 后 Console 看到一堆红色的 error，所以我暂时没有启用。另外，基于 LeanCloud 的 TopX 页面也是如此，甚至直接无法使用，生成的页面只有 title 和 name。Anyway，经过这个 PR，现在这些问题都能解决了😄！
+基础配置如注册 LeanCloud、配置安全域名、在 NexT 主题中启用等在这就不说了，请直接查看 Valine 的文档中的相关内容。下面主要说明下如何更新 Valine 以解决代码冲突问题。
+leancloud_visitors 首先，如果你的 NexT 是 v6，请直接 git pull 更新到最新版本即可。如果你自定义了一些功能，修改了主题的某些文件导致更新报错，别急，参考我的另一篇文章的 2.3.2 节更新即可。
+如果你的 NexT 是和我一样的 v5，那么请按下面步骤进行更新。
+1）编辑 valine.swig 文件，将旧的代码替换为最新的。
+2）参考这里，修改相关文件。</description>
+    </item>
+    
+    <item>
+      <title>加速 Hexo 博客</title>
+      <link>https://pub.oribos.cn/web/reprint/2018053001.html</link>
+      <pubDate>Wed, 30 May 2018 13:10:50 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2018053001.html</guid>
+      <description>引用自reuixiy
+尝试在博客利用 InstantClick 和 Hexo 的两个插件 hexo-service-worker、hexo-filter-optimize 让博客快如闪电⚡。
+注意：最新版本的 NexT 已经集成了 PJAX 的功能，因此对于处理起来比较麻烦的 InstantClick，可不需。另外，Service Worker 请查看我新写的利用 Workbox 实现博客的 PWA。
+InstantClick 介绍请看官网，直接下载 instantclick.js（浏览器右键保存为），再放到 ~/blog/themes/next/source/js/src/ 下，然后添加代码：
+1 2 3 4 5 6 &amp;lt;!-- 文件位置：~/blog/themes/next/layout/_layout.swig --&amp;gt; + &amp;lt;script type=&amp;#34;text/javascript&amp;#34; src=&amp;#34;/js/src/instantclick.js&amp;#34; data-no-instant&amp;gt;&amp;lt;/script&amp;gt; + &amp;lt;script data-no-instant&amp;gt;InstantClick.init();&amp;lt;/script&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 可能会有一些问题，比如与 FancyBox、Google Analytics 等等的兼容问题，解决方法自行查看官网的文档或 Google。
+Hexo 插件 先在站点文件夹根目录安装：
+~/blog $ npm install hexo-service-worker hexo-filter-optimize --save 然后在站点配置文件中配置：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 # 文件位置：~/blog/_config.</description>
+    </item>
+    
+    <item>
+      <title>Hexo 中 MathJax 的静态显示（svg）</title>
+      <link>https://pub.oribos.cn/web/reprint/009.html</link>
+      <pubDate>Wed, 16 May 2018 19:38:28 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/009.html</guid>
+      <description>引用自reuixiy
+对 NexT 主题来说，是支持 MathJax 的，但是感觉不够清真：
+动态加载，渲染还要时间； 有个右键菜单，感觉没必要。 本文尝试利用 gulp 和 gulp-mathjax-page 将公式直接渲染为 SVG 并嵌入 HTML，以实现静态化，支持任何 Hexo 主题。同时，支持化学方程式💥。
+注意：发现有人写了一个 Hexo 插件 hexo-filter-mathjax-ssr（Server-Side Render），可以先去尝试它。当然，如果你发现显示的样式有问题，可以参考我下文给出的 CSS 样式，自行加上。
+操作步骤 1）安装
+~/blog $ npm i -g gulp@3.9.1 ~/blog $ npm i -S gulp@3.9.1 gulp-mathjax-page 2）新建
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 // 文件位置：~/blog/gulpfile.js var gulp = require(&amp;#39;gulp&amp;#39;) var mathjax = require(&amp;#39;gulp-mathjax-page&amp;#39;) gulp.</description>
+    </item>
+    
+    <item>
+      <title>浅谈博客文章的两种分类方式</title>
+      <link>https://pub.oribos.cn/web/reprint/2017121105.html</link>
+      <pubDate>Mon, 11 Dec 2017 17:42:20 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017121105.html</guid>
+      <description>引用自reuixiy
+NexT 主题把分类（categories）作为文章分类的主要方式，而标签（tags）则是辅助。我个人很喜欢这种设计，分类为主，标签为辅。
+先浅谈下分类。「物以类聚」，有相同点的「物」可分为一类。「横看成岭侧成峰，远近高低各不同」，能有很多的分类。「身在此山中」，认知上有一个主分类。1
+可见，一定要有个主分类，博客的主分类应该是什么呢？我们日常生活中的分类都是树状分类（也可以说是有阶级性的，有「父」与「子」的关系），比如：知识、公务员、文件浏览器……我们博客写的文章，肯定是与日常生活紧密相联的，故写的文章也逃不了这种树状分类，对博客来说也就是 categories，因此 categories 应为博客的主分类。
+但是，树状分类有个缺陷——只能实现一种维度的分类，比如：你的 Windows 电脑按文件类型有视频、音乐、文档三个文件夹，但是如果这三个文件夹中各有些你很喜欢的，而你想把它们放到一起，这时该怎么办呢？
+1）创建个「我喜欢」文件夹，然后把它们复制到「我喜欢」文件夹？不可以，因为这样「我喜欢」文件夹就有视频、音乐、文档三种文件类型，又乱了。
+2）那基于 1，再在「我喜欢」文件夹中创建视频、音乐、文档文件夹？可以，但如果某天你突然讨厌其中的某个文件了，你就要删除两遍。
+3）那在 1 中，把它们移动到「我喜欢」文件夹，而不是复制？不可以，因为这样你视频、音乐、文档三种文件类型下的所有文件就不在一个文件夹了。
+这其实就是树状分类的天生缺陷，「文件类型」是一种分类维度，而「喜欢」是另一种分类维度，在树状分类的 Windows 文件浏览器中，无法实现不同分类维度的共存，除非重复文件。
+要弥补这个缺陷，就要利用 tags。与 categories 不同，tags 是一种平行分类，一个 tag 就是一种分类维度。因此，对于多维度分类的问题，利用 tags 即可简单地解决。在上面的例子中，如果 Windows 文件浏览器可以在你喜欢的文件上加上「我喜欢」的 tag，然后再有个「tags 浏览器」，问题就简单且完美地解决了。
+以上，分类（categories）应作为文章的主要分类方式，标签（tags）则是不可或缺的辅助，以弥补树状分类的缺陷。
+https://disq.us/p/1ltvq6f&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>如何安装 GNOME Shell 插件？</title>
+      <link>https://pub.oribos.cn/web/reprint/2017100206.html</link>
+      <pubDate>Mon, 02 Oct 2017 19:38:39 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017100206.html</guid>
+      <description> 引用自reuixiy
+感谢开源，让 Linux 下有了 GNOME 桌面环境，感谢开源，有了许多「外挂」似的 GNOME Shell 插件，开起后效果绝对秒杀 Windows！问题是：怎么安装 GNOME Shell Extensions 呢？
+源码包安装（推荐） 这种安装方式的好处就是可以获取到插件的最新版本。要怎么操作呢？直接 git clone 其源码，然后按照 README 中的说明自己编译安装，大部分直接 make install 即可，少部分可能要自己手动操作一下，详见各自的 README。
+浏览器插件安装 最好用 Firefox，我在 Chrome 下测试没用。打开 GNOME Shell Extensions 网站，会有个提示啥允许好像，然后 Allow 即可，刷新页面即可安装。
+下载安装包安装 直接去 GNOME Shell Extensions 的网站上下载安装包，然后解压缩，重命名（删除邮箱后面的字符）后复制到目录 ~/.local/share/gnome-shell/extensions/ 下，然后 alt + f2 重启 GNOME，再打开 Tweaks，应该就能在 Extensions 上看到。
+apt-get 方式 apt-get update apt-cache search gnome-shell-extension apt-get install gnome-shell-extension-插件名 不过只能搜到少部分，另还可以安装下面这个包，里面有一些插件：
+apt-get install gnome-shell-extensions 安装好后，点击按钮打开即可，如果有设置按钮，可以设置，并且如果有错误则会显示报错信息。
+安利几个插件 名字 功能 说明 Redshift 护眼模式 安装配置方法见这篇文章 Topicons plus 将左下脚的托盘图标放在顶栏 * Simple net speed 顶栏实时网速显示 * Openweather 顶栏显示天气 * EasyScreenCast 录屏 * Coverflow alt-tab 效果超赞的 alt-tab 切换效果 * Dash to Dock 自己试试，突然无法表达😂 * Workspaces to Dock 自定义工作区 * Blyr 毛玻璃效果 * Proxy Switcher 快速切换系统代理 科学上网时有用 </description>
+    </item>
+    
+    <item>
+      <title>解决更新 Kali Linux 后网易云音乐歌词乱码的问题</title>
+      <link>https://pub.oribos.cn/web/reprint/2017092301.html</link>
+      <pubDate>Sat, 23 Sep 2017 11:20:26 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017092301.html</guid>
+      <description>引用自reuixiy
+旧方法 前几天 apt-get dist-upgrade 一下，然后打开网易云音乐发现歌词和一些项目显示乱码了。据说是 Qt5.9 造成的1，解决方法：
+wget http://download.qt.io/archive/qt/5.8/5.8.0/qt-opensource-linux-x64-5.8.0.run chmod +x qt-opensource-linux-x64-5.8.0.run sudo ./qt-opensource-linux-x64-5.8.0.run 然后弹出安装界面，一直默认即可，最后：
+vim /usr/share/applications/netease-cloud-music.desktop Exec=env LD_LIBRARY_PATH=/opt/Qt5.8.0/5.8/gcc_64/lib netease-cloud-music %U --no-sandbox 新方法 安装新版，下载 ubuntu16.04（64 位）即可。可能会无法打开，怎么办呢？编辑文件2：
+vim /usr/share/applications/netease-cloud-music.desktop 然后：
+1 2 - Exec=netease-cloud-music %U + Exec=sudo netease-cloud-music %U ٩(•̤̀ᵕ•̤́)ᵒᵏᵎᵎᵎᵎ
+https://bbs.archlinuxcn.org/viewtopic.php?id=5021&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+http://www.kali.org.cn/thread-27612-1-1.html&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>零网（ZeroNet）初探</title>
+      <link>https://pub.oribos.cn/web/reprint/2017090105.html</link>
+      <pubDate>Fri, 01 Sep 2017 09:33:18 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017090105.html</guid>
+      <description>引用自reuixiy
+听说有个暗网，现在接触了个零网……打开之后，首先感觉界面很棒，骚气的紫色，加上渐变，让人眼前一亮 (๑•̀ㅂ•́)و✧～网页下拉，很赞有木有，不过最让人眼前一亮的是右上角的小东东，鼠标按住它往左拉，会出现一个侧栏。别的不说，光是这 UI 就值得体验一下🐱！
+介绍和安装 1）什么是 ZeroNet？
+ZeroNet 是一个去中心化的类似于 Internet 的网络，由匈牙利的开发者使用 Python 制作，完全开源。网站特殊的 ZeroNet URL 可以使用一般的浏览器浏览，就像访问本地主机一样。ZeroNet ..默认并不匿名..，但是用户可以通过内置的 Tor 功能进行匿名化。ZeroNet 使用 Bitcoin 加密算法及 BitTorrent 网络。
+ZeroNet 是一个利用比特币加密和 BT 技术提供不受审查的网络与通信的 BT 平台，ZeroNet 网络功能已经得到完整的种子的支持和加密连接，保证用户通信和文件共享的安全。使用 ZeroNet，你可以匿名上网，你可以在自己电脑搭建网站，但即使你关机，你的网站依然在全球存在，别人无法关闭你的网站。
+2）防 DMCA Take down
+由于 ZeroNet 去中心化的原因，国外有人制作了一个 ZeroNet 版本的海盗湾——Play，这个网站可让版权所有者头疼啦……一般的网站服务器都有 IP 地址，不抗投诉的 ISP 收到了向 IP WHOIS 滥用信箱发送的 DMCA 投诉信的话，你就要和你的网站说再见了……（俗称 DMCA Take down）。可用了 ZeroNet 后，并没有一台服务器是真实的服务器，任何访客都有可能成为服务器，还有些访客使用了 Tor，更找不到真正的。
+3）使用 ZeroNet 的特点
+可以建自己的网站，且无需备案，无需审核，无需服务器。1 基于 P2P 原理，你只要建好并有足够的人浏览过，即使你自己关机，你的网站依然在全球存在，别人想关你站，也没门。 基于 P2P 原理，支持内网穿透，也就是说你在内网也没关系，手机也没问题。 基于比特币原理，账号很安全，谁也不知道你是谁，谁也盗不去。 不需要域名，任何人访问都使用 http://127.</description>
+    </item>
+    
+    <item>
+      <title>重建博客：rm 的悲剧</title>
+      <link>https://pub.oribos.cn/web/reprint/005.html</link>
+      <pubDate>Mon, 21 Aug 2017 11:00:49 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/005.html</guid>
+      <description>引用自reuixiy
+2017.08.07 下午，昏昏欲睡的我，还在折腾电脑的驱动。紧张地 Google 解决方法，直接 Copy 一条命令回车，没想到这一操作就宣告了我博客的死亡😭😭😭&amp;hellip;
+死亡的味道 回车后，过了很久，当时也没太在意，继续操作。一会重启系统，感觉画风不对😶，桌面变了，后脑勺一凉，开终端，ls 一看，没了，我的「家」都没了……机智的我赶紧敲了一条 history 命令，看到（别问我为啥还能看到，神特么知道）：
+rm -rf ~/ .local/... 发现了没，~/ 后面多了个空格，卧槽！那个网站上贴这行代码的人！￥%×%%&amp;amp;×%&amp;amp;×%&amp;amp;×￥%……#%……&amp;amp;×%&amp;amp;（×……&amp;amp;+）——+（——）（&amp;amp;（×！
+删而后重建 之后试着恢复数据，无奈失败。把自己的「家」都给删了，半年多在这系统上的努力都废了，特别是博客文件夹，想到还要从 0 开始弄，头皮发麻……
+无奈归无奈，还好我电脑双系统，第二天就进 Windows 下载镜像烧 U 盘，重装系统，顺便（当然没那么顺便🙃）把引导由 BIOS + MBR 改为 UEFI + GPT1。
+最后终于进了新 Linux 系统，更新系统，解决驱动问题，装软件。接下来就是重新搭建 Hexo，优化 NexT 主题，将网站上的 38 篇文章全部写成 Markdown 文档。
+折腾新成果 1）博客方面
+规范了 Markdown 文档，可以更美观地使用 emoji 😛，添加 404 页面，使用插件使音乐支持歌词，视频支持弹幕……更多点击打造个性超赞博客 Hexo + NexT + GitHub Pages 的超深度优化查看。
+2）系统方面
+装了最新的 Wine QQ，深刻了解数据的重要性和 rm 的可怕😂&amp;hellip;
+3）其它方面
+熟悉了 UEFI + GPT，自己重装系统的能力又得到了巨大提升🤪&amp;hellip;</description>
+    </item>
+    
+    <item>
+      <title>我的小 Web 服务器树莓派在搭建 WordPress 时遇到的问题</title>
+      <link>https://pub.oribos.cn/web/reprint/2017020204.html</link>
+      <pubDate>Thu, 02 Feb 2017 11:54:42 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017020204.html</guid>
+      <description>引用自reuixiy
+宝宝只想用树莓派搭建个人博客玩玩啊，特么为啥如此麻烦？虽然遇到的问题，百度，Google，最后还是解决了😄～现将问题收集如下，希望对看到的人有用。我用树莓派搭建的网站的架构：Linux (Raspbian) + Nginx + MySQL + PHP + WordPress。
+1）未能找到 WordPress 内容目录
+找到 WordPress 的根目录，找到 wp-config.php 文件，在文件最后添加如下代码：
+1 2 3 4 5 /** Override default file permissions */ if(is_admin()) { add_filter(&amp;#39;filesystem_method&amp;#39;, create_function(&amp;#39;$a&amp;#39;, &amp;#39;return &amp;#34;direct&amp;#34;;&amp;#39; )); define( &amp;#39;FS_CHMOD_DIR&amp;#39;, 0751 ); } 2）WordPress 需要访问您网页服务器的权限，请输入您的 FTP 登录凭据以继续
+在 wp-config.php 文件中添加：
+1 2 3 define(&amp;#34;FS_METHOD&amp;#34;,&amp;#34;direct&amp;#34;); define(&amp;#34;FS_CHMOD_DIR&amp;#34;, 0777); define(&amp;#34;FS_CHMOD_FILE&amp;#34;, 0777); 3）安装主题失败，无法创建目录
+1 $ sudo chmod -R 777 /var/www/html/ 4）在 WordPress 中使用裁剪图片功能时，出现：「在裁剪您的图像时发生了错误。」
+1 2 $ sudo apt-get update $ sudo apt-get install php5-gd 5）删除自豪的使用 WordPress</description>
+    </item>
+    
+  </channel>
+</rss>

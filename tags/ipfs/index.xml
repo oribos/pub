@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ipfs on 记事本</title>
+    <link>https://pub.oribos.cn/tags/ipfs/</link>
+    <description>Recent content in ipfs on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Wed, 18 Sep 2019 15:13:56 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tags/ipfs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>将博客部署到星际文件系统（IPFS）</title>
+      <link>https://pub.oribos.cn/web/reprint/2019091804.html</link>
+      <pubDate>Wed, 18 Sep 2019 15:13:56 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019091804.html</guid>
+      <description>引用自reuixiy
+1
+在这篇文章中，我将主要介绍如何将你的..静态..博客以持续集成的方式部署到星际文件系统 IPFS 上，也会简单介绍一下 IPFS 的使用。本文中，我使用的 SSG2 是 Hugo，使用的持续集成服务由 Netlify 提供，博客的源码可以在 GitHub 上找到。另，提醒一下，与零网一样，IPFS 默认不匿名👓，且对 Tor 的支持还在开发中。
+说明：最近发现 Cloudflare 的 IPFS 服务好像挂了，需要等待非常长的时间才能获取到最新内容，因此本博客已暂时放弃部署在 IPFS 上。
+前言 一年前的昨天🧐，知名的互联网基础设施服务提供商 Cloudflare 宣布开始支持 IPFS Gateway，作为其分布式互联网网关项目的一部分。关于分布式互联网（Distributed Web，以下简称 D 网），它的到来很有可能会将我们带向 Web 3.0 时代，一个全新的互联网时代！而 D 网所具有的去中心化将会带我们走向新的自由之路——无审查，无高墙。👉🌎🌍🌏💫
+起因 浏览 Twitter 时发现了 @GoHugoIO 的一条推文，IPFS 四个字母激起了我的兴趣🐭（之前..轻微..了解过，印象只限于这四个字母），快速浏览一遍链接的文章之后，去看了他之前写的一篇详细教程，打开 IPFS 的官网，决定这次一定要尝试一下 IPFS！🕳️🦆
+正文 文章的正文分为两个部分：持续集成和原生部署，第一部分是文章的主体，第二部分供感兴趣的读者研究。
+当你按照此文章将博客成功部署到 IPFS 上后，你的博客将：
+⚡拥有全球范围的高速 CDN，国内也有不错的访问速度（Cloudflare） 🌤️无需支出且永远在线（如果你不需要域名的话） 🛸走向未来 持续集成 如果你只是想直接通过持续集成的方式部署博客，那么你是无需在自己的电脑（本地）上安装 IPFS 的，你甚至可以完全不用接触 IPFS。但是，你的电脑必须安装 Git 和 Node.js。如果你是一个程序员或之前有尝试过搭建静态博客，那么你对它们应该并不陌生。
+准备环境 首先是 Git，我们要将博客所在的文件夹初始化成一个 Git 仓库。注意，如果你之前已经初始化过了，请跳过这一步。怎么确定是否已经是一个 Git 仓库呢🤔？打开终端╱命令行，然后进入你的博客文件夹，输入 git status 然后回车，如下：</description>
+    </item>
+    
+  </channel>
+</rss>

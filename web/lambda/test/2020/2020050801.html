@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="2020 05 08 部署记录02" />
+<meta property="og:description" content="文件整合 对某些类型,某些特定功能的文件的整合.以减少文件数量和页面. 1. 将某一段时间的日志文件整合到一个文件夹. 2. 对某些类型的文件归入一个&quot;标签&quot;,增加关键字和分类 3. 文件的链接和引入. 4. 减少文件数量,减少目录的数量.即保证功能分目录增加又减少繁杂的新文件.
+例子:新的功能 文件目录结构: /总目录/功能目录/类别/2020-05-01-名称-附加.文件名
+总目录:用于整合所有有用文件.排除测试,临时,大文件等. 总目录:
+kit 所有app,大文件,存档,backup等 site 服务器的日常文件, project 主要工作文件,项目 project的文件夹的所有内容都是要随时备份的,site可以根据需要备份或同步.kit内的文件是交给内部存档.不用于同步和重要备份
+功能目录: web 发布的文档 olf 私有文件 文件名 2020-05-01-名称-附加.文件名 文件更新均在当年使用,之前的文档全部转入归档文件夹,文件夹的分类主要根据日期和附加类型区分,即附加名称为日记的均放到hb的类别目录下.
+前端即网站前台部分，运行在PC端，移动端等浏览器上展现给用户浏览的网页。随着互联网技术的发展，HTML5，CSS3，前端框架的应用，跨平台响应式网页设计能够适应各种屏幕分辨率，完美的动效设计，给用户带来极高的用户体验。
+如下图: 核心技术 HTML、CSS、JavaScript
+这三个是前端开发中最基本也是最必须的三个技能。前端的开发中，在页面的布局时， HTML将元素进行定义，CSS对展示的元素进行定位，再通过JavaScript实现相应的效果和交互。虽然表面看起来很简单，但这里面需要掌握的东西绝对不会少。在进行开发前，需要对这些概念弄清楚、弄明白，这样在开发的过程中才会得心应手。
+HTML 指的是超文本标记语言 (Hyper Text Markup Language)，这个也是我们网页最常用普通的语言了，经历了多个版本的发展，已经发展到5.0版了，得力于W3C建立的标准和规范，已普遍升级到了XHTML，XHTML 指可扩展超文本标签语言（EXtensible HyperText Markup Language）， XHTML 于2000年的1月26日成为 W3C 标准，是更严格更纯净的 HTML 代码，XHTML 的目标是取代 HTML。XHTML 与 HTML 4.01 几乎是相同的，XHTML 是作为一种 XML 应用被重新定义的 HTML，是一个 W3C 标准。W3C 将 XHTML 定义为最新的HTML版本。所有新的浏览器都支持 XHTML。
+CSS 级联样式表（Cascading Style Sheet）简称“CSS”，通常又称为“风格样式表（Style Sheet）”，它是用来进行网页风格设计的。比如，如果想让链接字未点击时是蓝色的，当鼠标移上去后字变成红色的且有下划线，这就是一种风格。通过设立样式表，可以统一地控制HTML中各标志的显示属性。级联样式表可以使人更能有效地控制网页外观。使用级联样式表，可以扩充精确指定网页元素位置，外观以及创建特殊效果的能力。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/lambda/test/2020/2020050801.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2020-05-08T11:38:06+08:00" />
+<meta property="article:modified_time" content="2020-05-08T11:38:06+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2020 05 08 部署记录02"/>
+<meta name="twitter:description" content="文件整合 对某些类型,某些特定功能的文件的整合.以减少文件数量和页面. 1. 将某一段时间的日志文件整合到一个文件夹. 2. 对某些类型的文件归入一个&quot;标签&quot;,增加关键字和分类 3. 文件的链接和引入. 4. 减少文件数量,减少目录的数量.即保证功能分目录增加又减少繁杂的新文件.
+例子:新的功能 文件目录结构: /总目录/功能目录/类别/2020-05-01-名称-附加.文件名
+总目录:用于整合所有有用文件.排除测试,临时,大文件等. 总目录:
+kit 所有app,大文件,存档,backup等 site 服务器的日常文件, project 主要工作文件,项目 project的文件夹的所有内容都是要随时备份的,site可以根据需要备份或同步.kit内的文件是交给内部存档.不用于同步和重要备份
+功能目录: web 发布的文档 olf 私有文件 文件名 2020-05-01-名称-附加.文件名 文件更新均在当年使用,之前的文档全部转入归档文件夹,文件夹的分类主要根据日期和附加类型区分,即附加名称为日记的均放到hb的类别目录下.
+前端即网站前台部分，运行在PC端，移动端等浏览器上展现给用户浏览的网页。随着互联网技术的发展，HTML5，CSS3，前端框架的应用，跨平台响应式网页设计能够适应各种屏幕分辨率，完美的动效设计，给用户带来极高的用户体验。
+如下图: 核心技术 HTML、CSS、JavaScript
+这三个是前端开发中最基本也是最必须的三个技能。前端的开发中，在页面的布局时， HTML将元素进行定义，CSS对展示的元素进行定位，再通过JavaScript实现相应的效果和交互。虽然表面看起来很简单，但这里面需要掌握的东西绝对不会少。在进行开发前，需要对这些概念弄清楚、弄明白，这样在开发的过程中才会得心应手。
+HTML 指的是超文本标记语言 (Hyper Text Markup Language)，这个也是我们网页最常用普通的语言了，经历了多个版本的发展，已经发展到5.0版了，得力于W3C建立的标准和规范，已普遍升级到了XHTML，XHTML 指可扩展超文本标签语言（EXtensible HyperText Markup Language）， XHTML 于2000年的1月26日成为 W3C 标准，是更严格更纯净的 HTML 代码，XHTML 的目标是取代 HTML。XHTML 与 HTML 4.01 几乎是相同的，XHTML 是作为一种 XML 应用被重新定义的 HTML，是一个 W3C 标准。W3C 将 XHTML 定义为最新的HTML版本。所有新的浏览器都支持 XHTML。
+CSS 级联样式表（Cascading Style Sheet）简称“CSS”，通常又称为“风格样式表（Style Sheet）”，它是用来进行网页风格设计的。比如，如果想让链接字未点击时是蓝色的，当鼠标移上去后字变成红色的且有下划线，这就是一种风格。通过设立样式表，可以统一地控制HTML中各标志的显示属性。级联样式表可以使人更能有效地控制网页外观。使用级联样式表，可以扩充精确指定网页元素位置，外观以及创建特殊效果的能力。"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 2020 05 08 部署记录02
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">2020 05 08 部署记录02</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	
+	
+		Posted at May 08, 2020
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<h3 id="文件整合">文件整合</h3>
+<p>对某些类型,某些特定功能的文件的整合.以减少文件数量和页面.
+1. 将某一段时间的日志文件整合到一个文件夹.
+2. 对某些类型的文件归入一个&quot;标签&quot;,增加关键字和分类
+3. 文件的链接和引入.
+4. 减少文件数量,减少目录的数量.即保证功能分目录增加又减少繁杂的新文件.</p>
+<h3 id="例子新的功能">例子:新的功能</h3>
+<p>文件目录结构:  /总目录/功能目录/类别/2020-05-01-名称-附加.文件名</p>
+<p>总目录:用于整合所有有用文件.排除测试,临时,大文件等.
+总目录:</p>
+<pre><code>kit  所有app,大文件,存档,backup等
+site  服务器的日常文件,
+project  主要工作文件,项目
+</code></pre>
+<p>project的文件夹的所有内容都是要随时备份的,site可以根据需要备份或同步.kit内的文件是交给内部存档.不用于同步和重要备份</p>
+<pre><code>功能目录:   web 发布的文档
+            olf 私有文件
+
+文件名  2020-05-01-名称-附加.文件名
+</code></pre>
+<p>文件更新均在当年使用,之前的文档全部转入归档文件夹,文件夹的分类主要根据日期和附加类型区分,即附加名称为日记的均放到hb的类别目录下.</p>
+<p>前端即网站前台部分，运行在PC端，移动端等浏览器上展现给用户浏览的网页。随着互联网技术的发展，HTML5，CSS3，前端框架的应用，跨平台响应式网页设计能够适应各种屏幕分辨率，完美的动效设计，给用户带来极高的用户体验。</p>
+<p>如下图:
+<img src="https://base.oribos.city/images/2020/3.png" alt=""></p>
+<h3 id="核心技术">核心技术</h3>
+<p>HTML、CSS、JavaScript</p>
+<p>这三个是前端开发中最基本也是最必须的三个技能。前端的开发中，在页面的布局时， HTML将元素进行定义，CSS对展示的元素进行定位，再通过JavaScript实现相应的效果和交互。虽然表面看起来很简单，但这里面需要掌握的东西绝对不会少。在进行开发前，需要对这些概念弄清楚、弄明白，这样在开发的过程中才会得心应手。</p>
+<p>HTML
+指的是超文本标记语言 (Hyper Text Markup Language)，这个也是我们网页最常用普通的语言了，经历了多个版本的发展，已经发展到5.0版了，得力于W3C建立的标准和规范，已普遍升级到了XHTML，XHTML 指可扩展超文本标签语言（EXtensible HyperText Markup Language）， XHTML 于2000年的1月26日成为 W3C 标准，是更严格更纯净的 HTML 代码，XHTML 的目标是取代 HTML。XHTML 与 HTML 4.01 几乎是相同的，XHTML 是作为一种 XML 应用被重新定义的 HTML，是一个 W3C 标准。W3C 将 XHTML 定义为最新的HTML版本。所有新的浏览器都支持 XHTML。</p>
+<p>CSS
+级联样式表（Cascading Style Sheet）简称“CSS”，通常又称为“风格样式表（Style Sheet）”，它是用来进行网页风格设计的。比如，如果想让链接字未点击时是蓝色的，当鼠标移上去后字变成红色的且有下划线，这就是一种风格。通过设立样式表，可以统一地控制HTML中各标志的显示属性。级联样式表可以使人更能有效地控制网页外观。使用级联样式表，可以扩充精确指定网页元素位置，外观以及创建特殊效果的能力。</p>
+<p>JavaScript
+是一种由Netscape的LiveScript发展而来的原型化继承的面向对象的动态类型的区分大小写的客户端脚本语言，主要目的是为了解决服务器端语言，比如Perl，遗留的速度问题，为客户提供更流畅的浏览效果。当时服务端需要对数据进行验证，由于网络速度相当缓慢，只有28.8kbps，验证步骤浪费的时间太多。于是Netscape的浏览器Navigator加入了Javascript，提供了数据验证的基本功能。</p>
+<h3 id="github作用">github作用</h3>
+<p>github是一个面向开源及私有软件项目的托管平台,类似的平台还有gitlab,coding.但是github的功能丰富,除了专业的git代码托管以外,还有其他用法</p>
+<h3 id="图床">图床</h3>
+<p>使用picgo,然后填写相应的代码可以实现图床功能.</p>
+<p><img src="https://cdn.jsdelivr.net/gh/denalon/ra-gh-1/pic/20200403090102.jpg" alt=""></p>
+<h3 id="静态网站">静态网站</h3>
+<p>github 自带的pages功能,支持自定义域名. <a href="https://pages.github.com/">pages</a></p>
+<h3 id="应用仓库">应用仓库</h3>
+<p>各类windows linux Android 应用都可以在github上搜索.</p>
+<h3 id="一个git仓库生成不同的分支">一个git仓库生成不同的分支</h3>
+<p>master分支显示正式的，整理过的文件。</p>
+<p>b分支是测试，临时文件。</p>
+<h3 id="提交出错">提交出错</h3>
+<p>由于运用新的文件格式,对g.hbn.pub的所有文件目录进行调整,包括旧文件.依符合新的文件格式的规范.然而由于之前必须确保网页URL地址长期不变,这些修改后的文件不应该发布到b.hbn.pub.又因为资源整个,g的仓库其实是跟b仓库放在一起,只是一个发布次序的问题.</p>
+<p>以上的情况导致在发布b网页更新是,将g仓库文件原封不动的发布到b网页.导致所有的旧文件URL地区全部改变.这必然导致已经发布的url地址出现无法访问的故障,不应该发生.</p>
+<p>针对这种异常,寻找一种办法解决.目前的措施是,撤销最近的提交,重新使用上一次文档.</p>
+<h4 id="专用的单页模板">专用的单页模板</h4>
+<p>info.hbn.pub 是专门设计的单页模板,此页面内容仅限分享出来的链接,</p>
+<p>如: <a href="http://info.ufs.im/hb/2020042101.html">http://info.ufs.im/hb/2020042101.html</a></p>
+<p>的特定地址,对应的页面,仅提供基本的内容,不提供搜索,只提供有限的索引目录链接功能.效果为 只能通过提供的url地址访问页面,点击页面的上链接将退出访问页面,且无法索引回访问页面.只能通过url地址访问.</p>
+<h4 id="单页功能">单页功能</h4>
+<p>提供特定页面,部署一个单页面以供某些特定情况使用.比如微博微信分享.</p>
+<p>将url地址短域名缩减.</p>
+<h3 id="二级域名问题">二级域名问题</h3>
+<p><!-- raw HTML omitted --><a href="https://www.baidu.com">www.baidu.com</a><!-- raw HTML omitted --> 到底是二级域名还是三级域名？ .com = 一级域名 .baidu.com =二级域名  那<!-- raw HTML omitted --><a href="https://www.baidu.com">www.baidu.com</a><!-- raw HTML omitted -->就应该是三级域名？</p>
+<p>但是，如下图</p>
+<p><img src="https://cdn.jsdelivr.net/gh/denalon/ra-gh-2/image/2020050201.png" alt="域名排序"></p>
+<h3 id="dynadot上关于域名的定义">dynadot上关于域名的定义</h3>
+<p>什么是二级域名（SLD）？</p>
+<p>二级域名（SLD）是域名的一部分，位于点号的左边，而顶级域名（TLD）则是点号右边的部分，又称为域名后缀。例如，我们的域名是dynadot.com，则&quot;dynadot&quot;属于SLD，&quot;.com&quot;属于TLD。由于域名系统（DNS）层次结构的关系，域名的这一部分称为“二级”。</p>
+<p>有时，SLD可以被认为是域名后缀的一部分，因为某些域名注册商使用SLD来指定TLD的应用。例如，.UK注册商提供了.CO.UK用作一般/商业用途，.ORG.UK用作非营利用途，.ME.UK用作个人网站用途。这三个例子也称为ccSLD或国家代码二级域名。</p>
+<p>同时请注意，某些注册商不允许对TLD进行直接注册。对于.UK也曾是如此，直到2014年6月开放了直接注册为止。</p>
+<p>什么是三级域名？</p>
+<p>三级域名是域名的一部分，即二级域名（SLD）点号左边部分的部分。例如，.CO.UK是.UK 国家代码顶级域名（ccTLD）下的一种国家代码二级域名（ccSLD）。.UK注册处支持作为域名后缀带有&quot;.CO.UK&quot;的.CO.UK下的域名注册。例如，我们拥有Dynadot.CO.UK，因此我们的三级域名是&quot;dynadot&quot;。</p>
+<p>请注意，三级域名不同于子域名。</p>
+<p>什么是子域名？</p>
+<p>子域名是域名的子集。域名通常由顶级域名（TLD）组成，也称为域名后缀（例如.COM）和次级域名（SLD）。例如，我们的域名是dynadot.com，SLD为&quot;dynadot&quot;，而TLD则为.COM。子域名的一个例子是example.dynadot.com，其子域名为&quot;example&quot;。</p>
+<p>想在dynadot.com上创建您自己的子域名？我们的网站建立器为您提供免费的自定义子域名功能。</p>
+<p>请注意，子域名不同于第三级域名。</p>
+<p>什么是顶级域（TLD）？</p>
+<p>顶级域(TLD) 是域名中 .右面的部分。例如，我们的域名是dynadot.com 而 .com 是顶级域TLD.</p>
+<p>有几种类型的顶级域名：通用、国家、赞助和地理。</p>
+<p>Generic TLDs or gTLDs包括 .COM, .NET, .ORG及其他很多顶级域， 任何人均可注册该类域名。</p>
+<p>国家代码顶级域名或ccTLD是属于特定国家的域名。根据ISO 3166-1 alpha-2，每一个国家都具有自己的国家代码（大部分情况如此，存在着少数例外）。例如，.US是美国的国家代码，.UK是英国的国家代码，.DE是德国的国家代码，.CA是加拿大的国家代码，而.NL则是荷兰的国家代码。某些ccTLD只限该国的居民申请，而另一些则对所有人开放。也有些域名在其国家内较受欢迎，而另一些则被用作其他用途——其中两个例子是黑山共和国的域名.ME被用作个人网站，而哥伦比亚的域名.CO被用于取代.COM。这些类型的域名有时被称为gccTLD。请查看我们的国家代码顶级域名完整列表。</p>
+<p>赞助顶级域名（sTLD）是获得赞助商支持的代表其所服务的特定领域的一种专门的域名后缀。例如，.XXX是专门用于成人网站的一种赞助顶级域名。</p>
+<p>地理TLD（geoTLD）是为城市或地理区域发布的最新TLD中的一个部分。部分例子包括.NYC、.ASIA、.TOKYO等等。查看地区TLD和城市TLD的完整列表。</p>
+<p>您可能也听说过新的顶级域名（TLD）。从2014年开始，大量新的顶级域名（TLD）获得了发布。我们将2016年不断地推出新的顶级域名（TLD），在新的一年也将同样如此。查看2014年推出和2015年推出的新的顶级域名（TLD）。</p>
+<h3 id="使用picgo制作图片链接">使用picgo制作图片链接</h3>
+<p>使用picgo上传图片到阿里云oss里，oss做cdn处理。oss访问地址保持同之前图床服务器地址一样，原有图床内的资源仍保持不变。后续可能备份到其他地方，暂时以阿里云oss为主。</p>
+<h3 id="资源服务均从服务器上撤离">资源服务均从服务器上撤离</h3>
+<p>由于服务器性能和资源有限，大量资源不宜放在服务器上，静态资源均放置在对象存储中，避免占用服务器资源。同时也是在服务器做迁移时避免转移大量文件。</p>
+<h2 id="git托管的两个国内站点">git托管的两个国内站点</h2>
+<p>国内的git托管站点有gitee，阿里云code，腾讯云coding等站点。目前在阿里云code和腾讯云coding上做选择。个人的很多数据都优先阿里云上，但是阿里云code没有pages功能。静态网站无法部署在其上代替网站服务器。而coding功能强大，有pages功能。但是个人不想选择腾讯云的服务，包括之前购买的云服务器都在腾讯云上退订了。</p>
+<h2 id="个人网站转移至coding">个人网站转移至coding</h2>
+<p>由于个人使用的服务器做精简，纯粹的网站服务器被裁减，个人网站由wordpress改为hugo，生成静态网站部署在coding上，具有pages的coding成为优先使用的git托管中心。</p>
+<h2 id="数据集中">数据集中</h2>
+<p>由于个人网站转移至coding，基于数据集中的原则，相应的图片，音乐等外接资源也将优先考虑腾讯云服务。必要的git同步也将倾向于coding。阿里云code保留使用某些应用。</p>
+<h2 id="github的必要性">github的必要性</h2>
+<p>github项目较多，在github上的项目可以考虑复制到阿里云code或coding上使用。</p>
+<h3 id="从云服务器转变为coding">从云服务器转变为coding</h3>
+<p>日志的更新从云服务器转变为coding上发布</p>
+<h3 id="固定链接">固定链接</h3>
+<p>为了适应网站部署方式的改变，每篇文章都要规定固定链接地址。必须定义url。（主要应对阿里云oss无法自动重定向到index.html）。保障文章能正确采用url地址访问。
+<!-- raw HTML omitted -->注意：<!-- raw HTML omitted -->在hexo和hugo里post文章里使用url 应做为基本操作。</p>
+<h3 id="对于部署方式变更后的备份问题">对于部署方式变更后的备份问题</h3>
+<p>之前的备份是根据服务器的主要目录，统一备份到oss里。现在文件从云服务器转为coding。然而，coding上放置的是经过hugo渲染后的html文件。源文件并没有同步到coding上面。源文件是保存在本地电脑上的！就需要一种方式，确保这些源文件能妥善备份。当业务转移时，在其他地方也能渲染生成整站文件。</p>
+<p>问题时这些文件是在不同电脑上的。而且不同电脑上操作的也不尽相同，步骤，内容并不同步。就需要同步到git托管中心上。</p>
+<p>1将源文件同步到git托管中心</p>
+<p>2在电脑A上拉取源代码</p>
+<p>3在电脑A上修改源代码</p>
+<p>4使用hugo命令生成public文件，推送public文件到 coding</p>
+<p>5 推送源文件到git托管中心</p>
+<p>6电脑B需要操作时，从git托管中心拉取源代码</p>
+<p>7重复3-5的步骤。</p>
+<h4 id="样式文件和js使用oss内容">样式文件和js使用oss内容</h4>
+<p>网站，单独页面需要的css，js，图片等静态资源均引用自oss内容。并使用https安全协议。静态资源使用一个公开访问的oss存储桶。</p>
+<h4 id="应用程序备份到oss里">应用程序备份到oss里</h4>
+<p>经常使用的（主要时海外资源）应用程序app，应保留在oss里。当其他应用需要安装时，引用oss里，加快传输速度。国内资源可直接引用原资源。</p>
+<h4 id="长期备份文件保存在oss里">长期备份文件保存在oss里</h4>
+<p>定期将网站内容备份到oss存储桶里，包括一些必要的个人文件。此oss存储桶为私有访问权限。</p>
+<h4 id="oss的作用">oss的作用</h4>
+<p>私有桶 资源冗余 资源长期备份</p>
+<p>公共桶 静态文件 文件中转加速</p>
+<h3 id="存储桶的分类和命名">存储桶的分类和命名</h3>
+<p>1 首先需要一个专门备份文件和收集重要资料的存储桶。私有权限，长期保存，不经常删减文件。至少需要一个。</p>
+<p>2 业务需要，一个公开访问的存储桶。公共读取权限，根据应用设置时间和内容级别。必要时对文件进行删减。至少需要一个。</p>
+<p>3 临时中转，一个私有权限存储桶。放置app，压缩包或其他类型文件。这种临时中转的文件，可能需要长期保存，也可能只是周转一下就删除。也可能涉及重要安全权限，需要单独放置。需要一个或多个。</p>
+<p>4 业务信息，一个由各类系统生成或存储各类日志，记录的存储桶。作为系统文件的存放点。私有权限，这些文件甚至从来没有被使用过。但是需要保留以备某些时候查阅。需要一个或多个。</p>
+<h3 id="公开桶的命名">公开桶的命名</h3>
+<p>1 公开桶的名字需要跟私有桶完全区分。必要时，需要给公开桶设置自定义访问域名。个人使用.ufs.pub作为所有公开访问的存储桶的域名。</p>
+<p>2 私有桶在需要时也需要自定义域名，个人使用.hbnote.com作为私有桶的域名。私有桶的域名在一般情况下无法直接通过浏览器访问或者访问时权限受限。</p>
+<p>3 临时桶，原则上来讲，临时的存储桶不需要专门设置自定义域名。但不排除必要情况下，长期使用临时桶使用。个人使用.ofs.pub作为所有临时业务的域名。</p>
+<h3 id="多个git同步">多个git同步</h3>
+<p>日志网站的源代码放在目录A中，hugo运行以后，在目录A里生成一个public目录。这个public是直接发布到coding上。这个目录需要做成git仓库同步。但是源代码的目录A也想通过git仓库同步，在不同电脑上可以操作。这就需要将目录A做成仓库。</p>
+<p>1 不想上传public文件夹两次。</p>
+<p>2 coding pages能否直接发布仓库里public文件夹的内容？</p>
+<p>3 如何将目录A的仓库，分离一个分支，存放public？</p>
+<h3 id="更换主题">更换主题</h3>
+<p>尽管之前的主题已经使用了bootstrap的css和js，但是字体、样式等文件还是差强人意。考虑到需要修改的代码过多，还是换一个主题合适。</p>
+<p>新的主题同样存在多少不足，很多地方的自定义代码发生变化。一直找不到完美点的主题。可能hugo本身就是不够漂亮。</p>
+<h3 id="新主题">新主题</h3>
+<p>新主题默认支持bootstrap，</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="k8s安装和部署" />
+<meta property="og:description" content="k8s安装和部署" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/note/2021/2021061001.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2021-06-10T11:55:45+08:00" />
+<meta property="article:modified_time" content="2021-06-10T11:55:45+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="k8s安装和部署"/>
+<meta name="twitter:description" content="k8s安装和部署"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - k8s安装和部署
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">k8s安装和部署</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Jun 10, 2021
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p>k8s安装和部署</p>
+	<article class="md">
+		<blockquote>
+<p>引用自阿良的博客 <a href="http://blog.ctnrs.com/post/k8s-kubeadm-install/">http://blog.ctnrs.com/post/k8s-kubeadm-install/</a></p>
+</blockquote>
+<h3 id="安装要求">安装要求</h3>
+<p>在开始之前，部署Kubernetes集群机器需要满足以下几个条件：</p>
+<p>一台或多台机器，操作系统 CentOS7.x-86_x64</p>
+<p>硬件配置：2GB或更多RAM，2个CPU或更多CPU，硬盘30GB或更多</p>
+<p>集群中所有机器之间网络互通</p>
+<p>可以访问外网，需要拉取镜像</p>
+<p>禁止swap分区</p>
+<h3 id="准备环境">准备环境</h3>
+<p><img src="https://base.oribos.city/images/2021/06/single-master.jpg" alt="k8s架构图"></p>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>IP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>k8s-master</td>
+<td>192.168.31.63</td>
+</tr>
+<tr>
+<td>k8s-node1</td>
+<td>192.168.31.65</td>
+</tr>
+<tr>
+<td>k8s-node2</td>
+<td>192.168.31.66</td>
+</tr>
+</tbody>
+</table>
+<h3 id="操作步骤">操作步骤</h3>
+<h4 id="准备系统环境">准备系统环境</h4>
+<pre tabindex="0"><code>关闭防火墙：
+$ systemctl stop firewalld
+$ systemctl disable firewalld
+
+关闭selinux：
+$ sed -i &#39;s/enforcing/disabled/&#39; /etc/selinux/config 
+$ setenforce 0
+
+关闭swap：
+$ swapoff -a  # 临时
+$ sed -ri &#39;s/.*swap.*/#&amp;/&#39; /etc/fstab # 永久
+
+根据规划设置主机名：
+hostnamectl set-hostname &lt;hostname&gt;
+
+在Master添加Hosts：
+$ cat /etc/hosts
+192.168.31.62 k8s-master
+192.168.31.63 k8s-node1
+192.168.31.65 k8s-node2
+
+将桥接的IPv4流量传递到iptables的链：
+$ cat &gt; /etc/sysctl.d/k8s.conf &lt;&lt; EOF
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+$ sysctl --system
+</code></pre><h3 id="所有节点安装dockerkubeadmkubelet">所有节点安装Docker/kubeadm/kubelet</h3>
+<p>Kubernetes默认CRI（容器运行时）为Docker，因此先安装Docker。</p>
+<h4 id="安装docker">安装Docker</h4>
+<pre tabindex="0"><code>wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O /etc/yum.repos.d/docker-ce.repo
+yum -y install docker-ce-18.06.1.ce-3.el7
+systemctl enable docker &amp;&amp; systemctl start docker
+docker --version
+Docker version 18.06.1-ce, build e68fc7a
+</code></pre><h4 id="添加阿里云yum软件源">添加阿里云YUM软件源</h4>
+<pre tabindex="0"><code>$ cat &gt; /etc/yum.repos.d/kubernetes.repo &lt;&lt; EOF
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
+repo_gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+</code></pre><h4 id="安装kubeadmkubelet和kubectl">安装kubeadm，kubelet和kubectl</h4>
+<p>由于版本更新频繁，这里指定版本号部署：</p>
+<pre tabindex="0"><code>$ yum install -y kubelet-1.18.0 kubeadm-1.18.0 kubectl-1.18.0
+$ systemctl enable kubelet
+</code></pre><h4 id="部署kubernetes-master">部署Kubernetes Master</h4>
+<pre tabindex="0"><code>kubeadm init \
+  --apiserver-advertise-address=192.168.31.63 \
+  --image-repository registry.aliyuncs.com/google_containers \
+  --kubernetes-version v1.18.0 \
+  --service-cidr=10.1.0.0/16\
+  --pod-network-cidr=10.244.0.0/16
+</code></pre><p>由于默认拉取镜像地址k8s.gcr.io国内无法访问，这里指定阿里云镜像仓库地址。</p>
+<p>拷贝kubectl连接集群用的配置文件：</p>
+<pre tabindex="0"><code>mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+kubectl get nodes
+</code></pre><h4 id="部署cni网络">部署CNI网络</h4>
+<pre tabindex="0"><code>wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+sed -i -r &#34;s#quay.io/coreos/flannel:.*-amd64#lizhenliang/flannel:v0.12.0-amd64#g&#34; kube-flannel.yml
+</code></pre><p>默认镜像地址无法访问，修改为docker hub镜像仓库。</p>
+<pre tabindex="0"><code>kubectl apply -f kube-flannel.yml
+
+kubectl get pods -n kube-system
+NAME                          READY   STATUS    RESTARTS   AGE
+kube-flannel-ds-amd64-2pc95   1/1     Running   0          72s
+
+kubectl get node
+NAME         STATUS   ROLES    AGE   VERSION
+k8s-master   Ready    &lt;none&gt;   41m   v1.18.3
+</code></pre><p>部署好网络插件，Node准备就绪。</p>
+<h4 id="加入kubernetes-node">加入Kubernetes Node</h4>
+<p>向集群添加新节点，使用在Master执行kubeadm init最后输出的kubeadm join命令：</p>
+<pre tabindex="0"><code>kubeadm join 192.168.31.63:6443 --token l79g5t.6ov4jkddwqki1dxe --discovery-token-ca-cert-hash sha256:4f07f9068c543130461c9db368d62b4aabc22105451057f887defa35f47fa076
+</code></pre><h4 id="测试kubernetes集群">测试kubernetes集群</h4>
+<p>在Kubernetes集群中创建一个pod，验证是否正常运行：</p>
+<pre tabindex="0"><code>kubectl create deployment nginx --image=nginx
+kubectl expose deployment nginx --port=80 --type=NodePort
+kubectl get pod,svc
+</code></pre><p>访问地址：http://NodeIP:Port</p>
+<h4 id="部署-dashboard">部署 Dashboard</h4>
+<pre tabindex="0"><code>wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
+</code></pre><p>默认Dashboard只能集群内部访问，修改Service为NodePort类型，暴露到外部：</p>
+<pre tabindex="0"><code>vi recommended.yaml
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard
+  namespace: kubernetes-dashboard
+spec:
+  ports:
+    - port: 443
+      targetPort: 8443
+      nodePort: 30001
+  type: NodePort
+  selector:
+    k8s-app: kubernetes-dashboard
+
+kubectl apply -f recommended.yaml
+</code></pre><pre tabindex="0"><code>kubectl get pods,svc -n kubernetes-dashboard
+NAME                                             READY   STATUS              RESTARTS   AGE
+pod/dashboard-metrics-scraper-694557449d-z8gfb   1/1     Running             0          2m18s
+pod/kubernetes-dashboard-9774cc786-q2gsx         1/1     Running		     0          2m19s
+
+NAME                                TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)         AGE
+service/dashboard-metrics-scraper   ClusterIP   10.1.0.141   &lt;none&gt;        8000/TCP        2m19s
+service/kubernetes-dashboard        NodePort    10.1.0.239   &lt;none&gt;        443:30001/TCP   2m19s
+</code></pre><p>访问地址：https://NodeIP:30001</p>
+<p>创建service account并绑定默认cluster-admin管理员集群角色：</p>
+<pre tabindex="0"><code>kubectl create serviceaccount dashboard-admin -n kube-system
+kubectl create clusterrolebinding dashboard-admin --clusterrole=cluster-admin --serviceaccount=kube-system:dashboard-admin
+kubectl describe secrets -n kube-system $(kubectl -n kube-system get secret | awk &#39;/dashboard-admin/{print $1}&#39;)
+</code></pre><p>使用输出的token登录Dashboard。</p>
+<p><img src="https://base.oribos.city/images/2021/06/single-master.jpg" alt="Dashboard"></p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

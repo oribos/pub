@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>raspberry-pi on 记事本</title>
+    <link>https://pub.oribos.cn/tags/raspberry-pi/</link>
+    <description>Recent content in raspberry-pi on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Thu, 02 Jul 2020 19:31:55 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tags/raspberry-pi/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>树莓派 &#43; 延时摄影</title>
+      <link>https://pub.oribos.cn/web/reprint/2020070206.html</link>
+      <pubDate>Thu, 02 Jul 2020 19:31:55 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2020070206.html</guid>
+      <description>引用自reuixiy
+1
+树莓派，还是将近四年前买的，当晚下单时就十分激动，到手后双眼看着精致的外盒，更是十分欣喜——这手中的小小「绿色卡片」竟然能运行 Linux！还有可以连接传感器可以控制外围电路的 GPIO！
+当时急着将买的亚克力外壳、散热风扇装好后，安装配置好系统就折腾了一个 WordPress 博客，弄了弄内网穿透。后来，又购买了一些传感器，以及一个红外夜视摄像头，尝鲜物联网。再后来，除了用它偷窥了一只突如其来的小壁虎，除了去年临时用它赶制了用以应付学业的一辆 Wi-Fi 连接手机网页控制的遥控小车，就吃灰了。
+尽管如此，前段时间来深圳时，还是将这个依旧十分精美的小玩具带上了，虽然我不知道它能否再次通电。到深圳后，有感于眼前壮美的天空，有感于这个城市紧张的快节奏生活，前几天傍晚就有了这样的一个想法：树莓派 + 延时摄影！
+出于对 8GB 的 SD 卡的担忧，想着是否可以将图片存放在电脑上呢，于是便有了 raspi-timelapse——以树莓派为终端，数据全部「上传」到电脑。代码比较简单，操作也不复杂。如果你之前没有接触过树莓派，可以参考下方的教程。
+教程 安装系统 下载最新的 Raspberry Pi OS Lite 系统：
+1 wget https://downloads.raspberrypi.org/raspios_lite_armhf_latest -O raspios-buster-lite-armhf.zip 将 SD 卡接入电脑，并将系统写入（回车前..注意..检查 SD 卡的设备名）：
+1 2 3 lsblk -p umount sdX1 unzip -p raspios-buster-lite-armhf.zip | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress 结束后，将我提供的两个文件，ssh 和 wpa_supplicant.conf 文件复制到 SD 卡中的 boot 文件夹下。第一个文件的作用是开启 SSH，第二个文件的作用是连接 Wi-Fi，里面的内容如下：
+1 2 3 4 5 6 7 8 9 country=CN ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev update_config=1 network={ ssid=&amp;#34;&amp;#34; psk=&amp;#34;&amp;#34; scan_ssid=0 } 将你的 Wi-Fi 名填入 ssid，密码填入 psk 即可。如果你的 Wi-Fi 设置了隐藏，则将 scan_ssid 修改为 1。</description>
+    </item>
+    
+    <item>
+      <title>我的小 Web 服务器树莓派在搭建 WordPress 时遇到的问题</title>
+      <link>https://pub.oribos.cn/web/reprint/2017020204.html</link>
+      <pubDate>Thu, 02 Feb 2017 11:54:42 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017020204.html</guid>
+      <description>引用自reuixiy
+宝宝只想用树莓派搭建个人博客玩玩啊，特么为啥如此麻烦？虽然遇到的问题，百度，Google，最后还是解决了😄～现将问题收集如下，希望对看到的人有用。我用树莓派搭建的网站的架构：Linux (Raspbian) + Nginx + MySQL + PHP + WordPress。
+1）未能找到 WordPress 内容目录
+找到 WordPress 的根目录，找到 wp-config.php 文件，在文件最后添加如下代码：
+1 2 3 4 5 /** Override default file permissions */ if(is_admin()) { add_filter(&amp;#39;filesystem_method&amp;#39;, create_function(&amp;#39;$a&amp;#39;, &amp;#39;return &amp;#34;direct&amp;#34;;&amp;#39; )); define( &amp;#39;FS_CHMOD_DIR&amp;#39;, 0751 ); } 2）WordPress 需要访问您网页服务器的权限，请输入您的 FTP 登录凭据以继续
+在 wp-config.php 文件中添加：
+1 2 3 define(&amp;#34;FS_METHOD&amp;#34;,&amp;#34;direct&amp;#34;); define(&amp;#34;FS_CHMOD_DIR&amp;#34;, 0777); define(&amp;#34;FS_CHMOD_FILE&amp;#34;, 0777); 3）安装主题失败，无法创建目录
+1 $ sudo chmod -R 777 /var/www/html/ 4）在 WordPress 中使用裁剪图片功能时，出现：「在裁剪您的图像时发生了错误。」
+1 2 $ sudo apt-get update $ sudo apt-get install php5-gd 5）删除自豪的使用 WordPress</description>
+    </item>
+    
+  </channel>
+</rss>

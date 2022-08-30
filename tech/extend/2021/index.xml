@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2021 on 记事本</title>
+    <link>https://pub.oribos.cn/tech/extend/2021/</link>
+    <description>Recent content in 2021 on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Mon, 08 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://pub.oribos.cn/tech/extend/2021/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>docker运行qbittorrent</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021110801.html</link>
+      <pubDate>Mon, 08 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021110801.html</guid>
+      <description>说明 之所以使用docker运行qbittorrent是为了针对型的配置qbittorrent，修改默认下载位置，使用端口号等操作。
+第一步 准备服务器 登录云服务器 通过ssh命令使用购买服务器后提供的用户名和密码登录服务器，如果你是使用的Hetzner服务器需要自行配置RAID0，##先不要急着登录服务器##
+配置RAID 第一步 进入Hetzner的控制后台，找到服务器，选择Rescue (救援模式)，设置完成后重启服务器
+第二步 登陆云服务器，进入救援模式，使用installimage配置服务器初始化
+其他使用默认配置，只需要根据下图，修改服务器的RAID 为0
+RAID设置区分 NO RIAD：一般情况建议不设置RAID，这样既保证空间大小，也保证了安全性.； RIAD 0：好处：速度快，合并容量，缺点：两个硬盘只要挂一个，那么文件全都挂了； RIAD 1：好处：同时把文件写入到两个硬盘，坏一个也没事，缺点：浪费空间，读写速度稍微有降低；
+编辑完成后按F10 保存配置文件；
+提示 登录救援模式后本地会保存服务器的验证信息，重新登录服务器需要先删除之前的验证信息，避免出现验证信息修改的报错。
+配置磁盘空间 使用fdisk -l查看服务器的硬盘，将未挂载的硬盘挂载的目录，对于配置永久挂载的请参考其他文章编辑磁盘配置文件。这里的挂载只是临时性的。
+mount /dev/md3 /denalon/downloads
+挂载/dev/md3的硬盘空间为目录/denalon/downloads
+第二步 准备docker环境 一键安装docker 对于大多数服务器使用一键安装脚本即可安装docker
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+如果安装时报错，意味着服务器上某些应用未正确安装和配置，可以参考自定义安装docker
+自定义安装docker 为没有安装sudo的机器安装sudo，避免抄一下代码运行时报错
+apt-get install sudo 卸载旧版docker
+sudo apt-get remove docker docker-engine docker.io containerd runc 更新包
+sudo apt-get update 安装必要组件
+sudo apt-get update sudo apt-get install \ ca-certificates \ curl \ gnupg \ lsb-release 设置官方 GPG 密钥</description>
+    </item>
+    
+    <item>
+      <title>随笔2021-11-04</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021110401.html</link>
+      <pubDate>Sun, 10 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021110401.html</guid>
+      <description>hexo糟糕的使用 我部署了一个hexo主题模板 ，当今天无意间想增加一些有趣的主题时发现许多问题。一些主题使用了五花八门的依赖，这些依赖要么对hexo版本有要求要么对nodejs环境有要求，导致在本机运行hexo init 以后生成的项目，部署新主题时，要么依赖低，要么依赖高，要么组件下载404错误。
+一些主题并没有按照hexo官方指导的方式，使用_config.主题名.yml和_config.yml分开的方法，而是采用npm安装，然后将主题移动到themes目录下的奇葩操作。有些则是在hexo init生成的环境安装其主题后显示 err: TypeError: Cannot read property &#39;path&#39; of undefined等各类错误。
+总之，hexo的各类乱七八糟的主题要求参差不齐，组件五花八门，有些甚至需要更改nodejs环境，代理连接等等操作导致部署失败率太高。
+hexo报错机制 hexo使用nodejs环境，npm包管理器，各类涉及依赖和组件的版本要求五花八门，而报错信息几乎一点用都没有。
+如下图铺天盖地的报错和提示
+不知道的还以为拿hexo做什么复杂的高科技研发工作
+Hetzner奇葩的登录方式 在使用Hetzner云服务时发现一个奇葩的现象：登录服务需要使用一个“Client number”的客户码
+问题时这个客户码不是用户自定义有意义的号码或者id，而是hetzner随机生成的，这个客户码可以在登录以后找到，也就是说用户第一次注册时必须牢记这个客户码，以后续登录。如果忘记或者压根就不知道自己有什么客户码，那不好意思，无法登录。而且hetzner并没有通过用户注册时的邮箱或其他用户id的方式快捷的找回客户码，也没有使用用户id，邮箱地址来登录的备用方式。
+着实是商家狠狠的教用户怎么用产品
+改变的成本 </description>
+    </item>
+    
+    <item>
+      <title>分享</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021071001/</link>
+      <pubDate>Sat, 10 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021071001/</guid>
+      <description>hexo 普通部署
+使用npm部署
+docker docker模板
+一些docker项目代码
+树莓派更新软件源 1、当前树莓派4b基于debian10
+一、国内源说明 1、先到https://tvtv.fun/ping测一下速度，看看哪个比较快，这里以电子科技大学为例
+2、需要改的源有两个：Raspbian 和 Raspberrypi。可以看镜像站的使用说明如科技大学说明
+二、改
+1.系统源 备份原文件
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak 一键修改
+sudo sed -i &amp;#39;s|raspbian.raspberrypi.org|mirrors.ustc.edu.cn/raspbian|g&amp;#39; /etc/apt/sources.list 也可以用nano手动把raspbian.raspberrypi.org/替换成mirrors.ustc.edu.cn/raspbian/
+2.软件源 备份原文件
+sudo cp /etc/apt/sources.list.d/raspi.list /etc/apt/sources.list.d/raspi.list.bak 一键修改
+sudo sed -i &amp;#39;s|//archive.raspberrypi.org|//mirrors.ustc.edu.cn/archive.raspberrypi.org|g&amp;#39; /etc/apt/sources.list.d/raspi.list 3.更新索引（修改源后必做）
+sudo apt-get update 4.更新软件包（建议）
+sudo apt-get upgrade </description>
+    </item>
+    
+    <item>
+      <title>博客内容更新包</title>
+      <link>https://pub.oribos.cn/web/note/2021/2021010117.html</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2021/2021010117.html</guid>
+      <description>博客内容更新包 该仓库是作为脱离于博客存档文章以外的额外更新包。平时针对该仓库进行管理和更新，当年末时，这些文章将转移到存档目录下，文章的url地址不变
+cloudflare 内容代理 &amp;#39;use strict&amp;#39; /** * static files (404.html, sw.js, conf.js) */ const ASSET_URL = &amp;#39;http://fly.oribos.cn&amp;#39; const JS_VER = 10 const MAX_RETRY = 1 /** @type {RequestInit} */ const PREFLIGHT_INIT = { status: 204, headers: new Headers({ &amp;#39;access-control-allow-origin&amp;#39;: &amp;#39;*&amp;#39;, &amp;#39;access-control-allow-methods&amp;#39;: &amp;#39;GET,POST,PUT,PATCH,TRACE,DELETE,HEAD,OPTIONS&amp;#39;, &amp;#39;access-control-max-age&amp;#39;: &amp;#39;1728000&amp;#39;, }), } /** * @param {any} body * @param {number} status * @param {Object&amp;lt;string, string&amp;gt;} headers */ function makeRes(body, status = 200, headers = {}) { headers[&amp;#39;--ver&amp;#39;] = JS_VER headers[&amp;#39;access-control-allow-origin&amp;#39;] = &amp;#39;*&amp;#39; return new Response(body, {status, headers}) } /** * @param {string} urlStr */ function newUrl(urlStr) { try { return new URL(urlStr) } catch (err) { return null } } addEventListener(&amp;#39;fetch&amp;#39;, e =&amp;gt; { const ret = fetchHandler(e) .</description>
+    </item>
+    
+  </channel>
+</rss>

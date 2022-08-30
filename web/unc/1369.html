@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="对网站适当的规划" />
+<meta property="og:description" content="之所以网站内容迟迟无法更新，是因为自己分不清那个网站是正式访问，那个网站是临时测试内容的。往往将很多资料放到一个网站。又因为一些过激的试验导致文件和数据库破坏。没有按照部署-发布的步骤合理规划。而且本地电脑的文件由于不同的环境致使文件繁杂，混乱。
+文件的管理 UFS 文件系统的统一规划 app 图片 音乐 视频 代码 云存储 git托管更新都需要进行必要的区分，规划。
+硬件的管理 服务器规划 个人使用的云服务器，公司使用的服务器，数据库，物理服务器都要进一步规整，管理。
+云数据的管理 OSS和文件服务器 重新规划个人和公司在用的oss存储桶，快照，备份。
+建立个人仓库 建立个人仓库，存放各类网络资源，素材，模板。并同步到阿里云或华为云对象存储服务里。做长期分享。当然是合法，健康可以公开分享的信息。比如字体，css，各类设计素材。
+目前是建立长期的，稳定的共享资源。
+个人的站点并非仅使用一个域名。目前持有hbn.pub ufs.pub paas.pub hbnote.com uns.pub iufs.app域名。其中，主要的站点均以hbn.pub域名为主，ufs.pub作为文件服务的专用域名，提供文件服务，oss桶域名。iufs.app由于无法在国内取得备案号，仅用于海外服务器。paas.pub和uns.pub暂时保留。其中www.hbnote.com www.hbn.pub www.ufs.pub 仅作为个人网站展示使用。
+主要更新的博客文件先在b.hbn.pub发表，并根据类型转载到以上三个网站。三个博客网站发布不同类型的文章。某些待完善的文章仅发表在iufs.app网页上，再根据情况转载到其他网站。 无论是海外站点还是国内站点，由于对防垃圾评论的功能支持不足，所有的博客站点均暂时关闭评论和留言功能。由于技术和风险限制，可能需要的支付类型也仅以支付宝（alipay）为主。
+原则 1 遵守相关法律法规 2 数据和资源掌握在自己手里 3 在可靠的地方上做长期备份 4 服务持续 5 构建简单" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/unc/1369.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2019-10-17T08:48:56+00:00" />
+<meta property="article:modified_time" content="2019-10-17T08:48:56+00:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="对网站适当的规划"/>
+<meta name="twitter:description" content="之所以网站内容迟迟无法更新，是因为自己分不清那个网站是正式访问，那个网站是临时测试内容的。往往将很多资料放到一个网站。又因为一些过激的试验导致文件和数据库破坏。没有按照部署-发布的步骤合理规划。而且本地电脑的文件由于不同的环境致使文件繁杂，混乱。
+文件的管理 UFS 文件系统的统一规划 app 图片 音乐 视频 代码 云存储 git托管更新都需要进行必要的区分，规划。
+硬件的管理 服务器规划 个人使用的云服务器，公司使用的服务器，数据库，物理服务器都要进一步规整，管理。
+云数据的管理 OSS和文件服务器 重新规划个人和公司在用的oss存储桶，快照，备份。
+建立个人仓库 建立个人仓库，存放各类网络资源，素材，模板。并同步到阿里云或华为云对象存储服务里。做长期分享。当然是合法，健康可以公开分享的信息。比如字体，css，各类设计素材。
+目前是建立长期的，稳定的共享资源。
+个人的站点并非仅使用一个域名。目前持有hbn.pub ufs.pub paas.pub hbnote.com uns.pub iufs.app域名。其中，主要的站点均以hbn.pub域名为主，ufs.pub作为文件服务的专用域名，提供文件服务，oss桶域名。iufs.app由于无法在国内取得备案号，仅用于海外服务器。paas.pub和uns.pub暂时保留。其中www.hbnote.com www.hbn.pub www.ufs.pub 仅作为个人网站展示使用。
+主要更新的博客文件先在b.hbn.pub发表，并根据类型转载到以上三个网站。三个博客网站发布不同类型的文章。某些待完善的文章仅发表在iufs.app网页上，再根据情况转载到其他网站。 无论是海外站点还是国内站点，由于对防垃圾评论的功能支持不足，所有的博客站点均暂时关闭评论和留言功能。由于技术和风险限制，可能需要的支付类型也仅以支付宝（alipay）为主。
+原则 1 遵守相关法律法规 2 数据和资源掌握在自己手里 3 在可靠的地方上做长期备份 4 服务持续 5 构建简单"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 对网站适当的规划
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">对网站适当的规划</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Oct 17, 2019
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<p>之所以网站内容迟迟无法更新，是因为自己分不清那个网站是正式访问，那个网站是临时测试内容的。往往将很多资料放到一个网站。又因为一些过激的试验导致文件和数据库破坏。没有按照部署-发布的步骤合理规划。而且本地电脑的文件由于不同的环境致使文件繁杂，混乱。</p>
+<h2 id="文件的管理-ufs-文件系统的统一规划">文件的管理 UFS 文件系统的统一规划</h2>
+<p>app 图片 音乐 视频 代码 云存储 git托管更新都需要进行必要的区分，规划。</p>
+<h2 id="硬件的管理-服务器规划">硬件的管理 服务器规划</h2>
+<p>个人使用的云服务器，公司使用的服务器，数据库，物理服务器都要进一步规整，管理。</p>
+<h2 id="云数据的管理-oss和文件服务器">云数据的管理 OSS和文件服务器</h2>
+<p>重新规划个人和公司在用的oss存储桶，快照，备份。</p>
+<h2 id="建立个人仓库">建立个人仓库</h2>
+<p>建立个人仓库，存放各类网络资源，素材，模板。并同步到阿里云或华为云对象存储服务里。做长期分享。当然是合法，健康可以公开分享的信息。比如字体，css，各类设计素材。</p>
+<p>目前是建立长期的，稳定的共享资源。</p>
+<p>个人的站点并非仅使用一个域名。目前持有hbn.pub ufs.pub paas.pub hbnote.com uns.pub iufs.app域名。其中，主要的站点均以hbn.pub域名为主，ufs.pub作为文件服务的专用域名，提供文件服务，oss桶域名。iufs.app由于无法在国内取得备案号，仅用于海外服务器。paas.pub和uns.pub暂时保留。其中www.hbnote.com <a href="https://www.hbn.pub">www.hbn.pub</a> <a href="https://www.ufs.pub">www.ufs.pub</a> 仅作为个人网站展示使用。</p>
+<p>主要更新的博客文件先在b.hbn.pub发表，并根据类型转载到以上三个网站。三个博客网站发布不同类型的文章。某些待完善的文章仅发表在iufs.app网页上，再根据情况转载到其他网站。 无论是海外站点还是国内站点，由于对防垃圾评论的功能支持不足，所有的博客站点均暂时关闭评论和留言功能。由于技术和风险限制，可能需要的支付类型也仅以支付宝（alipay）为主。</p>
+<h2 id="原则">原则</h2>
+<p>1 遵守相关法律法规 2 数据和资源掌握在自己手里 3 在可靠的地方上做长期备份 4 服务持续 5 构建简单</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

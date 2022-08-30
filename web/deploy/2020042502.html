@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="对各类应用的吐槽" />
+<meta property="og:description" content="对linux系统及其应用的吐槽 各类问题点 操作基于代码,或者说是最低端操作体验.需要记单词,需要区分大小写,需要区分字符类型.本身就是算法的操作思想却被照搬给用户使用.
+使用代码操作并不是因为多高大上,成品素质差,没有适合的,专业的,稳定的操作界面.随之而来的就是各类gui操作界面,网页操作界面.总之,产品总是不完善.
+过于散乱的包管理器ubuntu的 apt,centos的yum ,nodejs的npm,还有Homebrew,RubyGems等等,linux系统已经够多了,包管理器,一个应用级的程序居然也有如此之多,充分体现了linux用户互相容不下别人的思想.
+这些系统和包管理器,如果真的跟随系统对应,或者类似npm的应用广泛还能易用就没什么问题,奈何各类软件总是遇到各类神奇问题,网络不畅下载极慢,版本不兼容,对中文支持不佳.
+版本众多,更新保守导致产品碎片化严重.
+事例 一个在Windows linux macOS上广泛使用的静态网站生成器,他推荐的安装方式是:
+brew install hugo
+这是什么鬼东西,你把macOS上的工具照抄下来?为了安装这个静态网站生成器,需要安装golang git 这是运行基础,这个brew不就是一个macOS包管理器吗,
+为啥推到linux默认安装? 至于这么麻烦吗? 嫌用户入门太低?
+而且这个brew安装极慢,使用极不方便!
+hugo里面的主题,各类安装方式都有,各类toml,yaml甚至json配置文件.各类css,scss,PostCSS乱七八糟的东西.
+你感觉使用一个合格的主题就行了,没必要琢磨这么多,然而,几百个主题,没几个适合的.也就是说大部分都是残次品.要么不能自定义很多东西,要么各类不兼容,大部分都需要深度加工.当然下载极慢是家常便饭.另外还有花样繁多的安装方式,配置文件,扩展程序.私有文件.
+复杂的操作,使用zip分卷压缩和解压缩文件,代码如下
+cat a* &gt; a.tar.gz // 将该目录下的a.z01 a.z02 a.z03 全部集合到一个压缩包a.tar.gz tar xzvf a.tar.gz // 解压缩a.tar.gz 对windows系统及其应用的吐槽 登录时候先欢迎5分钟
+开机应用各种弹窗,各种确认,各种关闭
+各种自动更新" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/deploy/2020042502.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2020-04-25T18:57:04+08:00" />
+<meta property="article:modified_time" content="2020-04-25T18:57:04+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="对各类应用的吐槽"/>
+<meta name="twitter:description" content="对linux系统及其应用的吐槽 各类问题点 操作基于代码,或者说是最低端操作体验.需要记单词,需要区分大小写,需要区分字符类型.本身就是算法的操作思想却被照搬给用户使用.
+使用代码操作并不是因为多高大上,成品素质差,没有适合的,专业的,稳定的操作界面.随之而来的就是各类gui操作界面,网页操作界面.总之,产品总是不完善.
+过于散乱的包管理器ubuntu的 apt,centos的yum ,nodejs的npm,还有Homebrew,RubyGems等等,linux系统已经够多了,包管理器,一个应用级的程序居然也有如此之多,充分体现了linux用户互相容不下别人的思想.
+这些系统和包管理器,如果真的跟随系统对应,或者类似npm的应用广泛还能易用就没什么问题,奈何各类软件总是遇到各类神奇问题,网络不畅下载极慢,版本不兼容,对中文支持不佳.
+版本众多,更新保守导致产品碎片化严重.
+事例 一个在Windows linux macOS上广泛使用的静态网站生成器,他推荐的安装方式是:
+brew install hugo
+这是什么鬼东西,你把macOS上的工具照抄下来?为了安装这个静态网站生成器,需要安装golang git 这是运行基础,这个brew不就是一个macOS包管理器吗,
+为啥推到linux默认安装? 至于这么麻烦吗? 嫌用户入门太低?
+而且这个brew安装极慢,使用极不方便!
+hugo里面的主题,各类安装方式都有,各类toml,yaml甚至json配置文件.各类css,scss,PostCSS乱七八糟的东西.
+你感觉使用一个合格的主题就行了,没必要琢磨这么多,然而,几百个主题,没几个适合的.也就是说大部分都是残次品.要么不能自定义很多东西,要么各类不兼容,大部分都需要深度加工.当然下载极慢是家常便饭.另外还有花样繁多的安装方式,配置文件,扩展程序.私有文件.
+复杂的操作,使用zip分卷压缩和解压缩文件,代码如下
+cat a* &gt; a.tar.gz // 将该目录下的a.z01 a.z02 a.z03 全部集合到一个压缩包a.tar.gz tar xzvf a.tar.gz // 解压缩a.tar.gz 对windows系统及其应用的吐槽 登录时候先欢迎5分钟
+开机应用各种弹窗,各种确认,各种关闭
+各种自动更新"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 对各类应用的吐槽
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">对各类应用的吐槽</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	
+	
+		Posted at Apr 25, 2020
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<h3 id="对linux系统及其应用的吐槽">对linux系统及其应用的吐槽</h3>
+<h4 id="各类问题点">各类问题点</h4>
+<p>操作基于代码,或者说是最低端操作体验.需要记单词,需要区分大小写,需要区分字符类型.本身就是算法的操作思想却被<strong>照搬</strong>给用户使用.</p>
+<p>使用代码操作并不是因为多高大上,<strong>成品素质差</strong>,没有适合的,专业的,稳定的操作界面.随之而来的就是各类gui操作界面,网页操作界面.总之,产品总是不完善.</p>
+<p>过于散乱的包管理器ubuntu的 apt,centos的yum ,nodejs的npm,还有Homebrew,RubyGems等等,linux系统已经够多了,包管理器,一个应用级的程序居然也有如此之多,充分体现了<strong>linux用户互相容不下别人的思想</strong>.</p>
+<p>这些系统和包管理器,如果真的跟随系统对应,或者类似npm的应用广泛还能易用就没什么问题,奈何各类软件总是遇到各类神奇问题,<strong>网络不畅下载极慢</strong>,<strong>版本不兼容</strong>,对中文支持不佳.</p>
+<p>版本众多,更新保守导致<strong>产品碎片化严重</strong>.</p>
+<h4 id="事例">事例</h4>
+<p>一个在Windows linux macOS上广泛使用的静态网站生成器,他推荐的安装方式是:</p>
+<p><strong>brew install hugo</strong></p>
+<p>这是什么鬼东西,你把macOS上的工具照抄下来?为了安装这个静态网站生成器,需要安装golang git 这是运行基础,这个brew不就是一个macOS包管理器吗,</p>
+<p>为啥推到linux默认安装?  至于这么麻烦吗?  嫌用户入门太低?</p>
+<p>而且这个brew安装极慢,使用极不方便!</p>
+<hr>
+<p>hugo里面的主题,<strong>各类安装方式都有</strong>,各类toml,yaml甚至json配置文件.各类css,scss,PostCSS乱七八糟的东西.</p>
+<p>你感觉使用一个合格的主题就行了,没必要琢磨这么多,然而,几百个主题,没几个适合的.也就是说<strong>大部分都是残次品</strong>.要么不能自定义很多东西,要么各类不兼容,大部分都需要深度加工.当然<strong>下载极慢是家常便饭</strong>.另外还有花样繁多的安装方式,配置文件,扩展程序.私有文件.</p>
+<hr>
+<p>复杂的操作,使用zip分卷压缩和解压缩文件,代码如下</p>
+<pre tabindex="0"><code>cat a* &gt; a.tar.gz   // 将该目录下的a.z01  a.z02  a.z03 全部集合到一个压缩包a.tar.gz
+tar xzvf a.tar.gz   // 解压缩a.tar.gz
+</code></pre><h3 id="对windows系统及其应用的吐槽">对windows系统及其应用的吐槽</h3>
+<p>登录时候先欢迎5分钟</p>
+<p>开机应用各种弹窗,各种确认,各种关闭</p>
+<p>各种自动更新</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

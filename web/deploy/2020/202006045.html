@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="安装和部署hugo" />
+<meta property="og:description" content="安装和部署hugo
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/deploy/2020/202006045.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2020-06-04T10:31:33+08:00" />
+<meta property="article:modified_time" content="2020-06-04T10:31:33+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="安装和部署hugo"/>
+<meta name="twitter:description" content="安装和部署hugo
+"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 安装和部署hugo
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">安装和部署hugo</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Jun 04, 2020
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p>安装和部署hugo</p>
+	<article class="md">
+		<h3 id="快速开始">快速开始</h3>
+<p>按照以下步骤，可以快速运行一个简单的博客，但没有任何内容的。</p>
+<pre tabindex="0"><code># ubuntu 
+sudo apt install hugo  #安装hugo
+</code></pre><pre tabindex="0"><code>hugo new site blog  #使用hugo创建一个博客站点，名称blog
+
+cd blog  #进入博客站点blog
+
+hugo # 运行hugo构建blog站点
+</code></pre><p>以上命令就是一个简单的hugo站点的基本操作，但是运行完成以后，你得不到任何页面，因为没有为博客<a href="http://b.kit.hbn.pub/blog/2020/202006045.html#%E4%B8%8B%E8%BD%BD%E4%B8%BB%E9%A2%98">创建主题</a>、<a href="http://b.kit.hbn.pub/blog/2020/202006045.html#%E9%85%8D%E7%BD%AE%E7%AB%99%E7%82%B9">配置站点</a>、和<a href="http://b.kit.hbn.pub/blog/2020/202006045.html#%E6%96%B0%E5%BB%BA%E6%96%87%E7%AB%A0">新建文章</a> 。</p>
+<p>如果你只想做一个简单的博客页面，可以通过上面链接到相应位置配置即可。而如果你需要使用特定的复杂的主题，就需要重新开始安装和配置hugo。</p>
+<p>👇 下面的步骤需要你<strong>卸载</strong>快速安装的正式版hugo，因为下面例子所用的主题时<em>扩展版hugo</em></p>
+<h3 id="安装hugo">安装hugo</h3>
+<p>安装扩展版hugo，需要提前安装go语言环境，同时推荐安装git，因为某些复杂的主题可能需要使用git子模块的形式引用配置文件。有些主题需要使用npm。</p>
+<h5 id="安装go-语言">安装go 语言</h5>
+<h5 id="安装git--可选">安装git  （可选）</h5>
+<h4 id="安装npm-可选">安装npm （可选）</h4>
+<h4 id="安装hugo-1">安装hugo</h4>
+<p>版本区别 hugo分为正式版和扩展版两种，后者支持scss postcss等CSS预处理器文件。</p>
+<p>下载和安装 hugo_extended_0.72.0_Linux-64bit.tar.gz</p>
+<pre tabindex="0"><code>下载文件
+
+wget https://github.com/gohugoio/hugo/releases/download/v0.72.0/hugo_extended_0.72.0_Linux-64bit.tar.gz
+
+tar -zxvf  hugo_extended_0.72.0_Linux-64bit.tar.gz    # 解压缩文件包
+
+
+cp ./hugo /usr/local/bin/  # 将hugo复制到系统目录下，以直接运行hugo命令
+
+
+hugo verison     # 查看版本，验证安装是否正确。
+</code></pre><p><a href="https://github.com/gohugoio/hugo/releases">hugo releases</a></p>
+<h3 id="配置文件">配置文件</h3>
+<p>运行</p>
+<pre tabindex="0"><code>hugo new site blog
+</code></pre><p>创建blog目录</p>
+<h4 id="下载主题">下载主题</h4>
+<p><code>以安装hugo-meme主题为例</code></p>
+<pre tabindex="0"><code>cd blog
+cd themes
+
+git clone https://github.com/reuixiy/hugo-theme-meme.git
+
+修改hugo-theme-meme的目录名为meme
+</code></pre><hr>
+<p>以上 操作也可以通过使用<code>git submodule</code> 命令运行:</p>
+<pre tabindex="0"><code>cd blog
+git init
+git submodule add --depth 1 https://github.com/reuixiy/hugo-theme-meme.git themes/meme
+</code></pre><p>更新主题：</p>
+<pre tabindex="0"><code>~/blog $ git submodule update --rebase --remote
+</code></pre><h4 id="配置站点">配置站点</h4>
+<p>安装完 Hugo 和 MemE 后，通过替换 config.toml以将主题的examples文件，配置站点</p>
+<p>对于简体中文用户，你可以通过文件浏览器打开站点文件夹，然后将 Hugo 默认生成的 config.toml 删除，再进入 themes/meme/config-examples/zh-cn/ 目录，将 MemE 提供的 config.toml 复制到站点根目录下。当然，你也可以在<strong>站点根目录</strong>下运行：</p>
+<pre tabindex="0"><code> rm config.toml &amp;&amp; cp themes/meme/config-examples/zh-cn/config.toml config.toml
+</code></pre><h4 id="新建文章">新建文章</h4>
+<p>由于 Hugo 并不会提供默认的示例文章，所以如果你想在安装和配置完后立即体验 MemE 的话，还需新建一篇文章和一个关于页面。</p>
+<p>在<strong>站点根目录</strong>下运行：</p>
+<pre tabindex="0"><code> hugo new &#34;posts/hello-world.md&#34;
+ hugo new &#34;about/_index.md&#34;
+</code></pre><h3 id="发布">发布</h3>
+<p>现在，站点的主题文件，配置文件，文章都已经创建，可以在<strong>站点根目录</strong>下运行：</p>
+<pre tabindex="0"><code>hugo server -D
+</code></pre><p>数秒之后，打开 http://localhost:1313/，恭喜你！你已经成功在本地搭建好博客了</p>
+<p>如果你需要将blog发布到github pages或云服务器，虚拟主机上，你可以通过在<strong>站点根目录</strong>下运行：</p>
+<pre tabindex="0"><code>hugo
+</code></pre><p>以生成一个public文件夹。</p>
+<hr>
+<blockquote>
+<p>在 Hugo 中，配置是通过修改站点根目录下的 config.toml 这个配置文件来实现的。你可以通过<a href="https://github.com/toml-lang/toml">toml的语法和使用</a> ，<a href="https://gohugo.io/getting-started/configuration/">hugo配置</a>  了解更多toml的使用和hugo的配置方法。</p>
+</blockquote>
+<h3 id="进一步配置">进一步配置</h3>
+<p>通过安装hugo，下载主题，配置config.toml，新建文章就可以发布一个博客页面。如果希望对主题，页面样式等内容进行配置，就需要进一步了解hugo及其配置文件。</p>
+<p>Hugo 中是不区分站点和主题的配置文件的，Hugo 中只有一个位于站点根目录下的 config.toml 配置文件。</p>
+<p>在 Hugo 中，与 Hexo 的一个很大不同——也可以说是优点——是<strong>主题目录与站点目录有一样的结构</strong>，其中，assets、data、layouts、static 的作用都是与站点目录下的相应文件夹相同的，且站点目录下的文件可以覆盖主题目录下的相应文件——这意味着你可以在不修改主题文件的前提下方便地定制主题。在 Hugo 中，如果你想要定制主题，你只需<strong>在站点目录下新建相应的文件即可</strong>。这是非常利于主题的维护的，你只需使用 Git 的 submodule 的方式安装 Hugo 的主题，然后更新时只需直接在站点根目录下敲一条命令回车即可，非常方便！</p>
+<h4 id="认识目录">认识目录</h4>
+<p>首先理解不同目录下文件的作用，根据需要对相应文件进行编辑。</p>
+<h5 id="默认生成的目录">默认生成的目录</h5>
+<p><code>archetypes</code> hugo发布文章的模板，你可以通过定义default.md来定义一个最基本的文章的标题，分类等内容。也可以通过新建 类型名.md为后续的文章新增不同模板</p>
+<p><code>content</code> hugo新建的文件都保存这个文件夹下。</p>
+<p><code>data</code> 此目录用于存储 Hugo 在生成网站时可以使用的配置文件</p>
+<p><code>layouts</code> 以文件形式存储模板，以指定如何将内容的视图呈现到静态网站中。模板包括列表页、主页、分类模板、部分、单页模板等。</p>
+<p><code>static</code> 存储所有静态内容：图像、CSS、JavaScript 等。当 Hugo 构建您的网站时，静态目录中的所有文件都将以&quot;static&quot;复制到网站根目录下。</p>
+<h5 id="根据需要使用的目录">根据需要使用的目录</h5>
+<p><code>config</code> 此目录可以将config.toml规整为一个目录，在此目录下可以配置不同的配置文件，并根据环境进行构建。</p>
+<p><code>assets</code> 由Hugo Pipes处理的资源，通常放置一些js sccc文件。</p>
+<h4 id="配置主题">配置主题</h4>
+<p>首先  将主题文件夹 /blog/themes/meme下的文件夹 layouts， 文件夹static 复制到站点根目录 /blog</p>
+<p>其次  对/blog/layouts目录下的html文件的修改，就会在使用<code>hugo</code>构建hugo站点时生效。</p>
+<h4 id="config文件夹">config文件夹</h4>
+<h4 id="主题组件">主题组件</h4>
+<p>在强大的 Hugo 中有一个叫主题组件的东西，你可以同时使用多个主题。你可以使用这个功能添加一些别人写好的短代码（类似 Hexo 中的标签插件），比如：如果你喜欢 NexT 中的 Note 标签并想将它迁移到 MemE，可以通过 hugo-notice 这个主题组件实现。</p>
+<p>使用方式：
+修改config.toml的theme:</p>
+<pre tabindex="0"><code>theme = [&#34;my-shortcodes&#34;, &#34;base-theme&#34;, &#34;hyde&#34;]
+</code></pre>
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

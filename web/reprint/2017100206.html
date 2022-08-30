@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="如何安装 GNOME Shell 插件？" />
+<meta property="og:description" content=" 引用自reuixiy
+感谢开源，让 Linux 下有了 GNOME 桌面环境，感谢开源，有了许多「外挂」似的 GNOME Shell 插件，开起后效果绝对秒杀 Windows！问题是：怎么安装 GNOME Shell Extensions 呢？
+源码包安装（推荐） 这种安装方式的好处就是可以获取到插件的最新版本。要怎么操作呢？直接 git clone 其源码，然后按照 README 中的说明自己编译安装，大部分直接 make install 即可，少部分可能要自己手动操作一下，详见各自的 README。
+浏览器插件安装 最好用 Firefox，我在 Chrome 下测试没用。打开 GNOME Shell Extensions 网站，会有个提示啥允许好像，然后 Allow 即可，刷新页面即可安装。
+下载安装包安装 直接去 GNOME Shell Extensions 的网站上下载安装包，然后解压缩，重命名（删除邮箱后面的字符）后复制到目录 ~/.local/share/gnome-shell/extensions/ 下，然后 alt &#43; f2 重启 GNOME，再打开 Tweaks，应该就能在 Extensions 上看到。
+apt-get 方式 apt-get update apt-cache search gnome-shell-extension apt-get install gnome-shell-extension-插件名 不过只能搜到少部分，另还可以安装下面这个包，里面有一些插件：
+apt-get install gnome-shell-extensions 安装好后，点击按钮打开即可，如果有设置按钮，可以设置，并且如果有错误则会显示报错信息。
+安利几个插件 名字 功能 说明 Redshift 护眼模式 安装配置方法见这篇文章 Topicons plus 将左下脚的托盘图标放在顶栏 * Simple net speed 顶栏实时网速显示 * Openweather 顶栏显示天气 * EasyScreenCast 录屏 * Coverflow alt-tab 效果超赞的 alt-tab 切换效果 * Dash to Dock 自己试试，突然无法表达😂 * Workspaces to Dock 自定义工作区 * Blyr 毛玻璃效果 * Proxy Switcher 快速切换系统代理 科学上网时有用 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/reprint/2017100206.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2017-10-02T19:38:39+08:00" />
+<meta property="article:modified_time" content="2017-10-02T19:38:39+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="如何安装 GNOME Shell 插件？"/>
+<meta name="twitter:description" content=" 引用自reuixiy
+感谢开源，让 Linux 下有了 GNOME 桌面环境，感谢开源，有了许多「外挂」似的 GNOME Shell 插件，开起后效果绝对秒杀 Windows！问题是：怎么安装 GNOME Shell Extensions 呢？
+源码包安装（推荐） 这种安装方式的好处就是可以获取到插件的最新版本。要怎么操作呢？直接 git clone 其源码，然后按照 README 中的说明自己编译安装，大部分直接 make install 即可，少部分可能要自己手动操作一下，详见各自的 README。
+浏览器插件安装 最好用 Firefox，我在 Chrome 下测试没用。打开 GNOME Shell Extensions 网站，会有个提示啥允许好像，然后 Allow 即可，刷新页面即可安装。
+下载安装包安装 直接去 GNOME Shell Extensions 的网站上下载安装包，然后解压缩，重命名（删除邮箱后面的字符）后复制到目录 ~/.local/share/gnome-shell/extensions/ 下，然后 alt &#43; f2 重启 GNOME，再打开 Tweaks，应该就能在 Extensions 上看到。
+apt-get 方式 apt-get update apt-cache search gnome-shell-extension apt-get install gnome-shell-extension-插件名 不过只能搜到少部分，另还可以安装下面这个包，里面有一些插件：
+apt-get install gnome-shell-extensions 安装好后，点击按钮打开即可，如果有设置按钮，可以设置，并且如果有错误则会显示报错信息。
+安利几个插件 名字 功能 说明 Redshift 护眼模式 安装配置方法见这篇文章 Topicons plus 将左下脚的托盘图标放在顶栏 * Simple net speed 顶栏实时网速显示 * Openweather 顶栏显示天气 * EasyScreenCast 录屏 * Coverflow alt-tab 效果超赞的 alt-tab 切换效果 * Dash to Dock 自己试试，突然无法表达😂 * Workspaces to Dock 自定义工作区 * Blyr 毛玻璃效果 * Proxy Switcher 快速切换系统代理 科学上网时有用 "/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 如何安装 GNOME Shell 插件？
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">如何安装 GNOME Shell 插件？</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>reuixiy</b> |
+	
+		Posted at Oct 02, 2017
+	
+		
+	</div>
+	
+	<div class="sm:mt-4">
+		
+		<a class="not-first:ml-3" href="/tags/linux">#linux</a>
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<blockquote>
+<p>引用自<a href="https://io-oi.me/">reuixiy</a></p>
+</blockquote>
+<p><img src="https://base.oribos.city/images/2020/07/how-to-install-gnome-shell-extensions-title.jpg" alt="how-to-install-gnome-shell-extensions-title.jpg" title="我的桌面截图"></p>
+<p>感谢开源，让 Linux 下有了 GNOME 桌面环境，感谢开源，有了许多「外挂」似的 GNOME Shell 插件，开起后效果绝对秒杀 Windows！问题是：怎么安装 <a href="https://extensions.gnome.org/">GNOME Shell Extensions</a> 呢？</p>
+<h2 id="源码包安装推荐">源码包安装（推荐）</h2>
+<p>这种安装方式的好处就是可以获取到插件的最新版本。要怎么操作呢？直接 <code>git clone</code> 其源码，然后按照 README 中的说明自己编译安装，大部分直接 <code>make install</code> 即可，少部分可能要自己手动操作一下，详见各自的 README。</p>
+<h2 id="浏览器插件安装">浏览器插件安装</h2>
+<p>最好用 Firefox，我在 Chrome 下测试没用。打开 GNOME Shell Extensions 网站，会有个提示啥允许好像，然后 <code>Allow</code> 即可，刷新页面即可安装。</p>
+<h2 id="下载安装包安装">下载安装包安装</h2>
+<p>直接去 GNOME Shell Extensions 的网站上下载安装包，然后解压缩，重命名（删除邮箱后面的字符）后复制到目录 <code>~/.local/share/gnome-shell/extensions/</code> 下，然后 alt + f2 重启 GNOME，再打开 Tweaks，应该就能在 Extensions 上看到。</p>
+<h2 id="apt-get-方式">apt-get 方式</h2>
+<pre tabindex="0"><code>apt-get update
+apt-cache search gnome-shell-extension
+apt-get install gnome-shell-extension-插件名
+</code></pre><p>不过只能搜到少部分，另还可以安装下面这个包，里面有一些插件：</p>
+<pre tabindex="0"><code>apt-get install gnome-shell-extensions
+</code></pre><p>安装好后，点击按钮打开即可，如果有设置按钮，可以设置，并且如果有错误则会显示报错信息。</p>
+<h2 id="安利几个插件">安利几个插件</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名字</th>
+<th style="text-align:center">功能</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="https://extensions.gnome.org/extension/685/redshift/">Redshift</a></td>
+<td style="text-align:center">护眼模式</td>
+<td style="text-align:center">安装配置方法见这篇<a href="/tech/configure-redshift-in-linux/">文章</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://extensions.gnome.org/extension/1031/topicons/">Topicons plus</a></td>
+<td style="text-align:center">将左下脚的托盘图标放在顶栏</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://extensions.gnome.org/extension/1085/simple-net-speed/">Simple net speed</a></td>
+<td style="text-align:center">顶栏实时网速显示</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://extensions.gnome.org/extension/750/openweather/">Openweather</a></td>
+<td style="text-align:center">顶栏显示天气</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://extensions.gnome.org/extension/690/easyscreencast/">EasyScreenCast</a></td>
+<td style="text-align:center">录屏</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://extensions.gnome.org/extension/97/coverflow-alt-tab/">Coverflow alt-tab</a></td>
+<td style="text-align:center">效果超赞的 alt-tab 切换效果</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://extensions.gnome.org/extension/307/dash-to-dock/">Dash to Dock</a></td>
+<td style="text-align:center">自己试试，突然无法表达😂</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://extensions.gnome.org/extension/427/workspaces-to-dock/">Workspaces to Dock</a></td>
+<td style="text-align:center">自定义工作区</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://extensions.gnome.org/extension/1251/blyr/">Blyr</a></td>
+<td style="text-align:center">毛玻璃效果</td>
+<td style="text-align:center">*</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://extensions.gnome.org/extension/771/proxy-switcher/">Proxy Switcher</a></td>
+<td style="text-align:center">快速切换系统代理</td>
+<td style="text-align:center">科学上网时有用</td>
+</tr>
+</tbody>
+</table>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

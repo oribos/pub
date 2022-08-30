@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="SSH 容器直通" />
+<meta property="og:description" content="SSH 容器直通" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/note/2021/2021052507.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2021-04-01T09:01:40+08:00" />
+<meta property="article:modified_time" content="2021-04-01T09:01:40+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SSH 容器直通"/>
+<meta name="twitter:description" content="SSH 容器直通"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - SSH 容器直通
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">SSH 容器直通</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Apr 01, 2021
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p>SSH 容器直通</p>
+	<article class="md">
+		<h3 id="ssh-容器直通">SSH 容器直通</h3>
+<p>由于 SSH 在容器内运行，因此，如果需要 SSH 支持，则需要将 SSH 从主机传递到容器。一种选择是在非标准端口上运行容器 SSH（或将主机端口移至非标准端口）。另一个可能更直接的选择是将 SSH 连接从主机转发到容器。下面将说明此设置。</p>
+<p>本指南假定您已经在名为 git 的主机上创建了一个用户，该用户与容器值 USER_UID/USER_GID 共享相同的 UID/GID。这些值可以在 docker-compose.yml 中设置为环境变量：</p>
+<pre tabindex="0"><code>environment:
+  - USER_UID=1000
+  - USER_GID=1000
+</code></pre><p>接下来将主机的 /home/git/.ssh 装入容器。否则，SSH 身份验证将无法在容器内运行。</p>
+<pre tabindex="0"><code>volumes:
+  - /home/git/.ssh/:/data/git/.ssh
+</code></pre><p>现在，需要在主机上创建 SSH 密钥对。该密钥对将用于向主机验证主机上的 git 用户。</p>
+<pre tabindex="0"><code>sudo -u git ssh-keygen -t rsa -b 4096 -C &#34;Gitea Host Key&#34;
+</code></pre><p>在下一步中，需要在主机上创建一个名为 /app/gitea/gitea 的文件（具有可执行权限）。该文件将发出从主机到容器的 SSH 转发。将以下内容添加到 /app/gitea/gitea：</p>
+<pre tabindex="0"><code>ssh -p 2222 -o StrictHostKeyChecking=no git@127.0.0.1 &#34;SSH_ORIGINAL_COMMAND=\&#34;$SSH_ORIGINAL_COMMAND\&#34; $0 $@&#34;
+</code></pre><p>为了使转发正常工作，需要将容器（22）的 SSH 端口映射到 docker-compose.yml 中的主机端口 2222。由于此端口不需要暴露给外界，因此可以将其映射到主机的 localhost：</p>
+<pre tabindex="0"><code>ports:
+  # [...]
+  - &#34;127.0.0.1:2222:22&#34;
+</code></pre><p>另外，主机上的 /home/git/.ssh/authorized_keys 需要修改。它需要以与 Gitea 容器内的 authorized_keys 相同的方式进行操作。因此，将您在上面创建的密钥（“Gitea 主机密钥”）的公共密钥添加到 ~/git/.ssh/authorized_keys。这可以通过 echo &ldquo;$(cat /home/git/.ssh/id_rsa.pub)&rdquo; &raquo; /home/git/.ssh/authorized_keys 完成。重要提示：来自 git 用户的公钥需要“按原样”添加，而通过 Gitea 网络界面添加的所有其他公钥将以 command=&quot;/app [&hellip;] 作为前缀。</p>
+<p>该文件应该看起来像：</p>
+<pre tabindex="0"><code># SSH pubkey from git user
+ssh-rsa &lt;Gitea Host Key&gt;
+
+# other keys from users
+command=&#34;/app/gitea/gitea --config=/data/gitea/conf/app.ini serv key-1&#34;,no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty &lt;user pubkey&gt;
+</code></pre><p>这是详细的说明，当发出 SSH 请求时会发生什么：</p>
+<p>使用 git 用户向主机发出 SSH 请求，例如 git clone git@domain:user/repo.git。
+在 /home/git/.ssh/authorized_keys 中，该命令执行 /app/gitea/gitea 脚本。
+/app/gitea/gitea 将 SSH 请求转发到端口 2222，该端口已映射到容器的 SSH 端口（22）。
+由于 /home/git/.ssh/authorized_keys 中存在 git 用户的公钥，因此身份验证主机 → 容器成功，并且 SSH 请求转发到在 docker 容器中运行的 Gitea。
+如果在 Gitea Web 界面中添加了新的 SSH 密钥，它将以与现有密钥相同的方式附加到 .ssh/authorized_keys 中。</p>
+<h4 id="注意">注意</h4>
+<p>SSH 容器直通仅在以下情况下有效</p>
+<p>在容器中使用 opensshd</p>
+<p>如果未将 AuthorizedKeysCommand 与 SSH_CREATE_AUTHORIZED_KEYS_FILE = false 结合使用以禁用授权文件密钥生成LOCAL_ROOT_URL 不变</p>
+<h3 id="事例配置文件">事例：配置文件</h3>
+<h4 id="文件-confappini">文件 conf/app.ini</h4>
+<pre tabindex="0"><code>[server]
+APP_DATA_PATH    = /data/gitea
+DOMAIN           = code.oribos.cn
+SSH_DOMAIN       = code.oribos.cn
+HTTP_PORT        = 3000
+ROOT_URL         = http://code.oribos.cn:9003/
+DISABLE_SSH      = false
+SSH_PORT         = 9022
+SSH_LISTEN_PORT  = 22
+LFS_START_SERVER = true
+LFS_CONTENT_PATH = /data/git/lfs
+LFS_JWT_SECRET   = 90bIcfT6-NX3rtMai3VF3EBNaD2jtLq05e7JLCA67nw
+OFFLINE_MODE     = false
+
+[database]
+PATH     = /data/gitea/gitea.db
+DB_TYPE  = postgres
+HOST     = db:5432
+NAME     = gitea
+USER     = gitea
+PASSWD   = gitea
+LOG_SQL  = false
+SCHEMA   = 
+SSL_MODE = disable
+CHARSET  = utf8
+</code></pre><p>管理里加入vsc公钥,访问主机加入vsc私钥</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

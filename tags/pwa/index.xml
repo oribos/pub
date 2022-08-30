@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pwa on 记事本</title>
+    <link>https://pub.oribos.cn/tags/pwa/</link>
+    <description>Recent content in pwa on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Wed, 19 Aug 2020 23:29:45 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tags/pwa/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一个简单的 Service Worker</title>
+      <link>https://pub.oribos.cn/web/reprint/001.html</link>
+      <pubDate>Wed, 19 Aug 2020 23:29:45 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/001.html</guid>
+      <description>引用自reuixiy
+1 2 3 4 5 6 7 8 9 &amp;lt;!-- HTML --&amp;gt; &amp;lt;script&amp;gt; if (&amp;#39;serviceWorker&amp;#39; in navigator) { window.addEventListener(&amp;#39;load&amp;#39;, function() { navigator.serviceWorker.register(&amp;#39;/sw.js&amp;#39;); }); } &amp;lt;/script&amp;gt; 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 // sw.js /** References: 1. https://developers.google.com/web/fundamentals/primers/service-workers 2.</description>
+    </item>
+    
+    <item>
+      <title>利用 Workbox 实现博客的 PWA</title>
+      <link>https://pub.oribos.cn/web/reprint/2019100108.html</link>
+      <pubDate>Tue, 01 Oct 2019 21:32:34 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019100108.html</guid>
+      <description>引用自reuixiy
+1
+如果你使用 Google Chrome 浏览器访问我的博客💻，你可能会发现地址栏右侧有一个小小的 + 号，并会提醒你安装。当然，如果你是用手机访问的话📱，Chrome 就会在页面的底部提醒你。但你可千万千万不要把它当作什么恶意骚扰哦😅，它只是善意地提醒你：这个网站是一个 PWA 站点，强烈推荐您添加到桌面以获取原生应用般的优质体验！😝
+注意：请查看一个简单的 Service Worker。
+前言 渐进式网络应用程序（英语：Progressive Web Apps，简称：PWA）是一种运用现代的 Web API 以及传统的渐进式增强策略创建的跨平台 Web 应用程序。这种应用程序将目前最为现代化的浏览器提供的功能与移动设备的体验优势相结合，使其具有与原生应用相同的用户体验优势。2
+以上是开发者角度，就用户角度来说🐼，当你的博客实现 PWA 后，你的读者可以：
+添加你的博客到电脑╱手机的桌面，以原生应用般的方式浏览你的博客 更快速地浏览你的博客 离线浏览你的博客 第一点：对于读者，博客可一触即达，且无浏览器的地址栏、菜单栏等「无关」干扰👴；对于博客，非常有利于博客的用户留存率，也利于博客的品牌形象😺。第二点：可以利用 Service Worker 的缓存特点，极大地加速你的博客，如果再加上 InstantClick 的预加载特点，简直飞速🚀。第三点：对博客来说，个人感觉意义不大🤔。
+正文 PWA 有很多要求，比如：HTTPS、响应式布局等等，可参考这个 Checklist，可用 Lighthouse3 检查。
+4
+关于图标和 manifest.json，可以通过这个网站在线生成。如果你不确定，可以参考我的博客以及 MemE 主题的相关代码。
+在 PWA 的众多要求中，其中很重要的一点就是可离线访问，而要实现这一点，最简单的方法就是使用 Service Worker。在这篇文章中，我们使用 Workbox 这个工具生成 sw.js 以快速实现 Service Worker 🤖，并实现页面的预缓存和页面更新后的提醒功能，而非深究 Service Worker 的接口然后手动写 JS 代码来实现👨‍💻🐶&amp;hellip;
+由于我们需要使用 Node 的模块，因此我们的电脑必须安装 Node.js。如果你使用的是 Hexo，那么是已经安装过的；如果你使用的是 Hugo，那么请自行安装一下。然后，我们安装模块📦：</description>
+    </item>
+    
+    <item>
+      <title>加速 Hexo 博客</title>
+      <link>https://pub.oribos.cn/web/reprint/2018053001.html</link>
+      <pubDate>Wed, 30 May 2018 13:10:50 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2018053001.html</guid>
+      <description>引用自reuixiy
+尝试在博客利用 InstantClick 和 Hexo 的两个插件 hexo-service-worker、hexo-filter-optimize 让博客快如闪电⚡。
+注意：最新版本的 NexT 已经集成了 PJAX 的功能，因此对于处理起来比较麻烦的 InstantClick，可不需。另外，Service Worker 请查看我新写的利用 Workbox 实现博客的 PWA。
+InstantClick 介绍请看官网，直接下载 instantclick.js（浏览器右键保存为），再放到 ~/blog/themes/next/source/js/src/ 下，然后添加代码：
+1 2 3 4 5 6 &amp;lt;!-- 文件位置：~/blog/themes/next/layout/_layout.swig --&amp;gt; + &amp;lt;script type=&amp;#34;text/javascript&amp;#34; src=&amp;#34;/js/src/instantclick.js&amp;#34; data-no-instant&amp;gt;&amp;lt;/script&amp;gt; + &amp;lt;script data-no-instant&amp;gt;InstantClick.init();&amp;lt;/script&amp;gt; &amp;lt;/body&amp;gt; &amp;lt;/html&amp;gt; 可能会有一些问题，比如与 FancyBox、Google Analytics 等等的兼容问题，解决方法自行查看官网的文档或 Google。
+Hexo 插件 先在站点文件夹根目录安装：
+~/blog $ npm install hexo-service-worker hexo-filter-optimize --save 然后在站点配置文件中配置：
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 # 文件位置：~/blog/_config.</description>
+    </item>
+    
+  </channel>
+</rss>

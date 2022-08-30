@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>introspection on 记事本</title>
+    <link>https://pub.oribos.cn/tags/introspection/</link>
+    <description>Recent content in introspection on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Tue, 18 Aug 2020 22:55:47 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tags/introspection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>简化博客</title>
+      <link>https://pub.oribos.cn/web/reprint/2020081802.html</link>
+      <pubDate>Tue, 18 Aug 2020 22:55:47 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2020081802.html</guid>
+      <description>引用自reuixiy
+转眼间，博客三岁多了，从一开始的五光十色到一年前的极简主义，从加法到减法，从碎点到几何，博客如博主一样，逐渐走上而立之路。
+前些天，博主偶然在 GitHub 上看了眼博客的仓库，久久的重逢之后忽觉博客的复杂，于是一个计划浮上心头——简化博客！
+在最初的时候，博主使用的是 NexT 主题，然后魔改添增了许多眼花缭乱的样式和功能，不过这些在一年前都已经被移除简化了，这次的简化从何说起呢？
+一、页面
+这方面其实已经很好了，但出现了两处主要退化，一是分享，二是页脚。这两处退化的原因不是自己「贪钱」，而是自己「贪名」，希望通过链接引流量，而现在，是时候再次潜入黑暗了。
+同时关闭了多余的代码块行号，奇怪的代码块固定高度，将 SVG 图标用字符替换，用 CSS 的 scroll-behavior 和 scroll-margin-top 属性取代了 Smooth Scroll，关闭了 Instant Page，将 Medium Zoom 改为本地加载，减少了对第三方 JavaScript 库和服务的依赖。
+二、依赖
+博主搭建博客的目的一直很简单——作为一本自己的笔记本，只不过它是电子的，而非纸质。对于传统的纸质笔记本，它的依赖几乎为零，类比于电子相当于我们只需要一个输入和一个显示，即可。
+技术上，博主之前已经从 Hexo 迁移到 Hugo 了，但是为何却仍未摆脱 NPM 呢？因为博主需要通过 Workbox 来实现 Service Worker，当时觉得高大上，现在只觉满是复杂——选择 Hugo，就是因为它不需要 NPM，还是纯净的二进制——于是现在弄了一个简单的 Service Worker，然后 rm -rf package*.json node_modules——Farewell, NPM!
+有时代码开发上的 KISS，往往意味着代码链后的复杂。在当时，博主觉得研究 Service Worker 的原生接口势必要明白其原理，势必会更浪费时间，现在看来，这是画地为牢——其实原理没有想象中的复杂，自己也并非弄不明白。代码上要想真的践行极简，前提还是必须明白其原理，如此才能抓住源头，减少依赖。
+网页是前端，前端怎么能不用 NPM 呢？你这太过时了！是的，现代的 Web 前端是 Angular、React、Vue，但一个博客，要那么现代干什么，一本纸质书，不也没有淹没在这个电子化的时代，依旧不失其价值。要我说，这不叫过时，这叫 Old School，相比而言，反而与初衷一本自己的笔记本更相符。
+至于写作上，博文一直以来采用将必要样式语义化的标准 Markdown，使得在富文本的前提下能够以更为基础的文件系统来直接组织文章，避免了 CMS 的黑盒依赖。
+三、部署
+博客一开始是手动部署在 GitHub Pages 上的，后来手动部署在了 Netlify ，再后来自动部署在了 IPFS，甚至还尝试了 IPFS + ENS，现在走了一圈，又回到了 GitHub Pages，通过一个自己写的 GitHub Actions 自动部署，将来打算部署到自己的服务器上。减少平台，减少流程，减少依赖，减少黑盒，探索黑盒。</description>
+    </item>
+    
+    <item>
+      <title>博客重构：极简主义！</title>
+      <link>https://pub.oribos.cn/web/reprint/2019060301.html</link>
+      <pubDate>Mon, 03 Jun 2019 13:49:29 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019060301.html</guid>
+      <description>引用自reuixiy
+转眼间，我的这个博客已经两岁多了👴，访客总量 52k+，浏览总量 167k+。两年多的时间里，博客经历了多次改版，也经历了三次大灾难（rm、sed、硬盘暴废），可谓「阅历丰富」。但是，过去半年里，我的这个博客却少有更新，我最近不禁问我自己：我这是怎么了？刚开始写博客时的那种热情去哪了？经过一段时间的思考后，我决定重构博客，拥抱极简主义！
+Simplicity is the ultimate sophistication.（至繁归于至简）1
+— Leonardo da Vinci
+除旧 极简第一步，简化分类，简化标签。你可能注意到，我之前的博客的分类颇为复杂，标签也颇为繁冗。为什么我要设计得如此复杂呢？其实，这是因为我搭建这个博客的..初衷..并不是为了记录自己，而是为了归档我所习得的各种知识，以利于我的创造。
+你可能会问我要创造的是什么，答：一个哲学上的宏大体系，这在上面的两张图中应该有所体现。而我于去年搭建了一个新的博客，将哲学独立分离了出去，因此这个博客的分类和标签也是时候简化了，分类只有两个：生活、技术，标签则每篇文章不超过 5 个。
+极简第二步，页面元素，页面交互。博客的主体是文章，故除了文章内容，其它的一切都可以不要，只追求极致速度。菜单栏？分类才两个，不要！图片背景？应专注文字、排除干扰，不要！侧栏、返回顶部、动画效果？过多交互以致分散注意力，不要！文章信息、上篇下篇？相关文章？页脚？三个不要！
+极简第三步，浏览统计，评分评论。有时评论区会带来很大的心理压力，各种统计数字则是一种隐形心理压力。另，博客是静态，而这些属于动态内容，技术上讲即是写操作，违背了纯静态的只读原则2。综上，统统不要。
+当然，作为一个独立博客，博客的标识不可不要，因此保留了本博客独一无二的、显著的顶栏。此外，最终也在页面底部加上了标签、分类的内链，让读者来去自如。
+迎新 极简并不等于简陋，本博客也有了一些值得关注的创新设计。
+最值得关注的是字体排版，应该是目前中文博客中最美的🌚&amp;hellip; 字体使用了 Noto Serif SC + EB Garamond，通过 Google Fonts 实现；新增..着重号..以替代中文中不存在的斜体，更为美观、优雅；解决了网页中英字体混排导致的痛点——英文符号变全角或中文符号字形不对；……
+其它的方面，PWA、无需等待的超快速度、长文章的目录设计（可双向跳转）等等。
+其它 改变了本博客的 URL 结构，导致以前的博文链接大量 404（已利用 Netlify 解决，见我的这篇文章）。大量文章重写了，有些文章迁移了，少量文章删除了。为什么会重写呢？因为看看自己最初的文章，发现自己居然看不懂，表达得太差了，不忍直视。
+是否会开源？技术不足，代码写得丑，还无法将这些成果写成一个配置简单的主题，故暂时不会考虑开源。此外，还有轻微的模仿担忧。但是，欢迎你以本博客的设计理念去改善自己的博客，欢迎你以本博客的设计理念去开发一个主题。
+最后，希望自己在重构的本博客上多反省，多写感悟，多记录自己。「苟日新，日日新，又日新。」
+沃尔特·艾萨克森：《史蒂夫·乔布斯传》（管延圻等译），中信出版社，2011 年版，第六章。&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+https://maintao.com/2019/subtraction-done-in-my-blog/&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+  </channel>
+</rss>

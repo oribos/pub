@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on 记事本</title>
+    <link>https://pub.oribos.cn/tags/git/</link>
+    <description>Recent content in git on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Mon, 07 Oct 2019 20:19:20 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 SSH 连接到 GitHub（多帐号）</title>
+      <link>https://pub.oribos.cn/web/reprint/2019100704.html</link>
+      <pubDate>Mon, 07 Oct 2019 20:19:20 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019100704.html</guid>
+      <description>引用自reuixiy
+我们克隆 GitHub 上的仓库时，一般是通过默认的 HTTPS 的方式，而非上面这种 SSH 的方式。对于克隆仓库的话，我们使用起来是感受不到这两种方式的差别的。但是，当我们要将本地的改动提交到 GitHub 的时候，使用 SSH 就会比使用 HTTPS 方便很多——我们无需每次输入用户名和密码🐶&amp;hellip;
+单帐号 1 $ ssh-keygen -t rsa -b 4096 -C &amp;#34;reuixiy@gmail.com&amp;#34; 怎样使用 SSH 呢？首先，你需要通过以上命令生成 SSH 密钥对。当然，将上面的邮箱地址改为你自己在 GitHub 上的邮箱地址。然后，如果你是第一次生成的话，一路回车即可（口令 passphrase 非必须）。
+之后，cat ~/.ssh/id_rsa.pub 查看生成的公钥并复制，再去 GitHub 上设置一个 New SSH key，标题随便起一个（比如：我的电脑😺），然后粘贴公钥即可。
+最后，如果你 git clone 或 git remote add 的是 HTTPS 的地址1，那么要修改仓库的远程仓库链接地址为 SSH 地址，比如：
+1 ~/hugo-theme-meme $ git remote set-url origin git@github.com:reuixiy/hugo-theme-meme.git 此外，当你本地第一次连接 GitHub 的服务器时，可能会有警告信息，输入 yes 回车即可。
+多帐号 1 2 3 4 5 6 7 8 9 # 帐号一 $ ssh-keygen -t rsa -b 4096 -C &amp;#34;reuixiy@gmail.</description>
+    </item>
+    
+    <item>
+      <title>将博客部署到星际文件系统（IPFS）</title>
+      <link>https://pub.oribos.cn/web/reprint/2019091804.html</link>
+      <pubDate>Wed, 18 Sep 2019 15:13:56 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019091804.html</guid>
+      <description>引用自reuixiy
+1
+在这篇文章中，我将主要介绍如何将你的..静态..博客以持续集成的方式部署到星际文件系统 IPFS 上，也会简单介绍一下 IPFS 的使用。本文中，我使用的 SSG2 是 Hugo，使用的持续集成服务由 Netlify 提供，博客的源码可以在 GitHub 上找到。另，提醒一下，与零网一样，IPFS 默认不匿名👓，且对 Tor 的支持还在开发中。
+说明：最近发现 Cloudflare 的 IPFS 服务好像挂了，需要等待非常长的时间才能获取到最新内容，因此本博客已暂时放弃部署在 IPFS 上。
+前言 一年前的昨天🧐，知名的互联网基础设施服务提供商 Cloudflare 宣布开始支持 IPFS Gateway，作为其分布式互联网网关项目的一部分。关于分布式互联网（Distributed Web，以下简称 D 网），它的到来很有可能会将我们带向 Web 3.0 时代，一个全新的互联网时代！而 D 网所具有的去中心化将会带我们走向新的自由之路——无审查，无高墙。👉🌎🌍🌏💫
+起因 浏览 Twitter 时发现了 @GoHugoIO 的一条推文，IPFS 四个字母激起了我的兴趣🐭（之前..轻微..了解过，印象只限于这四个字母），快速浏览一遍链接的文章之后，去看了他之前写的一篇详细教程，打开 IPFS 的官网，决定这次一定要尝试一下 IPFS！🕳️🦆
+正文 文章的正文分为两个部分：持续集成和原生部署，第一部分是文章的主体，第二部分供感兴趣的读者研究。
+当你按照此文章将博客成功部署到 IPFS 上后，你的博客将：
+⚡拥有全球范围的高速 CDN，国内也有不错的访问速度（Cloudflare） 🌤️无需支出且永远在线（如果你不需要域名的话） 🛸走向未来 持续集成 如果你只是想直接通过持续集成的方式部署博客，那么你是无需在自己的电脑（本地）上安装 IPFS 的，你甚至可以完全不用接触 IPFS。但是，你的电脑必须安装 Git 和 Node.js。如果你是一个程序员或之前有尝试过搭建静态博客，那么你对它们应该并不陌生。
+准备环境 首先是 Git，我们要将博客所在的文件夹初始化成一个 Git 仓库。注意，如果你之前已经初始化过了，请跳过这一步。怎么确定是否已经是一个 Git 仓库呢🤔？打开终端╱命令行，然后进入你的博客文件夹，输入 git status 然后回车，如下：</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="webview不能加载http与https混合内容的问题" />
+<meta property="og:description" content="简化 解决android 5.0 webview不能加载http与https混合内容的问题 在使用WebView加载https资源文件时，如果认证证书不被Android认可，那么会出现无法成功加载对应资源问题。那么，我们就要针对这一状况作出对应的处理。
+1、解决方法：启用mixed content ,webview默认不允许加载http与https混合内容： 比如你访问的网页为http://xxx.com/a.html，则如果a.html包含了https的资源，则此资源不会显示。如果仔细观察log，可以看到如下的内容提示：
+********was loaded over HTTPS, but requested an insecure image******** 该怎么解决呢？很简单，只需设置webSettings，允许其加载混合网络协议内容即可。 //webview在安卓5.0之前默认允许其加载混合网络协议内容 // 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容 if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) { settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW); } 从Android5.0以后，当一个安全的站点（https）去加载一个非安全的站点（http）时，需要配置Webview加载内容的混合模式，一共有如下三种模式：
+MIXED_CONTENT_NEVER_ALLOW：Webview不允许一个安全的站点（https）去加载非安全的站点内容（http）,比如，https网页内容的图片是http链接。强烈建议App使用这种模式，因为这样更安全。 MIXED_CONTENT_ALWAYS_ALLOW：在这种模式下，WebView是可以在一个安全的站点（Https）里加载非安全的站点内容（Http）,这是WebView最不安全的操作模式，尽可能地不要使用这种模式。 MIXED_CONTENT_COMPATIBILITY_MODE：在这种模式下，当涉及到混合式内容时，WebView会尝试去兼容最新Web浏览器的风格。一些不安全的内容（Http）能被加载到一个安全的站点上（Https），而其他类型的内容将会被阻塞。这些内容的类型是被允许加载还是被阻塞可能会随着版本的不同而改变，并没有明确的定义。这种模式主要用于在App里面不能控制内容的渲染，但是又希望在一个安全的环境下运行。
+2、解决方法：设置WebView接受所有网站的证书 在认证证书不被Android所接受的情况下，我们可以通过设置重写WebViewClient的onReceivedSslError方法在其中设置接受所有网站的证书来解决，具体代码如下：
+webView.setWebViewClient(new WebViewClient() { @Override public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) { // TODO Auto-generated method stub // handler.cancel();// Android默认的处理方式 handler.proceed();// 接受所有网站的证书 // handleMessage(Message msg);// 进行其他处理 } }); 注：在重写WebViewClient的onReceivedSslError方法时，注意一定要去除onReceivedSslError方法的super.onReceivedSslError(view, handler, error);，否则设置无效。
+解决浏览器默认是不允许在 https 里面引用 http 资源 浏览器默认是不允许在 https 里面引用 http 资源的，一般都会弹出提示框。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/note/2021/2021091001.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2021-09-10T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-10T00:00:00+00:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="webview不能加载http与https混合内容的问题"/>
+<meta name="twitter:description" content="简化 解决android 5.0 webview不能加载http与https混合内容的问题 在使用WebView加载https资源文件时，如果认证证书不被Android认可，那么会出现无法成功加载对应资源问题。那么，我们就要针对这一状况作出对应的处理。
+1、解决方法：启用mixed content ,webview默认不允许加载http与https混合内容： 比如你访问的网页为http://xxx.com/a.html，则如果a.html包含了https的资源，则此资源不会显示。如果仔细观察log，可以看到如下的内容提示：
+********was loaded over HTTPS, but requested an insecure image******** 该怎么解决呢？很简单，只需设置webSettings，允许其加载混合网络协议内容即可。 //webview在安卓5.0之前默认允许其加载混合网络协议内容 // 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容 if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) { settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW); } 从Android5.0以后，当一个安全的站点（https）去加载一个非安全的站点（http）时，需要配置Webview加载内容的混合模式，一共有如下三种模式：
+MIXED_CONTENT_NEVER_ALLOW：Webview不允许一个安全的站点（https）去加载非安全的站点内容（http）,比如，https网页内容的图片是http链接。强烈建议App使用这种模式，因为这样更安全。 MIXED_CONTENT_ALWAYS_ALLOW：在这种模式下，WebView是可以在一个安全的站点（Https）里加载非安全的站点内容（Http）,这是WebView最不安全的操作模式，尽可能地不要使用这种模式。 MIXED_CONTENT_COMPATIBILITY_MODE：在这种模式下，当涉及到混合式内容时，WebView会尝试去兼容最新Web浏览器的风格。一些不安全的内容（Http）能被加载到一个安全的站点上（Https），而其他类型的内容将会被阻塞。这些内容的类型是被允许加载还是被阻塞可能会随着版本的不同而改变，并没有明确的定义。这种模式主要用于在App里面不能控制内容的渲染，但是又希望在一个安全的环境下运行。
+2、解决方法：设置WebView接受所有网站的证书 在认证证书不被Android所接受的情况下，我们可以通过设置重写WebViewClient的onReceivedSslError方法在其中设置接受所有网站的证书来解决，具体代码如下：
+webView.setWebViewClient(new WebViewClient() { @Override public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) { // TODO Auto-generated method stub // handler.cancel();// Android默认的处理方式 handler.proceed();// 接受所有网站的证书 // handleMessage(Message msg);// 进行其他处理 } }); 注：在重写WebViewClient的onReceivedSslError方法时，注意一定要去除onReceivedSslError方法的super.onReceivedSslError(view, handler, error);，否则设置无效。
+解决浏览器默认是不允许在 https 里面引用 http 资源 浏览器默认是不允许在 https 里面引用 http 资源的，一般都会弹出提示框。"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - webview不能加载http与https混合内容的问题
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">webview不能加载http与https混合内容的问题</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Sep 10, 2021
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<h3 id="简化">简化</h3>
+<p>解决android 5.0 webview不能加载http与https混合内容的问题
+在使用WebView加载https资源文件时，如果认证证书不被Android认可，那么会出现无法成功加载对应资源问题。那么，我们就要针对这一状况作出对应的处理。</p>
+<p>1、解决方法：启用mixed content  ,webview默认不允许加载http与https混合内容：
+比如你访问的网页为http://xxx.com/a.html，则如果a.html包含了https的资源，则此资源不会显示。如果仔细观察log，可以看到如下的内容提示：</p>
+<pre tabindex="0"><code>********was loaded over HTTPS, but requested an insecure image********
+该怎么解决呢？很简单，只需设置webSettings，允许其加载混合网络协议内容即可。  
+</code></pre><pre tabindex="0"><code>//webview在安卓5.0之前默认允许其加载混合网络协议内容
+// 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容
+ if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) {
+     settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+ }
+</code></pre><p>从Android5.0以后，当一个安全的站点（https）去加载一个非安全的站点（http）时，需要配置Webview加载内容的混合模式，一共有如下三种模式：</p>
+<p>MIXED_CONTENT_NEVER_ALLOW：Webview不允许一个安全的站点（https）去加载非安全的站点内容（http）,比如，https网页内容的图片是http链接。强烈建议App使用这种模式，因为这样更安全。
+MIXED_CONTENT_ALWAYS_ALLOW：在这种模式下，WebView是可以在一个安全的站点（Https）里加载非安全的站点内容（Http）,这是WebView最不安全的操作模式，尽可能地不要使用这种模式。
+MIXED_CONTENT_COMPATIBILITY_MODE：在这种模式下，当涉及到混合式内容时，WebView会尝试去兼容最新Web浏览器的风格。一些不安全的内容（Http）能被加载到一个安全的站点上（Https），而其他类型的内容将会被阻塞。这些内容的类型是被允许加载还是被阻塞可能会随着版本的不同而改变，并没有明确的定义。这种模式主要用于在App里面不能控制内容的渲染，但是又希望在一个安全的环境下运行。</p>
+<p>2、解决方法：设置WebView接受所有网站的证书
+在认证证书不被Android所接受的情况下，我们可以通过设置重写WebViewClient的onReceivedSslError方法在其中设置接受所有网站的证书来解决，具体代码如下：</p>
+<pre tabindex="0"><code>webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedSslError(WebView view,
+                    SslErrorHandler handler, SslError error) {
+                // TODO Auto-generated method stub
+                // handler.cancel();// Android默认的处理方式
+                handler.proceed();// 接受所有网站的证书
+                // handleMessage(Message msg);// 进行其他处理
+            }
+});
+</code></pre><p>注：在重写WebViewClient的onReceivedSslError方法时，注意一定要去除onReceivedSslError方法的super.onReceivedSslError(view, handler, error);，否则设置无效。</p>
+<p>解决浏览器默认是不允许在 https 里面引用 http 资源
+浏览器默认是不允许在 https 里面引用 http 资源的，一般都会弹出提示框。</p>
+<p>用户确认后才会继续加载，用户体验非常差。而且如果在一个 https 页面里动态的引入 http 资源，比如引入一个 js 文件，会被直接 block 掉的。Chrome v21 之后，在 SSL 加密页面 embed 非 SSL 的 Flash 资源也会被默默的屏蔽掉，只留下一句 console 报告。</p>
+<p>1、解决方法：让网站同时准备了 https 资源和 http 资源，通过相对协议的形式访问：
+<code>&lt;img src=&quot;//domain.com/img/logo.png&quot;&gt;</code>
+简而言之，就是将URL的协议（http、https）去掉，只保留//及后面的内容。这样，在使用https的网站中，浏览器会通过https请求URL，否则就通过https发送请求。</p>
+<p>附注：如果是浏览本地文件，浏览器通过file://协议发送请求，导致请求失败，因此本地测试最好是搭建一个本地服务器。</p>
+<p>2、解决方法：将http请求转成https请求，添加响应头，设置mate如下：
+<code>&lt;meta http-equiv='Content-Security-Policy' content='block-all-mixed-content'&gt;</code>
+或者在我们服务器响应头中加入：</p>
+<pre tabindex="0"><code>header(&#34;Content-Security-Policy: upgrade-insecure-requests&#34;);
+</code></pre><p>我们的页面是 https 的，而这个页面中包含了大量的 http 资源（图片、iframe等），页面一旦发现存在上述响应头，会在加载 http 资源时自动替换成 https 请求。</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

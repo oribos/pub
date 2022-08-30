@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="适用于萌新的hexo自动部署" />
+<meta property="og:description" content="适用于萌新的hexo自动部署" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/chip/2021041102.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2021-04-11T09:10:40+08:00" />
+<meta property="article:modified_time" content="2021-04-11T09:10:40+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="适用于萌新的hexo自动部署"/>
+<meta name="twitter:description" content="适用于萌新的hexo自动部署"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 适用于萌新的hexo自动部署
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">适用于萌新的hexo自动部署</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Apr 11, 2021
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p>适用于萌新的hexo自动部署</p>
+	<article class="md">
+		<h1 id="适用于萌新的hexo自动部署">适用于萌新的hexo自动部署</h1>
+<h3 id="简述">简述</h3>
+<p>下载本仓库代码，修改CNAME文件，添加自己的文章，将本仓库代码推送github</p>
+<h3 id="使用步骤">使用步骤</h3>
+<h4 id="第一步-使用代码">第一步 使用代码</h4>
+<p>git 下载<a href="https://frednab.coding.net/public/dev/hexo-blog/git/files">coding仓库</a>代码</p>
+<p><code>git clone https://e.coding.net/frednab/dev/hexo-blog.git</code></p>
+<h4 id="第二步-修改配置">第二步 修改配置</h4>
+<p>修改 <strong>source/CNAME</strong>文件里的域名</p>
+<p>安装主题</p>
+<p>方法一、下载主题目录，然后解压缩到themes目录下</p>
+<p>方法二、使用npm安装主题</p>
+<p><code>npm i hexo-theme-butterfly</code>方式安装自己需要的主题（请参照自己需要主题的安装说明）</p>
+<p>方法三、通过git submodule安装主题</p>
+<p><code>git clone -b master https://github.com/jerryc127/hexo-theme-butterfly.git themes/butterfly</code></p>
+<p><strong>其他文件不需要配置</strong></p>
+<h4 id="第三步-更新文章">第三步 更新文章</h4>
+<p>通过<code>hexo new page 文章.md</code>新建文档</p>
+<p>或者在source/_posts目录下撰写自己的文章</p>
+<h4 id="第四步-将源码推送到github">第四步 将源码推送到github</h4>
+<p>通过一下命令将该仓库里的源码推送到github仓库</p>
+<p><strong>如果你是使用git clone方式下载的代码，建议删掉目录下的.git目录再执行如下操作</strong></p>
+<pre tabindex="0"><code>git init //初始化仓库。
+git add . //添加文件到暂存区。(注意有点号.)
+git commit -m &#34;更新说明&#34; //将暂存区内容添加到仓库中。标识“更新说明”
+git remote add origin XXXX.git  //添加到远程仓库操作，将xxxx.git设置为远程仓库origin
+git push -u origin master  //推送master分支到origin仓库
+</code></pre><p>提示操作成功后，代码将推送到github上的master分支，github自动部署将启动，将hexo文件自动部署到gh-pages分支</p>
+<p><strong>由于该仓库含有github自动构建文件，上传到github将触发自动部署</strong></p>
+<p>github自动构建文件为 <code>.github/workflows/hexodeploy.yml</code>文件</p>
+<h4 id="第五步-开启pages">第五步 开启pages</h4>
+<p>在github仓库 “Settings”选择“GitHub Pages” source项选择Branch:gh-pages
+如图：
+<!-- raw HTML omitted --></p>
+<p>即可使用由github自动部署的 pages 服务。</p>
+<p><strong>请确保仓库里source/CNAME文件域名已经正确修改</strong></p>
+<hr>
+<h3 id="进阶操作">进阶操作</h3>
+<p>完成以上部署就可以正常使用由hexo生成，github自动部署的pages。你也可以通过以下操作扩展hexo进阶操作</p>
+<h4 id="安装更多的hexo插件">安装更多的hexo插件</h4>
+<p>通过<code>npm i XXX --save</code>插件安装适用于hexo的插件，使用&ndash;save可以将插件添加到项目依赖，这样在github自动部署时就能直接使用。</p>
+<h4 id="使用github子模块">使用github子模块</h4>
+<p>通过<code>git submodule add xxxx.git source/_posts </code> 可以将你其他git仓库文章。github自动部署时会自动更新子模块里的文章。</p>
+<h4 id="使用其他主题">使用其他主题</h4>
+<p>通过<code>npm i xxx主题 --save</code>安装其他主题，然后再执行如下操作：</p>
+<p><strong>使用npm uninstall 主题名将旧主题卸载</strong></p>
+<p>1 将新主题的配置文件<code>_config.yml</code>改名为<code>_config.xxx主题.yml</code>，复制到根目录下</p>
+<p>2 修改根目录下的<code>_config.yml</code>文件里的<code>theme: butterfly</code> 为<code>theme: xxx</code>主题</p>
+<p>hexo会组合<code>_config.yml</code>和<code>_config.xxx主题.yml</code>里的内容实现相应的效果。</p>
+<h4 id="其他操作请参照hexo教程">其他操作请参照hexo教程</h4>
+<h2 id="使用coding代码托管">使用coding代码托管</h2>
+<p>如果github访问异常，可以选择使用coding进行代码托管和自动构建
+在coding上的hexo有两种部署方式</p>
+<p>方式一: 使用coding的静态网站部署</p>
+<p><strong>由于使用的hexo和npm版本过高，coding的静态网站部署并无法正常使用该项目文件。</strong></p>
+<p>方式二：使用项目里的.coding/ci.yml自动构建文件,将自己的账户密码和仓库https地址对应以下变量</p>
+<p>https://${USER}:${TOKRN}@${HTTP_URL}</p>
+<p><img src="https://base.oribos.city/images/2021/04/202104140005.png" alt="ssh方式"></p>
+<p><img src="https://base.oribos.city/images/2021/04/202104140006.png" alt="ssh方式"></p>
+<p><img src="https://base.oribos.city/images/2021/04/202104140007.png" alt="ssh方式"></p>
+<p>构建完成后，手动在静态网站部署选择该项目的pages分支</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

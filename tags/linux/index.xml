@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on 记事本</title>
+    <link>https://pub.oribos.cn/tags/linux/</link>
+    <description>Recent content in linux on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Fri, 30 Nov 2018 23:52:38 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>开源：创造世界！</title>
+      <link>https://pub.oribos.cn/web/reprint/2018113007.html</link>
+      <pubDate>Fri, 30 Nov 2018 23:52:38 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2018113007.html</guid>
+      <description>引用自reuixiy
+几周前，经历一次硬盘暴废后，在我的全新硬盘，我只安装了 Arch Linux。我终于彻底摆脱了 Windows！然而，如果说几周前的硬盘损坏是物理上的意外压迫，那么刚刚这次经历就是一种精神上的诱惑。
+就在刚刚，我使用 Arch Linux 时，突然有了一个疯狂的需求：更改一张 SVG 图片的大小（注意，这很疯狂，因为我从未处理过）。这该怎么办呢？倘若在 Windows 下，我肯定要先打开浏览器，搜索编辑 SVG 的软件，然后去这个软件的官网下载，最后——不，等等，也许还要先注册个帐号——安装。这实在是逊爆了！比起我刚刚在 Arch Linux 上的经历。我刚刚只是 Google 时加上——arch linux——马上就看到我需要的软件包的名字：Incscape，终端输入 sudo pacman -S inkscape，回车，好了！没错，秒速就安装好了，仅仅几秒而已！真的是秒速！
+回到那张我想编辑的 SVG 图片，鼠标右键选择 Incscape 启动，马上就能编辑。哦，对了，就是马上！倘若在 Windows 下，安装好软件后打开的第一个界面可能并不是编辑，而是付费提醒。不友好，在漫长过程后的疲惫之时，甚至觉得是恶意，即使付费是合理的。Linux 下如何呢？快速地且舒服地进入了界面，再次 Google 一下如何编辑，选择一个 YouTube 视频观看。十几分钟之后，这个我之前认为疯狂的需求就完成了。
+这是为什么呢？为什么在 Linux 下一切都变得如此简单、迅速、友好？是开源！如果你不理解「开源」这个词语，可以通过一个故事来理解。有两个房间，房间甲和房间乙。一个房间被整齐地分为 1、2、3&amp;hellip; 个小隔间，隔间的每个人低着头，面无表情，按照死板的教条敲打着键盘，那是房间乙；一个房间空旷辽阔，几个人聚在一起，始于好奇，溺于创造，快乐无止！这是房间甲！这就是开源！一种符合人性的、自由的、奇异的合作模式！
+正是因为这种模式，珍品不断地在开源世界被创造。作为用户的我们不断感叹：珍品！而作为开发者，对自己的作品不是漠不关心，而是热情地不断完善自己的创造，最终在用户一次次的感叹中将珍品变为一个艺术品！这种模式，用户与开发者都在微笑中，一起创造出更好的未来！是的，那些生产者们，别再继续拖住我们前进的步伐了！你们永远无法生产出未来，因为未来是被创造出来的！你们永远无法生产出世界，因为世界是被创造出来的！
+还记得上面的硬盘暴废吗？这是个令人崩溃的可怕事件，万幸的是，我最终恢复了硬盘中的数据。说出来你可能难以相信，但我的确仅仅依靠自己就解决了。当然，除了我的机智之外，最直接的因素是：我使用的是 Linux，这个开源的现代的操作系统！我所做的，只是 Google 到 TestDisk 这个开源软件，然后在 Linux 中直接运行（系统自带），最终顺利地恢复了我的数据。需注意的是，这是个小概率事件，而生产者从来不重视它们。但是，由于好奇，创造者到达世界的每个角落，而且是以优雅的方式，并创造出珍品！数据无价，拯救我的数据的 TestDisk——这个珍品！——的背后，也有着一条快乐的创造之路！尽管很偏僻，但是很秀丽！
+这些如此神奇的开源软件，一个这样现代的操作系统！务必感谢这些因好奇、兴趣而热情地创造的伟大开发者们！致敬！你们这些伟大的创造者！拥抱开源，忠于好奇！我们创造的将是一个..显微后依然不断感叹..的奇异未来世界！</description>
+    </item>
+    
+    <item>
+      <title>如何安装 GNOME Shell 插件？</title>
+      <link>https://pub.oribos.cn/web/reprint/2017100206.html</link>
+      <pubDate>Mon, 02 Oct 2017 19:38:39 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017100206.html</guid>
+      <description> 引用自reuixiy
+感谢开源，让 Linux 下有了 GNOME 桌面环境，感谢开源，有了许多「外挂」似的 GNOME Shell 插件，开起后效果绝对秒杀 Windows！问题是：怎么安装 GNOME Shell Extensions 呢？
+源码包安装（推荐） 这种安装方式的好处就是可以获取到插件的最新版本。要怎么操作呢？直接 git clone 其源码，然后按照 README 中的说明自己编译安装，大部分直接 make install 即可，少部分可能要自己手动操作一下，详见各自的 README。
+浏览器插件安装 最好用 Firefox，我在 Chrome 下测试没用。打开 GNOME Shell Extensions 网站，会有个提示啥允许好像，然后 Allow 即可，刷新页面即可安装。
+下载安装包安装 直接去 GNOME Shell Extensions 的网站上下载安装包，然后解压缩，重命名（删除邮箱后面的字符）后复制到目录 ~/.local/share/gnome-shell/extensions/ 下，然后 alt + f2 重启 GNOME，再打开 Tweaks，应该就能在 Extensions 上看到。
+apt-get 方式 apt-get update apt-cache search gnome-shell-extension apt-get install gnome-shell-extension-插件名 不过只能搜到少部分，另还可以安装下面这个包，里面有一些插件：
+apt-get install gnome-shell-extensions 安装好后，点击按钮打开即可，如果有设置按钮，可以设置，并且如果有错误则会显示报错信息。
+安利几个插件 名字 功能 说明 Redshift 护眼模式 安装配置方法见这篇文章 Topicons plus 将左下脚的托盘图标放在顶栏 * Simple net speed 顶栏实时网速显示 * Openweather 顶栏显示天气 * EasyScreenCast 录屏 * Coverflow alt-tab 效果超赞的 alt-tab 切换效果 * Dash to Dock 自己试试，突然无法表达😂 * Workspaces to Dock 自定义工作区 * Blyr 毛玻璃效果 * Proxy Switcher 快速切换系统代理 科学上网时有用 </description>
+    </item>
+    
+    <item>
+      <title>解决更新 Kali Linux 后网易云音乐歌词乱码的问题</title>
+      <link>https://pub.oribos.cn/web/reprint/2017092301.html</link>
+      <pubDate>Sat, 23 Sep 2017 11:20:26 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017092301.html</guid>
+      <description>引用自reuixiy
+旧方法 前几天 apt-get dist-upgrade 一下，然后打开网易云音乐发现歌词和一些项目显示乱码了。据说是 Qt5.9 造成的1，解决方法：
+wget http://download.qt.io/archive/qt/5.8/5.8.0/qt-opensource-linux-x64-5.8.0.run chmod +x qt-opensource-linux-x64-5.8.0.run sudo ./qt-opensource-linux-x64-5.8.0.run 然后弹出安装界面，一直默认即可，最后：
+vim /usr/share/applications/netease-cloud-music.desktop Exec=env LD_LIBRARY_PATH=/opt/Qt5.8.0/5.8/gcc_64/lib netease-cloud-music %U --no-sandbox 新方法 安装新版，下载 ubuntu16.04（64 位）即可。可能会无法打开，怎么办呢？编辑文件2：
+vim /usr/share/applications/netease-cloud-music.desktop 然后：
+1 2 - Exec=netease-cloud-music %U + Exec=sudo netease-cloud-music %U ٩(•̤̀ᵕ•̤́)ᵒᵏᵎᵎᵎᵎ
+https://bbs.archlinuxcn.org/viewtopic.php?id=5021&amp;#160;&amp;#x21a9;&amp;#xfe0e;
+http://www.kali.org.cn/thread-27612-1-1.html&amp;#160;&amp;#x21a9;&amp;#xfe0e;</description>
+    </item>
+    
+    <item>
+      <title>重建博客：rm 的悲剧</title>
+      <link>https://pub.oribos.cn/web/reprint/005.html</link>
+      <pubDate>Mon, 21 Aug 2017 11:00:49 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/005.html</guid>
+      <description>引用自reuixiy
+2017.08.07 下午，昏昏欲睡的我，还在折腾电脑的驱动。紧张地 Google 解决方法，直接 Copy 一条命令回车，没想到这一操作就宣告了我博客的死亡😭😭😭&amp;hellip;
+死亡的味道 回车后，过了很久，当时也没太在意，继续操作。一会重启系统，感觉画风不对😶，桌面变了，后脑勺一凉，开终端，ls 一看，没了，我的「家」都没了……机智的我赶紧敲了一条 history 命令，看到（别问我为啥还能看到，神特么知道）：
+rm -rf ~/ .local/... 发现了没，~/ 后面多了个空格，卧槽！那个网站上贴这行代码的人！￥%×%%&amp;amp;×%&amp;amp;×%&amp;amp;×￥%……#%……&amp;amp;×%&amp;amp;（×……&amp;amp;+）——+（——）（&amp;amp;（×！
+删而后重建 之后试着恢复数据，无奈失败。把自己的「家」都给删了，半年多在这系统上的努力都废了，特别是博客文件夹，想到还要从 0 开始弄，头皮发麻……
+无奈归无奈，还好我电脑双系统，第二天就进 Windows 下载镜像烧 U 盘，重装系统，顺便（当然没那么顺便🙃）把引导由 BIOS + MBR 改为 UEFI + GPT1。
+最后终于进了新 Linux 系统，更新系统，解决驱动问题，装软件。接下来就是重新搭建 Hexo，优化 NexT 主题，将网站上的 38 篇文章全部写成 Markdown 文档。
+折腾新成果 1）博客方面
+规范了 Markdown 文档，可以更美观地使用 emoji 😛，添加 404 页面，使用插件使音乐支持歌词，视频支持弹幕……更多点击打造个性超赞博客 Hexo + NexT + GitHub Pages 的超深度优化查看。
+2）系统方面
+装了最新的 Wine QQ，深刻了解数据的重要性和 rm 的可怕😂&amp;hellip;
+3）其它方面
+熟悉了 UEFI + GPT，自己重装系统的能力又得到了巨大提升🤪&amp;hellip;</description>
+    </item>
+    
+  </channel>
+</rss>

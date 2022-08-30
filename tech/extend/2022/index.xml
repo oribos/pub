@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2022 on 记事本</title>
+    <link>https://pub.oribos.cn/tech/extend/2022/</link>
+    <description>Recent content in 2022 on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Wed, 24 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://pub.oribos.cn/tech/extend/2022/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>页面CF加速</title>
+      <link>https://pub.oribos.cn/web/note/2022/2022082401.html</link>
+      <pubDate>Wed, 24 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2022/2022082401.html</guid>
+      <description>addEventListener(&amp;#34;fetch&amp;#34;,event =&amp;gt; {let url = new URL(event.request.url);url.hostname =&amp;#34;youdomain.com&amp;#34;;let request = new Request(url,event.request);event.respondWith(fetch(request,{headers:{&amp;#39;Referer&amp;#39;:&amp;#39;https://youdomain.com/&amp;#39;,&amp;#39;User-Agent&amp;#39;:&amp;#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36&amp;#39;}}))}); // 替换成你OneDrive的网址const upstream = &amp;#39;*-my.sharepoint.com&amp;#39;// 替换成你OneDrive的网址const upstream_mobile = &amp;#39;*-my.sharepoint.com&amp;#39;// 下面的配置都不用动const upstream_path = &amp;#39;/&amp;#39;const blocked_region = [&amp;#39;KP&amp;#39;, &amp;#39;SY&amp;#39;, &amp;#39;PK&amp;#39;, &amp;#39;CU&amp;#39;]const blocked_ip_address = [&amp;#39;0.0.0.0&amp;#39;, &amp;#39;127.0.0.1&amp;#39;]const https = trueconst disable_cache = falseconst replace_dict = {&amp;#39;$upstream&amp;#39;: &amp;#39;$custom_domain&amp;#39;,&amp;#39;//sunpma.</description>
+    </item>
+    
+    <item>
+      <title>hexo模板</title>
+      <link>https://pub.oribos.cn/web/note/2022/2022082301.html</link>
+      <pubDate>Tue, 23 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2022/2022082301.html</guid>
+      <description>简述 下载本仓库代码，修改CNAME文件，添加自己的文章，将本仓库代码推送github，即可访问自己的博客。
+使用步骤 第一步 获取源码 下载这个hexo模板的代码 git 下载代码
+git clone https://e.coding.net/frednab/dev/blog-mould.git
+未安装git可通过下载github源码获得该项目源码
+下载完毕后删除.git文件夹
+rm -rf .git 或在windows平台显示隐藏文件，删除隐藏的.git文件夹。
+第二步 修改配置 修改hexo的配置 修改 source/CNAME文件里的域名
+此仓库已经预置butterfly主题
+通过修改_config.butterfly.yml来改变主题的配置，如主题颜色，样式，插件等。
+通过修改_config.yml来改变hexo站点的配置，如站点标题，语言，目录等。
+其他文件不需要配置
+第三步 更新文章 撰写或者将之前的文章复制到source/_posts目录下 通过hexo new page 文章.md新建文档
+或者在source/_posts目录下撰写自己的文章
+第四步 发布博客 通过多种方式发布博客 方式一 本地运行hexo的http服务来浏览博客 需要本地服务器安装nodejs和npm
+执行如下命令安装hexo
+npm install -g hexo-cli 执行如下命令安装该项目的依赖
+npm ci 执行如下命令来运行hexo的http服务
+hexo server 方式二 生成静态文件,部署到nginx或IIS 需要本地服务器安装nodejs和npm
+执行如下命令安装hexo
+npm install -g hexo-cli 执行如下命令安装该项目的依赖
+npm ci 执行如下命令生成html静态文件
+hexo g 生成html静态文件夹public，配合nginx或iis来部署静态网站。或者上传到虚拟主机，云服务器上部署。
+方式三 将源码推送到github，触发github actions自动构建 通过以下命令将该仓库里的源码推送到github仓库</description>
+    </item>
+    
+    <item>
+      <title>ACME v2证书自动化快速入门</title>
+      <link>https://pub.oribos.cn/web/note/2022/2022082213.html</link>
+      <pubDate>Mon, 22 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2022/2022082213.html</guid>
+      <description>安装acme.sh 建议切换到root模式，可以减少证书安装时的问题
+sudo su 注意：MacOS 不用切换到root更简单。
+curl https://get.acme.sh | sh -s email=my@example.com 如果上面官方下载地址失败 或者 太慢，可以选用国内的备用地址
+curl https://gitcode.net/cert/cn-acme.sh/-/raw/master/install.sh?inline=false | sh -s email=my@example.com 对域名授权 参见步骤
+证书申请 &amp;amp; 部署 使用获得的部署命令进行证书申请
+下载的证书文件中，应该含以下证书文件：
+ca.cer 域名.cer fullchain.cer 证书私钥 private.key。
+在 NGINX 上安装 SSL 证书 在本文中，介绍如何在 NGINX Web 服务器上安装 SSL 证书并设置 HTTPS 重定向。 准备工
+已下载包含证书文件的 ZIP 压缩文件。
+下载的证书文件中，应该含以下证书文件：
+domain-ca.pem
+domain-chain.pem
+domain-root.pem
+证书私钥 private.key。
+步骤1. 上传文件到网站服务器 登录网站的 Nginx 服务器，选择一个需要存放证书文件的目录，将下载的证书文件（domain-ca.pem，domain-chain.pem，domain-root.pem ）和 私钥 （private.key） 上传到选择的目录中。
+步骤2. 将证书文件重命名为 .crt 结尾的文件 Nginx 要求合并所有 .</description>
+    </item>
+    
+    <item>
+      <title>windows server安装docker</title>
+      <link>https://pub.oribos.cn/web/note/2022/2022072601.html</link>
+      <pubDate>Tue, 26 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/note/2022/2022072601.html</guid>
+      <description>在Server2019上安装docker 启动powershell
+安装Docker
+首先输入以下的命令
+Install-Module -Name DockerMsftProvider -Repository PSGallery -Force
+这里系统提示安装 NuGet 提供程序，我们需要输入 Y
+接着继续输入以下命令
+Install-Package -Name docker -ProviderName DockerMsftProvider
+PowerShell 询问是否信任包源“DockerDefault”时，键入 A 以继续进行安装
+这一步会等得比较久，因为需要下载docker文件，耐心等待。网上也有离线安装的方式，有兴趣的可以去试试。
+安装完成后，执行重启计算机的命令
+Restart-Computer -Force
+重启之后，再次打开powershell，输入
+docker version</description>
+    </item>
+    
+    <item>
+      <title>tag与release</title>
+      <link>https://pub.oribos.cn/web/dev/2022/2022010903.html</link>
+      <pubDate>Sun, 09 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/dev/2022/2022010903.html</guid>
+      <description>本文源自 作者：Hustlion
+定义 标签（tag）是特定提交（commit)一个指针，也就是每个tag对应一个特定的commit。
+Release是具有changelogs和二进制文件的一级对象，它可以代表超出Git架构本身的一个特定时间点之前的所有项目历史。也就是通过release，不但能够通过源码体现出项目历史，还能通过已经编译好的二进制文件来进一步描述此时的项目状态。“超出Git架构本身“的意思则在于，git本身只能记录项目修改，本质上不适合将编译好的项目二进制文件记录下来。而通过release则把项目二进制文件保存了下来，方便用户下载，也方便查找特定版本的二进制文件。
+以下是Github official announcement所定义原文： Releases are first-class objects with changelogs and binary assets that present a full project history beyond Git artifacts.
+创建方法 Release分为两种：lightweight and annotated.
+创建lightweight类型的tag：
+git tag v1.4-lw 创建annotated类型的tag：
+git tag -a v1.4 -m &amp;#34;my version 1.4&amp;#34; 通过tag可以返回到项目的特定状态下，所以可以将tag看作是在大量commit中设定的书签。
+创建release，则需要通过源码托管商的网页操作界面来进行，一般会要求填写tag名、分支以及相应的发布说明，还可上传编译好的程序、打包好的文件等。
+比较 标签是git中的概念，而release则是Github、码云等源码托管商所提供的更高层的概念。也就是说git本身是没有release这个概念的，只有tag。
+两者之间的关系则是，release基于tag，为tag添加更丰富的信息，一般是编译好的文件。
+总结 Release是源码托管商对git的tag功能的增强。通过git提供的tag功能，我们可以给项目进行版本标识，以识别特定的版本，如v0.1.0、v1.0.0等。而通过源码托管商提供的release功能，在tag的基础上我们可以添加编译好的二进制文件等，如.deb、.exe等给特定的版本提供更多的信息，方便用户，也方便后期查找特定版本的程序。</description>
+    </item>
+    
+    <item>
+      <title>测试</title>
+      <link>https://pub.oribos.cn/web/dev/2022/2022010907.html</link>
+      <pubDate>Sun, 09 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/dev/2022/2022010907.html</guid>
+      <description>测试 使用 Ed25519 算法生成 SSH 密钥 创建Ed25519算法的ssh密钥，
+ssh-keygen -t ed25519 -C &amp;quot;denalon@qq.com&amp;quot; </description>
+    </item>
+    
+  </channel>
+</rss>

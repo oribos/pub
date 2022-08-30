@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="树莓派 &#43; 延时摄影" />
+<meta property="og:description" content="引用自reuixiy
+1
+树莓派，还是将近四年前买的，当晚下单时就十分激动，到手后双眼看着精致的外盒，更是十分欣喜——这手中的小小「绿色卡片」竟然能运行 Linux！还有可以连接传感器可以控制外围电路的 GPIO！
+当时急着将买的亚克力外壳、散热风扇装好后，安装配置好系统就折腾了一个 WordPress 博客，弄了弄内网穿透。后来，又购买了一些传感器，以及一个红外夜视摄像头，尝鲜物联网。再后来，除了用它偷窥了一只突如其来的小壁虎，除了去年临时用它赶制了用以应付学业的一辆 Wi-Fi 连接手机网页控制的遥控小车，就吃灰了。
+尽管如此，前段时间来深圳时，还是将这个依旧十分精美的小玩具带上了，虽然我不知道它能否再次通电。到深圳后，有感于眼前壮美的天空，有感于这个城市紧张的快节奏生活，前几天傍晚就有了这样的一个想法：树莓派 &#43; 延时摄影！
+出于对 8GB 的 SD 卡的担忧，想着是否可以将图片存放在电脑上呢，于是便有了 raspi-timelapse——以树莓派为终端，数据全部「上传」到电脑。代码比较简单，操作也不复杂。如果你之前没有接触过树莓派，可以参考下方的教程。
+教程 安装系统 下载最新的 Raspberry Pi OS Lite 系统：
+1 wget https://downloads.raspberrypi.org/raspios_lite_armhf_latest -O raspios-buster-lite-armhf.zip 将 SD 卡接入电脑，并将系统写入（回车前..注意..检查 SD 卡的设备名）：
+1 2 3 lsblk -p umount sdX1 unzip -p raspios-buster-lite-armhf.zip | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress 结束后，将我提供的两个文件，ssh 和 wpa_supplicant.conf 文件复制到 SD 卡中的 boot 文件夹下。第一个文件的作用是开启 SSH，第二个文件的作用是连接 Wi-Fi，里面的内容如下：
+1 2 3 4 5 6 7 8 9 country=CN ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev update_config=1 network={ ssid=&#34;&#34; psk=&#34;&#34; scan_ssid=0 } 将你的 Wi-Fi 名填入 ssid，密码填入 psk 即可。如果你的 Wi-Fi 设置了隐藏，则将 scan_ssid 修改为 1。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/reprint/2020070206.html" /><meta property="og:image" content="https://base.oribos.city/images/2020/07/timelapse-with-raspi.jpg" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2020-07-02T19:31:55+08:00" />
+<meta property="article:modified_time" content="2020-07-02T19:31:55+08:00" />
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://base.oribos.city/images/2020/07/timelapse-with-raspi.jpg"/>
+
+<meta name="twitter:title" content="树莓派 &#43; 延时摄影"/>
+<meta name="twitter:description" content="引用自reuixiy
+1
+树莓派，还是将近四年前买的，当晚下单时就十分激动，到手后双眼看着精致的外盒，更是十分欣喜——这手中的小小「绿色卡片」竟然能运行 Linux！还有可以连接传感器可以控制外围电路的 GPIO！
+当时急着将买的亚克力外壳、散热风扇装好后，安装配置好系统就折腾了一个 WordPress 博客，弄了弄内网穿透。后来，又购买了一些传感器，以及一个红外夜视摄像头，尝鲜物联网。再后来，除了用它偷窥了一只突如其来的小壁虎，除了去年临时用它赶制了用以应付学业的一辆 Wi-Fi 连接手机网页控制的遥控小车，就吃灰了。
+尽管如此，前段时间来深圳时，还是将这个依旧十分精美的小玩具带上了，虽然我不知道它能否再次通电。到深圳后，有感于眼前壮美的天空，有感于这个城市紧张的快节奏生活，前几天傍晚就有了这样的一个想法：树莓派 &#43; 延时摄影！
+出于对 8GB 的 SD 卡的担忧，想着是否可以将图片存放在电脑上呢，于是便有了 raspi-timelapse——以树莓派为终端，数据全部「上传」到电脑。代码比较简单，操作也不复杂。如果你之前没有接触过树莓派，可以参考下方的教程。
+教程 安装系统 下载最新的 Raspberry Pi OS Lite 系统：
+1 wget https://downloads.raspberrypi.org/raspios_lite_armhf_latest -O raspios-buster-lite-armhf.zip 将 SD 卡接入电脑，并将系统写入（回车前..注意..检查 SD 卡的设备名）：
+1 2 3 lsblk -p umount sdX1 unzip -p raspios-buster-lite-armhf.zip | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress 结束后，将我提供的两个文件，ssh 和 wpa_supplicant.conf 文件复制到 SD 卡中的 boot 文件夹下。第一个文件的作用是开启 SSH，第二个文件的作用是连接 Wi-Fi，里面的内容如下：
+1 2 3 4 5 6 7 8 9 country=CN ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev update_config=1 network={ ssid=&#34;&#34; psk=&#34;&#34; scan_ssid=0 } 将你的 Wi-Fi 名填入 ssid，密码填入 psk 即可。如果你的 Wi-Fi 设置了隐藏，则将 scan_ssid 修改为 1。"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 树莓派 &#43; 延时摄影
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">树莓派 &#43; 延时摄影</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>reuixiy</b> |
+	
+		Posted at Jul 02, 2020
+	
+		
+	</div>
+	
+	<div class="sm:mt-4">
+		
+		<a class="not-first:ml-3" href="/tags/raspberry-pi">#raspberry-pi</a>
+		
+		<a class="not-first:ml-3" href="/tags/timelapse">#timelapse</a>
+		
+	</div>
+	
+</div>
+<main>
+	<p></p>
+	<article class="md">
+		<blockquote>
+<p>引用自<a href="https://io-oi.me/">reuixiy</a></p>
+</blockquote>
+<p><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p>树莓派，还是将近四年前买的，当晚下单时就十分激动，到手后双眼看着精致的外盒，更是十分欣喜——这手中的小小「绿色卡片」竟然能运行 Linux！还有可以连接传感器可以控制外围电路的 GPIO！</p>
+<p>当时急着将买的亚克力外壳、散热风扇装好后，安装配置好系统就折腾了一个 WordPress 博客，弄了弄内网穿透。后来，又购买了一些传感器，以及一个红外夜视摄像头，尝鲜物联网。再后来，除了用它偷窥了一只<a href="/life/a-little-gecko-come-suddenly/">突如其来的小壁虎</a>，除了去年临时用它赶制了用以应付学业的一辆 Wi-Fi 连接手机网页控制的遥控小车，就吃灰了。</p>
+<p>尽管如此，前段时间来深圳时，还是将这个依旧十分精美的小玩具带上了，虽然我不知道它能否再次通电。到深圳后，有感于眼前壮美的天空，有感于这个城市紧张的快节奏生活，前几天傍晚就有了这样的一个想法：树莓派 + 延时摄影！</p>
+<p>出于对 8GB 的 SD 卡的担忧，想着是否可以将图片存放在电脑上呢，于是便有了 <a href="https://github.com/reuixiy/raspi-timelapse">raspi-timelapse</a>——以树莓派为终端，数据全部「上传」到电脑。代码比较简单，操作也不复杂。如果你之前没有接触过树莓派，可以参考下方的教程。</p>
+<h2 id="教程">教程</h2>
+<h3 id="安装系统">安装系统</h3>
+<p>下载最新的 Raspberry Pi OS Lite 系统：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">wget https://downloads.raspberrypi.org/raspios_lite_armhf_latest -O raspios-buster-lite-armhf.zip
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将 SD 卡接入电脑，并将系统写入（回车前..注意..检查 SD 卡的设备名）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">lsblk -p
+</span></span><span class="line"><span class="cl">umount sdX1
+</span></span><span class="line"><span class="cl">unzip -p raspios-buster-lite-armhf.zip <span class="p">|</span> sudo dd <span class="nv">of</span><span class="o">=</span>/dev/sdX <span class="nv">bs</span><span class="o">=</span>4M <span class="nv">conv</span><span class="o">=</span>fsync <span class="nv">status</span><span class="o">=</span>progress
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>结束后，将我提供的<a href="https://github.com/reuixiy/raspi-timelapse/tree/master/client/boot">两个文件</a>，ssh 和 wpa_supplicant.conf 文件复制到 SD 卡中的 boot 文件夹下。第一个文件的作用是开启 SSH，第二个文件的作用是连接 Wi-Fi，里面的内容如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nv">country</span><span class="o">=</span>CN
+</span></span><span class="line"><span class="cl"><span class="nv">ctrl_interface</span><span class="o">=</span><span class="nv">DIR</span><span class="o">=</span>/var/run/wpa_supplicant <span class="nv">GROUP</span><span class="o">=</span>netdev
+</span></span><span class="line"><span class="cl"><span class="nv">update_config</span><span class="o">=</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">network</span><span class="o">={</span>
+</span></span><span class="line"><span class="cl">   <span class="nv">ssid</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="nv">psk</span><span class="o">=</span><span class="s2">&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">   <span class="nv">scan_ssid</span><span class="o">=</span><span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>将你的 Wi-Fi 名填入 <code>ssid</code>，密码填入 <code>psk</code> 即可。如果你的 Wi-Fi 设置了隐藏，则将 <code>scan_ssid</code> 修改为 <code>1</code>。</p>
+<p>接下来修改 config.txt，在文件末的 <code>dtparam=audio=on</code> 下方添加 <code>start_x=1</code> 以开启摄像头<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>，也可添加 <code>disable_camera_led = 1</code> 以将摄像头上的 LED 灯关闭。</p>
+<p>安全拔出 SD 卡，接入树莓派，接电开机。</p>
+<h3 id="进入系统">进入系统</h3>
+<p>等待片刻，接下来我们要用电脑通过 SSH 连接到树莓派，以进入系统。</p>
+<p>先要找到树莓派的 IP 地址，你可以通过路由器的管理后台查看，也可以通过电脑扫描内网查看（以 <code>192.168.1.*</code> 为例）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo nmap -sn 192.168.1.0/24
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>等待输出，下方输出的即是树莓派：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.1.2
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.42s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">MAC Address: **:**:**:**:**:** <span class="o">(</span>Raspberry Pi Foundation<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>得知树莓派的 IP 地址后，我们通过 SSH 连接它（以 <code>192.168.1.2</code> 为例）：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">ssh pi@192.168.1.2
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>输入默认密码 <code>raspberry</code> 后直接回车，成功进入系统。</p>
+<h3 id="配置系统">配置系统</h3>
+<p>先修改时区，确保照片的时间正确：<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo raspi-config
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Localisation Options &gt; Change Time Zone &gt; Asia &gt; Shanghai。</p>
+<p>然后更新系统：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo apt update
+</span></span><span class="line"><span class="cl">sudo apt full-upgrade
+</span></span><span class="line"><span class="cl">sudo apt autoremove
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="延时摄影">延时摄影</h3>
+<p>在树莓派，下载我提供的代码：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">wget https://github.com/reuixiy/raspi-timelapse/raw/master/client/timelapse.tar.gz <span class="p">|</span> tar -zxvf
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>考虑到国内网络，可以克隆 <a href="https://github.com/reuixiy/raspi-timelapse">raspi-timelapse</a> 到电脑后，在..电脑..通过以下命令复制到树莓派：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">cd</span> raspi-timelapse
+</span></span><span class="line"><span class="cl">scp -r client/timelapse pi@192.168.1.2:timelapse
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>然后回到树莓派，安装依赖：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl"><span class="nb">cd</span> timelapse
+</span></span><span class="line"><span class="cl">cat README.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>按说明操作即可。考虑到国内网络，安装 Python 的模块时，可使用国内阿里的镜像：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sudo pip3 install bottle -i https://mirrors.aliyun.com/pypi/simple
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>最后回到电脑，获取拍摄的图片，处理后即可生成视频，详见 <a href="https://github.com/reuixiy/raspi-timelapse/blob/master/server/README.md">README.md</a>。</p>
+<hr>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>YouTube 地址：<a href="https://www.youtube.com/watch?v=Ej1WwFLVyVk">https://www.youtube.com/watch?v=Ej1WwFLVyVk</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>也可进入系统后，通过 <code>raspi-config</code> 配置。关于摄像头，博主一开始使用的是红外夜视版本的，所以颜色有些奇怪，但可以通过 <code>-sa 25 -awb cloud/flash</code> 参数来调整（更多参数见<a href="https://www.raspberrypi.org/documentation/raspbian/applications/camera.md">官方文档</a>），上方的天空即是这样拍摄出来的，后来博主在某宝花十几元包邮购买了一个普通版本的，拍出来效果也很不错。&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>这也可能会影响后面的系统更新，系统会自动选择就近的源，下载速度更快。&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="入门git教程" />
+<meta property="og:description" content="入门git教程" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/course/git.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2021-04-14T08:20:45+08:00" />
+<meta property="article:modified_time" content="2021-04-14T08:20:45+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="入门git教程"/>
+<meta name="twitter:description" content="入门git教程"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 入门git教程
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">入门git教程</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Apr 14, 2021
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p>入门git教程</p>
+	<article class="md">
+		<h2 id="前言">前言</h2>
+<p>此教程指导入门者初步接触git和使用git从代码托管服务商下载和推送代码，并不系统性介绍git各种概念和原理。</p>
+<p>本教程的目录是为了让入门者初步使用代码。参考<a href="https://www.runoob.com/manual/git-guide/">Git 简明指南</a></p>
+<h2 id="下载项目代码">下载项目代码</h2>
+<!-- raw HTML omitted -->
+<p><strong>在github下载缓慢可以选择coding或gitee下载</strong></p>
+<p><img src="https://base.oribos.city/images/2021/04/202104140001.png" alt="直接下载zip包"></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h2 id="git的作用">git的作用</h2>
+<p>Git（读音为/gɪt/）是一个开源的分布式版本控制系统，hexo的代码可以通过git命令实现代码管理,并通过github actions自动构建。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h2 id="git使用">git使用</h2>
+<p>推送代码到github或使用项目的自动构建需要下列操作:</p>
+<h4 id="安装git">安装git</h4>
+<p>访问<a href="https://git-scm.com/">git官网</a>下载git，然后按照提示安装(一直下一步什么都不需要改)</p>
+<h4 id="配置本地git用户信息">配置本地git用户信息</h4>
+<pre tabindex="0"><code>git config --global user.name &#34;用户名&#34;
+git config --global user.email &#34;邮箱&#34;
+</code></pre><h4 id="配置github仓库">配置github仓库</h4>
+<h5 id="1-注册github账户">1 注册github账户</h5>
+<p>在github官方注册github用户，获得用户名和密码</p>
+<p>如果github无法访问，可以使用coding或gitee进行代码托管。</p>
+<h5 id="2-任选一种方式连接github">2 任选一种方式连接github</h5>
+<p>2.1 选择 https方式连接 推送代码时需要提供用户名和密码</p>
+<p><img src="https://base.oribos.city/images/2021/04/202104140003.png" alt="https方式"></p>
+<p>2.2 ssh免密方式连接，需要使用密钥对</p>
+<p><img src="https://base.oribos.city/images/2021/04/202104140004.png" alt="ssh方式"></p>
+<p>需要在本地电脑上使用以下命令生成密钥对
+ </p>
+<pre tabindex="0"><code>ssh-keygen -t rsa -C &#34;GitHub 邮箱&#34;
+</code></pre><p>然后一路回车。生成的两个文件中，后缀名为.pub的文件为公钥，无后缀名或后缀名为.key的文件为私钥。</p>
+<p>2.3 提交公钥给github，</p>
+<p>使用记事本打开.pub文件，将文件内代码复制然后在github网站<code>settings</code>-<code>SSH and GPG keys</code></p>
+<p><img src="https://base.oribos.city/images/2021/04/202104140002.png" alt="ssh方式"></p>
+<p><strong>私钥需要妥善保管</strong>，系统对私钥有严格要求，用于验证时权限不能太大，避免文件被改写影响验证。</p>
+<p>私钥：当前系统的SYSTEM，Administrators用户组，拥有该文件的完全控制权限；该文件的所有者拥有修改权限。<strong>删除其他用户或Everyone读取和执行权限</strong></p>
+<p>公钥：除去私钥的所有权限设置外，可以允许Everyone拥有读取和执行权限</p>
+<h3 id="下载代码到本地">下载代码到本地</h3>
+<p>使用zip下载不会携带.git文件， 使用git clone方式下载的代码需要删掉项目根目录下的.git文件夹再执行如下操作。</p>
+<blockquote>
+<p>进阶操作：你可以通过git remote github xxx.git 配置github仓库而不需要删除.git</p>
+</blockquote>
+<h3 id="推送代码到github">推送代码到github</h3>
+<p>修改项目根目录下的文件，比如config.yml和CNAME文件，通过以下代码将整个仓库代码推送到github。</p>
+<pre tabindex="0"><code>git init //初始化仓库。 
+git add . //添加文件到暂存区。(注意有点号.) 
+git commit -m &#34;更新说明&#34; //将暂存区内容添加到仓库中。标识“更新说明” 
+git remote add origin XXXX.git  //添加到远程仓库操作，将xxxx.git设置为远程仓库origin 
+git push -u origin master  //推送master分支到origin仓库
+</code></pre><h2 id="注意">注意</h2>
+<p>使用git 方式部署代码是将整个博客项目上传到github，如果你的仓库是开源的，这就会导致<strong>源码公开</strong>，请根据自己需要决定是否将仓库设置私有。</p>
+<h2 id="进阶操作">进阶操作</h2>
+<p>私有仓库使用pages可以购买github 会员或者修改项目目录.github/workflows的代码，在段修改仓库地址到其他开源仓库。这样只有生成的html文件才会开源。</p>
+<p>假如你的仓库开源。.github/workflows的代码和项目的文件<strong>绝不要填写私钥信息或密码</strong>，这些内容会被泄露。你可以在workflows文件使用变量名，然后在github项目管理里填入密码信息。</p>
+<p>你可以将仓库的基本文件公开，使用<code>git submodule</code>引入私有仓库的内容和私密配置文件以保密自己的文章源码。此时需要在workflows文件里配置访问私有仓库的密码信息。这些密码信息应使用变量调用。</p>
+<p>使用git submodule 调用文章仓库，可以使文章的撰写同服务器环境脱离，适合后台撰写，手机客户端，自动转载，自动搜集文章等复杂功能。</p>
+<p>使用.gitignore忽略node_modules或resources文件，避免源码仓库过大。这些被忽略的文件会再自动构建中重新生成。</p>
+<!-- raw HTML omitted -->
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="2020 05 13 在workers上部署博客" />
+<meta property="og:description" content="Cloudflare workers &#43; Github 实现的动态博客系统，使用边缘计算，无需服务器
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/deploy/2020/2020051305.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2020-05-13T20:05:49+08:00" />
+<meta property="article:modified_time" content="2020-05-13T20:05:49+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2020 05 13 在workers上部署博客"/>
+<meta name="twitter:description" content="Cloudflare workers &#43; Github 实现的动态博客系统，使用边缘计算，无需服务器
+"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 2020 05 13 在workers上部署博客
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">2020 05 13 在workers上部署博客</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	
+	
+		Posted at May 13, 2020
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p>Cloudflare workers + Github 实现的动态博客系统，使用边缘计算，无需服务器</p>
+	<article class="md">
+		<h1 id="cloudflare-workers-blog">Cloudflare workers blog</h1>
+<p>Cloudflare workers + Github 实现的动态博客系统，使用边缘计算，无需服务器</p>
+<p>Workers 是 Cloudflare 提供的边缘计算服务，原本是收费的，现在免费了，每天有 10 万次请求的免费额度。</p>
+<p>用户可以使用 JavaScript 编写自己的程序，然后可以直接通过域名访问运行。</p>
+<p>演示博客地址：https://blog.16lab.io/</p>
+<p>项目地址 ：<a href="https://github.com/kasuganosoras/cloudflare-worker-blog">cloudflare-worker-blog</a></p>
+<h2 id="如何部署">如何部署</h2>
+<p>首先在 Cloudflare 控制面板创建一个新的 workers</p>
+<p><img src="https://cdn.jsdelivr.net/gh/denalon/mms/2020/2020-05-13-01.png" alt="img"></p>
+<p><strong>将 workers.js（或者 workers-sakurafrp.js） 的内容根据自己情况修改</strong>，然后替换 Cloudflare 在线编辑器的默认代码。</p>
+<p>点击 Save and deploy 保存。</p>
+<h2 id="如何编写文章">如何编写文章</h2>
+<p>首先创建一个 Github 项目，名字随意，然后将这个项目 clone 到本地。</p>
+<pre tabindex="0"><code># 示例
+git clone https://github.com/kasuganosoras/cloudflare-worker-blog
+cd cloudflare-worker-blog/
+</code></pre><p>进入项目文件夹，新建一个 posts 文件夹</p>
+<pre tabindex="0"><code>mkdir posts/
+</code></pre><p>在里面编写文章，内容一般用 .md 后缀即可，例如 helloworld.md</p>
+<p>写完之后回到项目根目录（就是上级目录），然后新建一个 list.json</p>
+<pre tabindex="0"><code>touch list.json
+</code></pre><p>编辑 list.json，在里面写入以下内容</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;title&#34;</span><span class="p">:</span><span class="s2">&#34;文章名称&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;time&#34;</span><span class="p">:</span><span class="s2">&#34;发布时间&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;file&#34;</span><span class="p">:</span><span class="s2">&#34;posts/helloworld.md（或者其他名字）&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>如果你有多篇文章就这样写：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;title&#34;</span><span class="p">:</span><span class="s2">&#34;文章1&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;time&#34;</span><span class="p">:</span><span class="s2">&#34;2019-06-01&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;file&#34;</span><span class="p">:</span><span class="s2">&#34;posts/1.md&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;title&#34;</span><span class="p">:</span><span class="s2">&#34;文章2&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;time&#34;</span><span class="p">:</span><span class="s2">&#34;2019-06-03&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;file&#34;</span><span class="p">:</span><span class="s2">&#34;posts/2.md&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;title&#34;</span><span class="p">:</span><span class="s2">&#34;文章3&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;time&#34;</span><span class="p">:</span><span class="s2">&#34;2019-06-07&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;file&#34;</span><span class="p">:</span><span class="s2">&#34;posts/3.md&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="err">&lt;--注意json格式，最后一篇文章的这里不需要逗号</span>
+</span></span><span class="line"><span class="cl"><span class="p">]</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>一切就绪后，使用 <code>git push</code> 命令将代码推送到仓库上。</p>
+<p>然后修改你的 workers，设置 github_base 为你的仓库名称，例如 <code>kasuganosoras/cloudflare-worker-blog</code></p>
+<p>现在访问你的 Workers 即可看到文章。</p>
+<h2 id="自定义-workers-绑定域名">自定义 Workers 绑定域名</h2>
+<p>请阅读此文章：https://blog.16lab.io/workers-custom-domain</p>
+<h2 id="javascript-资源">JavaScript 资源</h2>
+<p>如果你仔细查看 workers.js，你会看到一些 <a href="https://cn.tql.ink:4443/">https://cn.tql.ink:4443/</a> 的资源文件</p>
+<p>我建议在实际使用时将这些资源下载下来放到其他地方，或者使用 CDN，因为这是我自己的演示环境域名，并不稳定。</p>
+<h2 id="wbs-管理工具">WBS 管理工具</h2>
+<p>这个工具使用 PHP 开发，需要安装 PHP 运行环境，文件就是 wbs.php，用于快捷管理文章。</p>
+<p>将 wbs.php 复制到任意目录，例如 <code>/usr/local/tools/</code>，然后编辑 <code>~/.bashrc</code>，结尾新增一行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">wbs</span><span class="o">=</span><span class="s1">&#39;php /usr/local/tools/wbs.php&#39;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>接着输入 <code>source ~/.bashrc</code> 更新。</p>
+<p>现在你就可以使用 <code>wbs</code> 命令来进行文章操作了，第一次运行会要求输入项目目录（就是你储存文章的项目）</p>
+<ul>
+<li>wbs n / wbs new 写一篇新文章</li>
+<li>wbs u / wbs upload 上传已经写好的文章</li>
+<li>wbs c / wbs config 重新配置 wbs</li>
+</ul>
+<h2 id="评论系统">评论系统</h2>
+<p>workers-sakurafrp.js 默认使用了 Sakura Comments 评论系统，你可以在我的博客下方留言申请域名白名单，或者更换为其他的评论系统。</p>
+<p>文章地址：https://blog.16lab.io/2 （你还可以在 Issues 里提出，通过任意方式告诉我即可）</p>
+<h2 id="开源协议">开源协议</h2>
+<p>本项目使用 MIT 协议开源，在遵守协议的前提下可任意修改，创作自己的主题等。</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

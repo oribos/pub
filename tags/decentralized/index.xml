@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>decentralized on 记事本</title>
+    <link>https://pub.oribos.cn/tags/decentralized/</link>
+    <description>Recent content in decentralized on 记事本</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <copyright>©nierheim</copyright>
+    <lastBuildDate>Wed, 01 Apr 2020 18:51:47 +0800</lastBuildDate><atom:link href="https://pub.oribos.cn/tags/decentralized/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ENS 尝鲜</title>
+      <link>https://pub.oribos.cn/web/reprint/006.html</link>
+      <pubDate>Wed, 01 Apr 2020 18:51:47 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/006.html</guid>
+      <description>引用自reuixiy
+Opera 浏览器昨天宣布其最新 Android 版已经支持 IPFS——你现在可以通过 ipfs://io-oi.eth 来访问本博客了！
+.eth 是什么域名呢？.eth 是 ENS（Ethereum Name Service）即以太坊域名服务的顶级域名，更多信息及注册流程见 ens.domains。
+接下来，本文将主要介绍一下这个博客是如何持续集成部署到 IPFS，并自动更新 ENS 记录，以实现 io-oi.me 与 io-oi.eth 的「同步」。
+如何持续集成部署到 IPFS？请参见我之前写的文章《将博客部署到星际文件系统（IPFS）》。
+成功部署后，购买域名后，我们编辑一下 package.json 文件，利用 ens-updater 这个工具实现 ENS 记录的自动更新，如下：
+1 2 3 4 5 6 7 8 &amp;#34;scripts&amp;#34;: { - &amp;#34;ipfs-deploy&amp;#34;: &amp;#34;./node_modules/ipfs-deploy/bin/ipfs-deploy.js -p pinata public -u pinata -d cloudflare -C -O&amp;#34; + &amp;#34;ipfs-deploy&amp;#34;: &amp;#34;./node_modules/ipfs-deploy/bin/ipfs-deploy.js -p pinata public -u pinata -d cloudflare -C -O | ./node_modules/@triplespeeder/ens-updater/bin/ens-updater.js setContenthash ${ENS_NAME} ipfs-ns stdin --web3 https://mainnet.</description>
+    </item>
+    
+    <item>
+      <title>将博客部署到星际文件系统（IPFS）</title>
+      <link>https://pub.oribos.cn/web/reprint/2019091804.html</link>
+      <pubDate>Wed, 18 Sep 2019 15:13:56 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2019091804.html</guid>
+      <description>引用自reuixiy
+1
+在这篇文章中，我将主要介绍如何将你的..静态..博客以持续集成的方式部署到星际文件系统 IPFS 上，也会简单介绍一下 IPFS 的使用。本文中，我使用的 SSG2 是 Hugo，使用的持续集成服务由 Netlify 提供，博客的源码可以在 GitHub 上找到。另，提醒一下，与零网一样，IPFS 默认不匿名👓，且对 Tor 的支持还在开发中。
+说明：最近发现 Cloudflare 的 IPFS 服务好像挂了，需要等待非常长的时间才能获取到最新内容，因此本博客已暂时放弃部署在 IPFS 上。
+前言 一年前的昨天🧐，知名的互联网基础设施服务提供商 Cloudflare 宣布开始支持 IPFS Gateway，作为其分布式互联网网关项目的一部分。关于分布式互联网（Distributed Web，以下简称 D 网），它的到来很有可能会将我们带向 Web 3.0 时代，一个全新的互联网时代！而 D 网所具有的去中心化将会带我们走向新的自由之路——无审查，无高墙。👉🌎🌍🌏💫
+起因 浏览 Twitter 时发现了 @GoHugoIO 的一条推文，IPFS 四个字母激起了我的兴趣🐭（之前..轻微..了解过，印象只限于这四个字母），快速浏览一遍链接的文章之后，去看了他之前写的一篇详细教程，打开 IPFS 的官网，决定这次一定要尝试一下 IPFS！🕳️🦆
+正文 文章的正文分为两个部分：持续集成和原生部署，第一部分是文章的主体，第二部分供感兴趣的读者研究。
+当你按照此文章将博客成功部署到 IPFS 上后，你的博客将：
+⚡拥有全球范围的高速 CDN，国内也有不错的访问速度（Cloudflare） 🌤️无需支出且永远在线（如果你不需要域名的话） 🛸走向未来 持续集成 如果你只是想直接通过持续集成的方式部署博客，那么你是无需在自己的电脑（本地）上安装 IPFS 的，你甚至可以完全不用接触 IPFS。但是，你的电脑必须安装 Git 和 Node.js。如果你是一个程序员或之前有尝试过搭建静态博客，那么你对它们应该并不陌生。
+准备环境 首先是 Git，我们要将博客所在的文件夹初始化成一个 Git 仓库。注意，如果你之前已经初始化过了，请跳过这一步。怎么确定是否已经是一个 Git 仓库呢🤔？打开终端╱命令行，然后进入你的博客文件夹，输入 git status 然后回车，如下：</description>
+    </item>
+    
+    <item>
+      <title>零网（ZeroNet）初探</title>
+      <link>https://pub.oribos.cn/web/reprint/2017090105.html</link>
+      <pubDate>Fri, 01 Sep 2017 09:33:18 +0800</pubDate>
+      
+      <guid>https://pub.oribos.cn/web/reprint/2017090105.html</guid>
+      <description>引用自reuixiy
+听说有个暗网，现在接触了个零网……打开之后，首先感觉界面很棒，骚气的紫色，加上渐变，让人眼前一亮 (๑•̀ㅂ•́)و✧～网页下拉，很赞有木有，不过最让人眼前一亮的是右上角的小东东，鼠标按住它往左拉，会出现一个侧栏。别的不说，光是这 UI 就值得体验一下🐱！
+介绍和安装 1）什么是 ZeroNet？
+ZeroNet 是一个去中心化的类似于 Internet 的网络，由匈牙利的开发者使用 Python 制作，完全开源。网站特殊的 ZeroNet URL 可以使用一般的浏览器浏览，就像访问本地主机一样。ZeroNet ..默认并不匿名..，但是用户可以通过内置的 Tor 功能进行匿名化。ZeroNet 使用 Bitcoin 加密算法及 BitTorrent 网络。
+ZeroNet 是一个利用比特币加密和 BT 技术提供不受审查的网络与通信的 BT 平台，ZeroNet 网络功能已经得到完整的种子的支持和加密连接，保证用户通信和文件共享的安全。使用 ZeroNet，你可以匿名上网，你可以在自己电脑搭建网站，但即使你关机，你的网站依然在全球存在，别人无法关闭你的网站。
+2）防 DMCA Take down
+由于 ZeroNet 去中心化的原因，国外有人制作了一个 ZeroNet 版本的海盗湾——Play，这个网站可让版权所有者头疼啦……一般的网站服务器都有 IP 地址，不抗投诉的 ISP 收到了向 IP WHOIS 滥用信箱发送的 DMCA 投诉信的话，你就要和你的网站说再见了……（俗称 DMCA Take down）。可用了 ZeroNet 后，并没有一台服务器是真实的服务器，任何访客都有可能成为服务器，还有些访客使用了 Tor，更找不到真正的。
+3）使用 ZeroNet 的特点
+可以建自己的网站，且无需备案，无需审核，无需服务器。1 基于 P2P 原理，你只要建好并有足够的人浏览过，即使你自己关机，你的网站依然在全球存在，别人想关你站，也没门。 基于 P2P 原理，支持内网穿透，也就是说你在内网也没关系，手机也没问题。 基于比特币原理，账号很安全，谁也不知道你是谁，谁也盗不去。 不需要域名，任何人访问都使用 http://127.</description>
+    </item>
+    
+  </channel>
+</rss>

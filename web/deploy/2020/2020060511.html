@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="2020 06 05 对于不确定的厌恶" />
+<meta property="og:description" content="2020 06 05 对于不确定的厌恶
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/deploy/2020/2020060511.html" /><meta property="article:section" content="essay" />
+<meta property="article:published_time" content="2020-06-05T00:02:04+08:00" />
+<meta property="article:modified_time" content="2020-06-05T00:02:04+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="2020 06 05 对于不确定的厌恶"/>
+<meta name="twitter:description" content="2020 06 05 对于不确定的厌恶
+"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 2020 06 05 对于不确定的厌恶
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">2020 06 05 对于不确定的厌恶</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>denalon</b> |
+	
+		Posted at Jun 05, 2020
+	
+		
+	</div>
+	
+</div>
+<main>
+	<p>2020 06 05 对于不确定的厌恶</p>
+	<article class="md">
+		<h3 id="遇到的困惑">遇到的困惑</h3>
+<p>通过今天遇到的问题，而写的文章</p>
+<h4 id="修改网页主题出现的问题">修改网页主题出现的问题</h4>
+<p>无意间修改了一个配置文件，出现以下错误信息</p>
+<p><img src="https://base.oribos.city/images/2020060503.png" alt="满屏幕的错误提示"></p>
+<p>跟着错误提示，选择文件，发现错误提示的地方并没有找到问题。</p>
+<p>然后偶尔发现，是自己配置config.toml时，将 production 的配置文件config.toml的主题设置theme = [&ldquo;docsy&rdquo;]修改了，导致没有引用主题造成的错误。</p>
+<p>但是  <!-- raw HTML omitted -->没有主题就说没有主题，怎么乱给一些代码，修改半天发现根本不是那回事，这错误提示有什么用！<!-- raw HTML omitted --></p>
+<p>就因为整个问题，我回想过去种种现象，发现不管是一个页面程序，还是使用linux，Windows的各种所见所闻，种种愤慨不吐不快。</p>
+<h4 id="日常遇到的各类错误提示">日常遇到的各类错误提示</h4>
+<p>Error: error sending request for url (<a href="https://crates.io/api/v1/crates/wasm-pack)">https://crates.io/api/v1/crates/wasm-pack)</a>: error trying to connect: operation timed out</p>
+<p>Your site&rsquo;s DNS settings are using a custom subdomain, b.hbn.pub, that&rsquo;s not set up with a correct CNAME record.</p>
+<p>如果将dns解析填到b.hbn.pub，那么github pages令人发指的访问速度实在无法正常使用，所以需要设置cdn，然后如果把cdn源站信息填b.hbn.pub，加速域名填t.hbn.pub，访问t.hbn.pub调用github pages的b.hbn.pub就会出错.或者是网络问题，或者是github对dns有检测到t.hbn.pub找不到文件。</p>
+<p>Module not found: Error: Can&rsquo;t resolve &lsquo;bundle.js&rsquo; in '</p>
+<p>在webpack 4.0 之前 ，打包命令为npm demo.js bundle.js 但是，如果安装的是最新的webpack，需要使用</p>
+<p>webpack demo.js -o demo.bundle.js 进行打包</p>
+<p>It should be prefixed with &lsquo;webpack-scaffold&rsquo;, but have different suffix.</p>
+<h4 id="虽然正确却看似没用的言辞">虽然正确却看似没用的言辞</h4>
+<p>电脑出现问题？<strong>重启一下</strong>，网速慢？<strong>刷新一下</strong>，打印机卡纸？拿出来换一张。等等日常遇到各式各样的，诡异问题，解决方法也是含糊不清。</p>
+<h4 id="遇到的繁杂的产品和设计">遇到的繁杂的产品和设计</h4>
+<p>使用服务器时候的yum apt  yarn homebrew npm 等等乱七八糟的管理器，css scss  nodejs vue angular 等等各式各样的应用，软件。</p>
+<h4 id="学习过程中某些过度简化的词语">学习过程中，某些过度简化的词语</h4>
+<p>“对象是类的实例，“只需要为代码实际运行所消耗的资源付费”这些高度简化的词语，虽然看上去很正确。但缺乏许多细节，类似微软告诉你电脑保持更新更好一样，词语很难表达实际的准确的意思。</p>
+<h4 id="登录腾讯云的过程">登录腾讯云的过程</h4>
+<p>首先你需要1 手机扫描在腾讯云上登录QQ账号，然后手机确认登录腾讯云，然后2打开手机微信，打开腾讯云助手获得验证码，再此输入验证码。所谓的安全措施就是一遍又一遍的找用户确认乱七八糟的东西。</p>
+<p>实际上，遇到的这些问题根本不是重点，重点是由于以上重重的条件导致不可控的错误，故障，限制，要求等等。</p>
+<h4 id="输入法">输入法</h4>
+<p>中英文符号半角 全角切换，中英文切换</p>
+<h4 id="http和https的差异">http和https的差异</h4>
+<p>使用https以后就会保存缓存，导致每次访问都自动加上https，纵然服务器端修改，客户端依然默认http</p>
+<h4 id="某款奇葩软件">某款奇葩软件</h4>
+<p>使用httrack 下载一个重要网页的镜像。下载了2天终于下完，然后偶尔点击了一下更新镜像。它居然再几秒内将已经下载好的文件通通清空了。不是删除，是全部莫名其妙的不间了， <!-- raw HTML omitted -->而且无法恢复！<!-- raw HTML omitted --></p>
+<h3 id="问题">问题</h3>
+<p>1 构建一个简单的页面，结果页面不使用css引入的简单方式，非要去使用离线引入Font-Awesome包和bootstrap包，两个包都需要完全下载，再加上令人发指的网速，安装整个主题成了折磨人的事。</p>
+<p>2 主题自带的配置文件出现兼容问题，如果不配置代码，每次都提示<code>  Replace Autoprefixer browsers option to Browserslist config.</code>等等。对这类只提示，不给解决方案，每次都蹦出来的很反感。imgproc ，swaggerui组件部分设置方法不自由，图片引用无法明确。最麻烦的是，主题配置文件里对此一笔带过，没有详细说明，没有完整案例。配置一直都是提示失败。</p>
+<h3 id="这些问题的根源还是信息技术使用的逻辑缺陷">这些问题的根源还是信息技术使用的逻辑缺陷</h3>
+<p>由一阶谓词逻辑构建的现在信息技术，对数值的0/1，是与否要求非常严格。</p>
+<p>比如：一篇文章引用一个图片，必须指定整个图片的文件名和后缀，如果文件名不完整，后缀名错误。哪怕整个图片就在文章里面，也会显示错误。</p>
+<p>应用的开发人员考虑不周，无法对所有情况和多种配置都考虑到。也没能提供详细的指导。</p>
+<p>使用人员不是专业开发人员，不知道开发人员的具体配置，而且接触不到详细的说明指导。</p>
+<p>流行的应用使用人数越多，指导文件教程，模板越详细。应用越易用。使用人数越少，指导文件教程越少，应用越难用。</p>
+<p>开发人员为了顾及已有业务，会故意屏蔽多方面的使用场景，以避免业务冲突。</p>
+<p>制造人员为了销量会故意降低产品的耐用性，促使用户更新换代。</p>
+<h3 id="标准不统一要求五花八门">标准不统一，要求五花八门</h3>
+<p>各公司对资源，信息的要求和管理五花八门，产品的配置选项也是不尽相同。转嫁成本到用户身上。</p>
+<p>为了维护自己现有产品的经营，故意拖延新技术新产品的应用，对开发创新兴趣不高或者对新技术只会研究如何配置旧产品使用，如何提高现有产品销量。</p>
+<p>行业风气恶劣，行业垄断，拒绝外来技术创新。</p>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>

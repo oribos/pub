@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="利用 Workbox 实现博客的 PWA" />
+<meta property="og:description" content="通过 Workbox (via workbox-build &amp; gulp) 生成 Service Worker 以将你的博客变成一个 PWA 站点" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://pub.oribos.cn/web/reprint/2019100108.html" /><meta property="article:section" content="tech" />
+<meta property="article:published_time" content="2019-10-01T21:32:34+08:00" />
+<meta property="article:modified_time" content="2019-10-01T21:32:34+08:00" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="利用 Workbox 实现博客的 PWA"/>
+<meta name="twitter:description" content="通过 Workbox (via workbox-build &amp; gulp) 生成 Service Worker 以将你的博客变成一个 PWA 站点"/>
+
+  
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#262d33">
+  <title>
+    
+    记事本 - 利用 Workbox 实现博客的 PWA
+    
+  </title>
+  
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+
+  
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+ 
+  
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.bundle.min.js"></script>  
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  
+  
+  
+  <link rel="stylesheet" href="/minima.1661830171.css">
+
+  
+  
+  <link rel="stylesheet" href="/css/app.css">
+  <script defer type="text/javascript" src="/minima.1661830171.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="/js/app.js"></script>
+  
+</head>
+<script>
+  
+  let theme_2b_used = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  try {
+    if (!('theme' in localStorage)) {
+      const default_theme = 'system';
+      
+      
+      if (default_theme === 'dark' || default_theme === 'light') {
+        theme_2b_used = default_theme;
+      }
+
+      
+      localStorage.theme = theme_2b_used;
+    }
+    
+    document.querySelector('html').classList.add(localStorage.theme);
+  } catch (e) {
+    console.error(e);
+  }
+</script>
+
+
+<body class=" sm:mx-5 sm:my-0">
+  <header class="flex justify-between items-center mb-6 sm:my-3">
+  
+  <nav class="flex items-center whitespace-nowrap overflow-x-auto overflow-y-hidden">
+    
+    <a class="ml-3 mr-3" href="/">首页</a>
+    
+    <a class="ml-3 mr-3" href="/tech">技术</a>
+    
+    <a class="ml-3 mr-3" href="/essay">随笔</a>
+    
+    <a class="ml-3 mr-3" href="/about">关于</a>
+    
+  </nav>
+  <div class="flex items-center">
+    <div id="theme-switcher" class="text-4xl cursor-pointer">🌻</div>
+  </div>
+</header>
+  
+  
+
+<h2 class="mt-2 mb-2 text-info">利用 Workbox 实现博客的 PWA</h2>
+<hr class="hr-colorful">
+<div class="mb-3 text-xs flex justify-between sm:flex-col">
+	<div>
+	 作者 <b>reuixiy</b> |
+	
+		Posted at Oct 01, 2019
+	
+		
+	</div>
+	
+	<div class="sm:mt-4">
+		
+		<a class="not-first:ml-3" href="/tags/hugo">#hugo</a>
+		
+		<a class="not-first:ml-3" href="/tags/pwa">#pwa</a>
+		
+	</div>
+	
+</div>
+<main>
+	<p>通过 Workbox (via workbox-build &amp; gulp) 生成 Service Worker 以将你的博客变成一个 PWA 站点</p>
+	<article class="md">
+		<blockquote>
+<p>引用自<a href="https://io-oi.me/">reuixiy</a></p>
+</blockquote>
+<p><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><img src="https://base.oribos.city/images/2020/07/pwa.png" alt="pwa.png" title="PWA"></p>
+<p>如果你使用 Google Chrome 浏览器访问我的博客💻，你可能会发现地址栏右侧有一个小小的 <code>+</code> 号，并会提醒你安装。当然，如果你是用手机访问的话📱，Chrome 就会在页面的底部提醒你。但你可千万千万不要把它当作什么恶意骚扰哦😅，它只是善意地提醒你：这个网站是一个 <a href="https://developers.google.com/web/progressive-web-apps/">PWA</a> 站点，强烈推荐您添加到桌面以获取原生应用般的优质体验！😝</p>
+<p><strong>注意</strong>：请查看<a href="/tech/a-simple-service-worker/">一个简单的 Service Worker</a>。</p>
+<h2 id="前言">前言</h2>
+<blockquote>
+<p>渐进式网络应用程序（英语：<strong>P</strong>rogressive <strong>W</strong>eb <strong>A</strong>pps，简称：<strong>PWA</strong>）是一种运用现代的 Web API 以及传统的渐进式增强策略创建的跨平台 Web 应用程序。这种应用程序将目前最为现代化的浏览器提供的功能与移动设备的体验优势相结合，使其具有与原生应用相同的用户体验优势。<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></p>
+</blockquote>
+<p>以上是开发者角度，就用户角度来说🐼，当你的博客实现 PWA 后，你的读者可以：</p>
+<ol>
+<li>添加你的博客到电脑╱手机的桌面，以原生应用般的方式浏览你的博客</li>
+<li>更快速地浏览你的博客</li>
+<li>离线浏览你的博客</li>
+</ol>
+<p>第一点：对于读者，博客可一触即达，且无浏览器的地址栏、菜单栏等「无关」干扰👴；对于博客，非常有利于博客的用户留存率，也利于博客的品牌形象😺。第二点：可以利用 Service Worker 的缓存特点，极大地加速你的博客，如果再加上 <a href="/tech/speed-up-hexo/">InstantClick</a> 的预加载特点，简直飞速🚀。第三点：对博客来说，个人感觉意义不大🤔。</p>
+<h2 id="正文">正文</h2>
+<p>PWA 有很多要求，比如：HTTPS、响应式布局等等，可参考这个 <a href="https://developers.google.com/web/progressive-web-apps/checklist">Checklist</a>，可用 <a href="https://developers.google.com/web/tools/lighthouse">Lighthouse</a><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> 检查。</p>
+<p><sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup><img src="https://base.oribos.city/images/2020/07/lighthouse-report.png" alt="lighthouse-report.png" title="本站首页的 Lighthouse 测试报告"></p>
+<p>关于图标和 <a href="https://developers.google.com/web/fundamentals/web-app-manifest/"><code>manifest.json</code></a>，可以通过<a href="https://realfavicongenerator.net/">这个网站</a>在线生成。如果你不确定，可以参考<a href="https://github.com/reuixiy/io-oi.me/tree/master/static">我的博客</a>以及 MemE 主题的<a href="https://github.com/reuixiy/hugo-theme-meme/blob/8de3b8d8c2ffe79df999079cdd2a21d536e44db2/layouts/partials/head.html#L79-L90">相关代码</a>。</p>
+<hr>
+<p>在 PWA 的众多要求中，其中很重要的一点就是可离线访问，而要实现这一点，最简单的方法就是使用 <a href="https://developers.google.com/web/fundamentals/primers/service-workers/">Service Worker</a>。在这篇文章中，我们使用 <a href="https://developers.google.com/web/tools/workbox/">Workbox</a> 这个工具生成 <code>sw.js</code> 以快速实现 Service Worker 🤖，并实现页面的预缓存和页面更新后的提醒功能，而非深究 Service Worker 的接口然后手动写 JS 代码来实现👨‍💻🐶&hellip;</p>
+<p>由于我们需要使用 Node 的模块，因此我们的电脑必须安装 <a href="https://nodejs.org/zh-cn/download/">Node.js</a>。如果你使用的是 Hexo，那么是已经安装过的；如果你使用的是 Hugo，那么请自行安装一下。然后，我们安装模块📦：</p>
+<pre tabindex="0"><code>~/blog $ npm install workbox-build gulp gulp-uglify readable-stream uglify-es --save-dev
+</code></pre><blockquote>
+<p>如何将安装的模块更新到最新版本呢？</p>
+<pre tabindex="0"><code>~/blog $ npm update
+</code></pre><p>如果不生效，可继续尝试（下方以 <code>workbox-build</code> 为例）：</p>
+<pre tabindex="0"><code>~/blog $ npm outdated
+Package        Current  Wanted  Latest  Location
+workbox-build    4.3.1   4.3.1   5.0.0  blog
+
+~/blog $ npm install workbox-build@latest
+</code></pre><p><a href="https://bytearcher.com/articles/using-npm-update-and-npm-outdated-to-update-dependencies/">https://bytearcher.com/articles/using-npm-update-and-npm-outdated-to-update-dependencies/</a></p>
+</blockquote>
+<p>接下来，我们在博客文件夹下新建一个 <code>gulpfile.js</code> 文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">gulp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;gulp&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">workbox</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;workbox-build&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">uglifyes</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;uglify-es&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">composer</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;gulp-uglify/composer&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">uglify</span> <span class="o">=</span> <span class="nx">composer</span><span class="p">(</span><span class="nx">uglifyes</span><span class="p">,</span> <span class="nx">console</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">pipeline</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;readable-stream&#39;</span><span class="p">).</span><span class="nx">pipeline</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s1">&#39;generate-service-worker&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">injectManifest</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">swSrc</span><span class="o">:</span> <span class="s1">&#39;./sw-template.js&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">swDest</span><span class="o">:</span> <span class="s1">&#39;./public/sw.js&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">globDirectory</span><span class="o">:</span> <span class="s1">&#39;./public&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">globPatterns</span><span class="o">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;**/*.{html,css,js,json,woff2}&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">modifyURLPrefix</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="s2">&#34;&#34;</span><span class="o">:</span> <span class="s2">&#34;./&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s2">&#34;uglify&#34;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">pipeline</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">gulp</span><span class="p">.</span><span class="nx">src</span><span class="p">(</span><span class="s2">&#34;./public/sw.js&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">uglify</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">gulp</span><span class="p">.</span><span class="nx">dest</span><span class="p">(</span><span class="s2">&#34;./public&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">gulp</span><span class="p">.</span><span class="nx">task</span><span class="p">(</span><span class="s2">&#34;build&#34;</span><span class="p">,</span> <span class="nx">gulp</span><span class="p">.</span><span class="nx">series</span><span class="p">(</span><span class="s2">&#34;generate-service-worker&#34;</span><span class="p">,</span> <span class="s2">&#34;uglify&#34;</span><span class="p">));</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中，<code>globPatterns</code> 就是生成的预缓存列表的文件匹配模式，在这里就是将所有的 <code>html</code>、<code>css</code>、<code>js</code>、<code>json</code>、<code>woff2</code> 文件预缓存，即博客首次加载时，自动将这些文件缓存。</p>
+<hr>
+<p>然后，再新建一个 <code>sw-template.js</code> 文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">workboxVersion</span> <span class="o">=</span> <span class="s1">&#39;5.0.0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">importScripts</span><span class="p">(</span><span class="sb">`https://storage.googleapis.com/workbox-cdn/releases/</span><span class="si">${</span><span class="nx">workboxVersion</span><span class="si">}</span><span class="sb">/workbox-sw.js`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">workbox</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">setCacheNameDetails</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">prefix</span><span class="o">:</span> <span class="s2">&#34;reuixiy&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">workbox</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">skipWaiting</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">workbox</span><span class="p">.</span><span class="nx">core</span><span class="p">.</span><span class="nx">clientsClaim</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">workbox</span><span class="p">.</span><span class="nx">precaching</span><span class="p">.</span><span class="nx">precacheAndRoute</span><span class="p">(</span><span class="nx">self</span><span class="p">.</span><span class="nx">__WB_MANIFEST</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">workbox</span><span class="p">.</span><span class="nx">precaching</span><span class="p">.</span><span class="nx">cleanupOutdatedCaches</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Images
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="sr">/\.(?:png|jpg|jpeg|gif|bmp|webp|svg|ico)$/</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">CacheFirst</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cacheName</span><span class="o">:</span> <span class="s2">&#34;images&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">expiration</span><span class="p">.</span><span class="nx">ExpirationPlugin</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">maxEntries</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">maxAgeSeconds</span><span class="o">:</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">30</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}),</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">cacheableResponse</span><span class="p">.</span><span class="nx">CacheableResponsePlugin</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">statuses</span><span class="o">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Fonts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="sr">/\.(?:eot|ttf|woff|woff2)$/</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">CacheFirst</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cacheName</span><span class="o">:</span> <span class="s2">&#34;fonts&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">expiration</span><span class="p">.</span><span class="nx">ExpirationPlugin</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">maxEntries</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">maxAgeSeconds</span><span class="o">:</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">30</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}),</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">cacheableResponse</span><span class="p">.</span><span class="nx">CacheableResponsePlugin</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">statuses</span><span class="o">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Google Fonts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="sr">/^https:\/\/fonts\.googleapis\.com/</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">StaleWhileRevalidate</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cacheName</span><span class="o">:</span> <span class="s2">&#34;google-fonts-stylesheets&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="sr">/^https:\/\/fonts\.gstatic\.com/</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">CacheFirst</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cacheName</span><span class="o">:</span> <span class="s1">&#39;google-fonts-webfonts&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">expiration</span><span class="p">.</span><span class="nx">ExpirationPlugin</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">maxEntries</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">maxAgeSeconds</span><span class="o">:</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">30</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}),</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">cacheableResponse</span><span class="p">.</span><span class="nx">CacheableResponsePlugin</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">statuses</span><span class="o">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Static Libraries
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="sr">/^https:\/\/cdn\.jsdelivr\.net/</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">CacheFirst</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cacheName</span><span class="o">:</span> <span class="s2">&#34;static-libs&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">expiration</span><span class="p">.</span><span class="nx">ExpirationPlugin</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">maxEntries</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">maxAgeSeconds</span><span class="o">:</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">30</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}),</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">cacheableResponse</span><span class="p">.</span><span class="nx">CacheableResponsePlugin</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">statuses</span><span class="o">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// External Images
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">workbox</span><span class="p">.</span><span class="nx">routing</span><span class="p">.</span><span class="nx">registerRoute</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="sr">/^https:\/\/raw\.githubusercontent\.com\/reuixiy\/hugo-theme-meme\/master\/static\/icons\/.*/</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">strategies</span><span class="p">.</span><span class="nx">CacheFirst</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">cacheName</span><span class="o">:</span> <span class="s2">&#34;external-images&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">plugins</span><span class="o">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">expiration</span><span class="p">.</span><span class="nx">ExpirationPlugin</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">maxEntries</span><span class="o">:</span> <span class="mi">1000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">maxAgeSeconds</span><span class="o">:</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">24</span> <span class="o">*</span> <span class="mi">30</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}),</span>
+</span></span><span class="line"><span class="cl">            <span class="k">new</span> <span class="nx">workbox</span><span class="p">.</span><span class="nx">cacheableResponse</span><span class="p">.</span><span class="nx">CacheableResponsePlugin</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">statuses</span><span class="o">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl"><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">workbox</span><span class="p">.</span><span class="nx">googleAnalytics</span><span class="p">.</span><span class="nx">initialize</span><span class="p">();</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>其中，请将 <code>prefix</code> 修改为你博客的名字（英文），请查看 Workbox 的 <a href="https://github.com/GoogleChrome/workbox/releases">Releases</a> 页面并务必视..版本说明..修改 <code>workboxVersion</code> 为最新版，其它项也请务必结合你的情况自行修改。如果你想用其它缓存策略，请自行查看<a href="https://developers.google.com/web/tools/workbox/modules/workbox-strategies">相关文档</a>。同时，提醒一下，..绝对不要..缓存视频或者预缓存图片。</p>
+<hr>
+<p>本地测试一下：</p>
+<pre tabindex="0"><code>~/blog $ ./node_modules/gulp/bin/gulp.js build
+</code></pre><p>你可以手动检查一下生成的 <code>sw.js</code> 文件（在 <code>public</code> 文件夹内）。当然，你也可以本地 F12 调试一下，Hugo 的话 <code>hugo server -D --renderToDisk --environment production</code>，Hexo 的话直接 <code>hexo s</code>。</p>
+<hr>
+<p>生成 <code>sw.js</code> 文件后，还没结束哦，我们还要在 HTML 页面中加入相关代码以注册 Service Worker，并添加页面更新后的提醒功能。在这里可能要编辑你的主题相关模板文件，把以下代码放在 <code>&lt;/body&gt;</code> 的前面：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;app-refresh&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;app-refresh&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;app-refresh-wrap&#34;</span> <span class="na">onclick</span><span class="o">=</span><span class="s">&#34;location.reload()&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>已更新最新版本<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>点击刷新<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;serviceWorker&#39;</span> <span class="k">in</span> <span class="nx">navigator</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">controller</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;controllerchange&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">showNotification</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="p">});</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">navigator</span><span class="p">.</span><span class="nx">serviceWorker</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="s1">&#39;/sw.js&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">function</span> <span class="nx">showNotification</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s1">&#39;meta[name=theme-color]&#39;</span><span class="p">).</span><span class="nx">content</span> <span class="o">=</span> <span class="s1">&#39;#000&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;app-refresh&#39;</span><span class="p">).</span><span class="nx">className</span> <span class="o">+=</span> <span class="s1">&#39; app-refresh-show&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>再添加以下 CSS 样式到你的 <code>custom.styl</code>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">app-refresh</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">background</span><span class="p">:</span> <span class="mh">#000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">line-height</span><span class="p">:</span> <span class="mi">3</span><span class="kt">em</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">overflow</span><span class="p">:</span> <span class="kc">hidden</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">position</span><span class="p">:</span> <span class="kc">fixed</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">right</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">z-index</span><span class="p">:</span> <span class="mi">42</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">padding</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">1</span><span class="kt">em</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">transition</span><span class="p">:</span> <span class="kc">all</span> <span class="mf">.3</span><span class="kt">s</span> <span class="kc">ease</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">app-refresh-wrap</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">color</span><span class="p">:</span> <span class="mh">#fff</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">app-refresh-wrap</span> <span class="nt">label</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">flex</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">app-refresh-show</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">height</span><span class="p">:</span> <span class="mi">3</span><span class="kt">em</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>你可以修改一下你的某篇文章，然后再次生成 <code>sw.js</code>，最后浏览器刷新一下测试一下。</p>
+<hr>
+<p>这种方法是适合各种静态博客的😎，不管你的 SSG<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup> 是 <a href="https://gohugo.io/">Hugo</a>，或是 <a href="https://hexo.io/">Hexo</a>，还是其它。另外，Hugo 的 <a href="https://github.com/reuixiy/hugo-theme-meme">MemE</a> 主题是支持 Service Worker 这个功能的，因为以上内容其实就是我在开发该主题时摸索出来🐶。最后，如果你对自动化的持续集成部署有疑惑，可以参考我的<a href="https://github.com/reuixiy/io-oi.me">博客源码</a>以及我之前写的<a href="/tech/host-your-blog-on-ipfs/">一篇文章</a>。</p>
+<h2 id="references--resources">References &amp; Resources</h2>
+<p>Workbox：</p>
+<ol>
+<li><a href="https://www.thepolyglotdeveloper.com/2019/03/service-workers-workbox-hugo-static-generated-site/">Service Workers With Workbox In A Hugo Static Generated Site | The Polyglot Developer</a></li>
+<li><a href="https://karannagupta.com/using-custom-workbox-service-workers-with-create-react-app/">Using Custom Workbox Service Workers with Create-React-App (without ejecting) | Karan NA Gupta</a></li>
+<li><a href="https://blog.skk.moe/post/hello-workbox/">Workbox, not sw-toolbox &amp; sw-precache | Sukka’s Blog</a></li>
+<li><a href="https://developers.google.com/web/tools/workbox/guides/precache-files/workbox-build">Precache Files with workbox-build | Workbox | Google Developers</a></li>
+<li><a href="https://developers.google.com/web/tools/workbox/guides/common-recipes">Common Recipes | Workbox | Google Developers</a></li>
+<li><a href="https://developers.google.com/web/tools/workbox/modules/workbox-window">Workbox Window | Workbox | Google Developers</a></li>
+<li><a href="https://zoumiaojiang.com/article/amazing-workbox-3/">神奇的 Workbox 3.0 | zoumiaojiang</a></li>
+<li><a href="https://developers.google.com/web/tools/workbox/guides/migrations/migrate-from-v4">Migrate from Workbox v4 to v5 | Google Developers</a></li>
+<li><a href="https://developers.google.com/web/tools/workbox/reference-docs/latest/workbox">Namespace: workbox | Google Developers</a></li>
+</ol>
+<p>Notification：</p>
+<ol>
+<li><a href="https://github.com/craigjennings11/bible-app/blob/master/src/service-worker/sw-installer.js">bible-app/sw-installer.js | craigjennings11/bible-app | GitHub</a></li>
+<li><a href="https://github.com/arnellebalane/arnellebalane.com/blob/master/source/static/javascripts/main.mjs">arnellebalane.com/main.mjs | arnellebalane/arnellebalane.com | GitHub</a></li>
+<li><a href="https://github.com/zoumiaojiang/hexo-service-worker/blob/master/src/templates/sw-register.tpl.js">hexo-service-worker/sw-register.tpl.js | zoumiaojiang/hexo-service-worker | GitHub</a></li>
+<li><a href="https://github.com/fredliang44/hugo-theme-refine/blob/master/layouts/partials/service-worker.html">hugo-theme-refine/service-worker.html | fredliang44/hugo-theme-refine | GitHub</a></li>
+<li><a href="https://medium.com/@webmaxru/workbox-4-implementing-refresh-to-update-version-flow-using-the-workbox-window-module-41284967e79c">Workbox 4: Implementing refresh-to-update-version flow using the workbox-window module | Medium</a></li>
+<li><a href="https://samvloeberghs.be/posts/lessons-learned-on-offline-capabilities-with-service-workers-using-workbox-the-sequel">Lessons learned on offline capabilities with service workers using Workbox | Sam Vloeberghs</a></li>
+<li><a href="https://github.com/reuixiy/hugo-theme-meme/blob/master/layouts/partials/third-party/service-worker.html">hugo-theme-meme/service-worker.html | reuixiy/hugo-theme-meme | GitHub</a></li>
+<li><a href="https://github.com/jeffposnick/jeffposnick.github.io/blob/active/_posts/_includes/register_service_worker.njk">jeffposnick.github.io/_posts/_includes/register_service_worker.njk | GitHub</a></li>
+</ol>
+<p>PWA：</p>
+<ol>
+<li><a href="https://harttle.land/2017/04/09/service-worker-now.html">立即使用 Service Worker！ | Harttle Land</a></li>
+<li><a href="https://harttle.land/2019/03/27/from-spa-to-pwa.html">从 SPA 到 PWA | Harttle Land</a></li>
+<li><a href="https://blog.fredliang.cn/posts/2019-05-16-mini-program-vs-pwa/">小程序标准化 &amp; PWA | Fred’s Blog</a></li>
+</ol>
+<hr>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>来源：<a href="https://developers.google.com/web/tools/workboxhttps://base.oribos.city/images/2020/07/pwa.svg">https://developers.google.com/web/tools/workboxhttps://base.oribos.city/images/2020/07/pwa.svg</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>参考①：<a href="https://zh.wikipedia.org/wiki/%E6%B8%90%E8%BF%9B%E5%BC%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F">https://zh.wikipedia.org/wiki/渐进式网络应用程序</a><br>
+参考②：<a href="https://developer.mozilla.org/zh-CN/docs/Web/Progressive_web_apps">https://developer.mozilla.org/zh-CN/docs/Web/Progressive_web_apps</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>安利一个提供在线测试的网站：<a href="https://www.webpagetest.org/lighthouse">https://www.webpagetest.org/lighthouse</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://www.webpagetest.org/result/191003_X2_834c7f82e1a525b190986e3ec91e2927/">https://www.webpagetest.org/result/191003_X2_834c7f82e1a525b190986e3ec91e2927/</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p>静态网站生成器，<a href="https://www.staticgen.com/">Static Site Generator</a>，简称 SSG。&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+	</article>
+</main>
+
+
+
+
+
+	
+
+	
+
+	
+
+
+  
+  
+
+
+<footer class="mt-8 flex sm:flex-col-reverse justify-between items-center">
+  <p class="mt-0 text-sm-3">
+    ©nierheim |
+    <a href="https://gohugo.io" target="_blank" rel="noopener noreferrer">Hugo</a> on
+    <a href="https://github.com/mivinci/hugo-theme-minima" target="_blank" rel="noopener noreferrer">Minima</a>
+    |<a href="http://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">豫ICP备2020027870号-2</a>
+  </p>
+  <p class="flex items-center mt-0">
+    
+      <a class="icon mx-2" href="https://github.com/oribos/pub" title="github">
+      
+        <svg fill="#63636f" width="18" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      
+      </a>
+    
+      <a class="icon mx-2" href="/index.xml" title="rss">
+      
+        <svg fill="#63636f" t="1626591563876" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1984" width="18" height="16"><path d="M128 768a128 128 0 1 0 0 256 128 128 0 0 0 0-256zM0 368v176c265.104 0 480 214.912 480 480h176c0-362.32-293.696-656-656-656zM0 0v176c468.336 0 848 379.664 848 848h176C1024 458.464 565.536 0 0 0z" p-id="1985"></path></svg>
+      
+      </a>
+    
+  </p>
+</footer>
+  <style>
+
+    #upBtn {
+      display: none;  
+    }
+    
+    .shareBtn {
+    margin: 2 auto;
+    position: fixed; 
+    z-index: 99; 
+    cursor: pointer; 
+    bottom: 70px; 
+    right: 16px; 
+    width: 52px;
+    float: left;
+    text-align: center;
+    }
+    
+</style>
+    
+    <div class="container-fluid">
+        <div class="shareBtn">
+                <a  id="upBtn"  href="javascript:topFunction()" title="向上"> <i class="fa fa-arrow-up fa-2x text-info"></i></a>
+        </div>
+    </div>
+</body>
+</html>
