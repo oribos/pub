@@ -1,10 +1,14 @@
-baseURL = "https://pub.oribos.cn"
+baseURL = "/"
 languageCode = "zh-cn"
 title = "记事本"
 copyright = "©nierheim"
 googleAnalytics = ""
 
-
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
 
 # paginate decides the number of the newest posts
 # that'll be shown on the home page.
