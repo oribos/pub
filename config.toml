@@ -4,15 +4,11 @@ title = "记事本"
 copyright = "©nierheim"
 googleAnalytics = ""
 
-[markup]
-  defaultMarkdownHandler = "goldmark"
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+
 
 # paginate decides the number of the newest posts
 # that'll be shown on the home page.
-paginate = 20
+paginate = 30
 
 # theme is the name of the hugo theme you're gonna use,
 # `hugo-theme-minima` is put here only for debuging,
@@ -169,6 +165,17 @@ series = "series"
 
 # Fields below make sure all the codes in a post are
 # highlighted correctly, so better not edit them.
+
+
+[markup]
+  defaultMarkdownHandler = "goldmark"
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+
+      
 [markup.highlight]
 lineNos = true
 noClasses = false
+
